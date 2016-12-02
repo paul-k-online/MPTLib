@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
+using MPT.BaseTypeHelpers;
 using MPT.Model;
-using MPT.Strings;
 
 namespace MPT.RSView.ImportExport
 {
@@ -280,7 +281,8 @@ namespace MPT.RSView.ImportExport
         public static IEnumerable<RsViewTag> GetTags(XElement xElement, IDictionary<string, object> paramDict, string nodeName)
         {
             var tagElements = xElement.Elements("TAG");
-            return tagElements.Select(element => element.ToRsViewTag(paramDict, nodeName));
+            var tags = tagElements.Select(x => x.ToRsViewTag(paramDict, nodeName));
+            return tags;
         }
 
         public static IEnumerable<RsViewTag> GetTags(this Position position, XElement shema, string nodeName)

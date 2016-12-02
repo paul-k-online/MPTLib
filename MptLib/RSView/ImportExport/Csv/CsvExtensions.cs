@@ -3,59 +3,24 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPT.RSView.ImportExport.Csv
 {
     public static class CsvConvertExtensions
     {
-        /*
-        public static string ToRsViewFormat(this RsViewTagType value)
-        {
-            return value.ToString().ToRsViewFormat();
-        }
-
-        public static string ToRsViewFormat(this RsViewDataSource value)
-        {
-            return value.ToString().ToRsViewFormat();
-        }
-
-        public static string ToRsViewFormat(this RSBool value)
-        {
-            return value.ToString().ToRsViewFormat();
-        }
-        */
-        
-        /*
-        public static string ToRsViewFormat(this string value)
-        {
-            return value == null ? "" : string.Format("\"{0}\"", value);
-        }
-        */
-        /*
-        public static string ToRsViewFormat(this double? value)
-        {
-            return value == null ? "" : value.ToString();
-        }
-        */
-
         public static string ToRsViewFormat(this object value)
         {           
             if (value == null)
                 return "";
             
             if (value is string)
-                //return (value as string).ToRsViewFormat();
-                //return value == null ? "" : string.Format("\"{0}\"", value);
                 return string.Format("\"{0}\"", value);
 
             if (value is double)
-                //return (value as double?).ToRsViewFormat();
-                //return value == null ? "" : value.ToString();
                 return Convert.ToString(value,CultureInfo.InvariantCulture.NumberFormat);
 
             if (value is int)
-                //return (value as double?).ToRsViewFormat();
-                //return value == null ? "" : value.ToString();
                 return value.ToString();
 
 
@@ -65,22 +30,9 @@ namespace MPT.RSView.ImportExport.Csv
             if (value is CsvAnalogAlarmTreshold)
                 return value.ToString();
             
-            /*
-            if (value is RsViewTagType)
-                return ((RsViewTagType)value).ToRsViewFormat();
-
-            if (value is RsViewDataSource)
-                return ((RsViewDataSource)value).ToRsViewFormat();
-
-            if (value is RSBool)
-                return ((RSBool)value).ToRsViewFormat();
-            */
-
-            //return "";
             var a = value.ToString();
             var b = a.ToRsViewFormat();
             return b;
-            //return value.ToString().ToRsViewFormat();
         }
 
 
@@ -94,6 +46,7 @@ namespace MPT.RSView.ImportExport.Csv
             return csvTag;
         }
 
+
         public static CsvTag ToCsvTag(this RsViewDigitalTag tag)
         {
             var csvTag = CsvTag.CreateDigit(tag.FullName, tag.Description, tag.InitialValue);
@@ -104,6 +57,7 @@ namespace MPT.RSView.ImportExport.Csv
             return csvTag;
         }
 
+
         public static CsvTag ToCsvTag(this RsViewStringTag tag)
         {
             var csvTag = CsvTag.CreateString(tag.FullName, tag.Description, tag.InitialValue);
@@ -113,6 +67,7 @@ namespace MPT.RSView.ImportExport.Csv
             }
             return csvTag;
         }
+
 
         public static CsvTag ToCsvTag(this RsViewTag tag)
         {
@@ -141,6 +96,7 @@ namespace MPT.RSView.ImportExport.Csv
             return new CsvAnalogAlarmTreshold(analogAlarm.Threshold, analogAlarm.Label, analogAlarm.Direction, analogAlarm.Severity);
         }
 
+
         public static CsvAnalogAlarm ToCsvAnalogAlarm(this RsViewAnalogTag tag)
         {
             if (!tag.IsAlarm)
@@ -154,6 +110,7 @@ namespace MPT.RSView.ImportExport.Csv
             }
             return csvAnalogAlarm;
         }
+
 
         public static CsvDigitalAlarm ToCsvDigitalAlarm(this RsViewDigitalTag tag)
         {
@@ -169,5 +126,6 @@ namespace MPT.RSView.ImportExport.Csv
 
             return csvDigitalAlarm;
         }
+
     }
 }

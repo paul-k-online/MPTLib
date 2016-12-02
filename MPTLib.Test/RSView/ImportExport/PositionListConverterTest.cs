@@ -16,7 +16,7 @@ namespace MPTLib.Test.RSView.ImportExport
         [TestMethod]
         public void TestConvert()
         {
-            TestData.ExcelPositionList.ReadAllData();
+            TestData.ExcelPositionList.LoadAllData();
 
             var aiTags = Converter.GetAiTags();
             var dioTags = Converter.GetDioTags();
@@ -29,9 +29,9 @@ namespace MPTLib.Test.RSView.ImportExport
         {
             try
             {
-                TestData.ExcelPositionList.ReadAllData();
+                TestData.ExcelPositionList.LoadAllData();
                 var tags = Converter.GetAiTags();
-                var file = new CsvConverter(tags, TestData.NodeName);
+                var file = new CsvGenerator(tags, TestData.NodeName);
                 //file.CollectFolders();
             }
             catch (Exception e)

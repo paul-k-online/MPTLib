@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MPT.Strings;
+using MPT.BaseTypeHelpers;
 
 namespace MPTLib.Test.Strings
 {

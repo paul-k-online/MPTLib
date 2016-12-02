@@ -37,7 +37,7 @@ namespace MPT.Model
         public virtual DbSet<PLC> PLCs { get; set; }
         public virtual DbSet<PLCDescription> PLCDescriptions { get; set; }
         public virtual DbSet<PLC_TO> PLC_TOs { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectHMI> ProjectHMIs { get; set; }
         public virtual DbSet<Workstation> Workstations { get; set; }
         public virtual DbSet<Ws_Data> Ws_Data { get; set; }
     

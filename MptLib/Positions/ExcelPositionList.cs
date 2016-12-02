@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using MPT.Excel;
 using MPT.Model;
@@ -18,54 +19,61 @@ namespace MPT.Positions
         private int? _plcId;
         public int? PlcId
         {
-            get
-            {
-                return _plcId;
-            }
+            get { return _plcId; }
             set 
             {
                 _plcId = value;
-                if (PlcId == null) 
-                    return;
+                if (PlcId == null) return;
                 UpdateAiListPlcId(PlcId.Value);
+                UpdateAoListPlcId(PlcId.Value);
                 UpdateDioListPlcId(PlcId.Value);
                 UpdateMessageListPlcId(PlcId.Value);
             }
         }
 
-        public ExcelPositionList(ExcelDataBase excel, int? plcId = null)
+        public ExcelPositionList(ExcelDataBase excel, int? plcId = null, bool loadData = false)
         {
             Excel = excel;
             PlcId = plcId;
+            AiPositions = new Dictionary<int, AiPosition>();
+            AoPositions = new Dictionary<int, AoPosition>();
+            DioPositions = new Dictionary<int, DioPosition>();
+            PlcMessages = new Dictionary<int, PlcMessage>();
+
+            if (loadData)
+            {
+                LoadAllData();
+            }
         }
 
-        public ExcelPositionList(string excelFile, int? plcId = null)
-            : this(new ExcelDataBase(excelFile), plcId)
+        
+        public ExcelPositionList(string excelFile, int? plcId = null, bool loadData = false)
+            : this(new ExcelDataBase(excelFile), plcId, loadData)
         {}
 
-        public bool ReadAllData()
-        {
-            var readAi = ReadAiSheet();
-            var readDio = ReadDioSheet();
-            var readAo = ReadAoSheet();
 
+        public bool LoadAllData()
+        {
+            var readAi = LoadAiSheet();
+            var readAo = LoadAoSheet();
+            var readDio = LoadDioSheet();
+            
             var updateScale = false;
             if(readAi && readAo)
                 updateScale = UpdateAoScale();
 
-            var readMessage = ReadMessagesSheet();
+            var readMessage = LoadMessagesSheet();
             
             return readAi && readAo && readDio;
         }
         
-        public bool ReadAiSheet(string sheetName = "AI")
+        public bool LoadAiSheet(string sheetName = "AI")
         {
             try
             {
                 AiPositions = Excel
                     .GetDataList(sheetName, ExcelPositionConvert.ToAiPosition)
                     .ToDictionary(x => x.Number, y => y);
-
             }
             catch (Exception)
             {
@@ -77,7 +85,7 @@ namespace MPT.Positions
             return true;
         }
 
-        public bool ReadAoSheet(string sheetName = "AO")
+        public bool LoadAoSheet(string sheetName = "AO")
         {
             try
             {
@@ -94,7 +102,7 @@ namespace MPT.Positions
             return true;
         }
 
-        public bool ReadDioSheet(string sheetName = "DIO")
+        public bool LoadDioSheet(string sheetName = "DIO")
         {
             try
             {
@@ -106,12 +114,12 @@ namespace MPT.Positions
                 return false;
             }
             
-            if (PlcId != null)
+            if (PlcId != null) 
                 UpdateDioListPlcId(PlcId.Value);
             return true;
         }
 
-        public bool ReadMessagesSheet(string sheetName = "Message")
+        public bool LoadMessagesSheet(string sheetName = "Message")
         {
             try
             {
@@ -130,8 +138,7 @@ namespace MPT.Positions
 
         public bool UpdateAoScale()
         {
-            if (AiPositions == null)
-                return false;
+            if (AiPositions == null) return false;
 
             foreach (var aoPosition in AoPositions)
             {
@@ -150,8 +157,7 @@ namespace MPT.Positions
 
         protected void UpdateAiListPlcId(int plcId)
         {
-            if (AiPositions == null)
-                return;
+            if (AiPositions == null) return;
 
             foreach (var position in AiPositions)
             {
@@ -161,8 +167,7 @@ namespace MPT.Positions
 
         protected void UpdateAoListPlcId(int plcId)
         {
-            if(AoPositions == null)
-                return;
+            if(AoPositions == null) return;
 
             foreach (var position in AoPositions)
             {
@@ -172,8 +177,7 @@ namespace MPT.Positions
 
         protected void UpdateDioListPlcId(int plcId)
         {
-            if(DioPositions == null)
-                return;
+            if(DioPositions == null) return;
 
             foreach (var position in DioPositions)
             {
@@ -183,9 +187,8 @@ namespace MPT.Positions
 
         protected void UpdateMessageListPlcId(int plcId)
         {
-            if (PlcMessages == null)
-                return;
-
+            if (PlcMessages == null) return;
+            
             foreach (var position in PlcMessages)
             {
                 position.Value.PlcId = plcId;

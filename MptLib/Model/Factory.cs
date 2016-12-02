@@ -18,7 +18,7 @@ namespace MPT.Model
         public Factory()
         {
             this.PLCs = new HashSet<PLC>();
-            this.Projects = new HashSet<Project>();
+            this.Projects = new HashSet<ProjectHMI>();
         }
     
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace MPT.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLC> PLCs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<ProjectHMI> Projects { get; set; }
     }
 }

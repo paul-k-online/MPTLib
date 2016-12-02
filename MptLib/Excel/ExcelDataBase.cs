@@ -9,8 +9,12 @@ namespace MPT.Excel
 {
     public class ExcelDataBase
     {
-        const string ConnectionStringTemplate = @"provider=Microsoft.Jet.OLEDB.4.0; Data Source='{0}'; Extended Properties=Excel 8.0;";//HDR=Yes;"; //IMEX=1
+        //const string ConnectionStringTemplate = @"provider=Microsoft.Jet.OLEDB.4.0; Data Source='{0}'; Extended Properties=Excel 8.0;";//HDR=Yes;"; //IMEX=1
+        const string ConnectionStringTemplate = @"provider=Microsoft.ACE.OLEDB.12.0; Data Source='{0}'; Extended Properties=Excel 12.0 XML;";// HDR=YES; HDR=NO;
+        
+        
         const string TableQueryTemplate = "SELECT * FROM [{0}$]";
+
 
         private string ConnectionString
         {

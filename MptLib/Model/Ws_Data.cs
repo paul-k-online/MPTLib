@@ -14,11 +14,11 @@ namespace MPT.Model
     
     public partial class Ws_Data
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int WorkstationId { get; set; }
-        public long status { get; set; }
-        public string active_window { get; set; }
-        public string work_time { get; set; }
+        public long Status { get; set; }
+        public string ActiveWindow { get; set; }
+        public string WorkTime { get; set; }
         public string activity { get; set; }
         public long CPU { get; set; }
         public long MB { get; set; }

@@ -41,7 +41,7 @@
 
         public bool IsAlarm
         {
-            get { return Alarm == null; }
+            get { return Alarm != null; }
         }
 
         public DigitalAlarm Alarm;

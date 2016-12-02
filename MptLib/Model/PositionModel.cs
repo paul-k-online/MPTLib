@@ -11,7 +11,7 @@ namespace MPT.Model
         public string Name { get; set; }
         public string Description { get; set; }
         public string Note { get; set; }
-        public int? GroupId { get; set; }
+        public int GroupId { get; set; }
         
         /// <summary>
         /// полное название
@@ -49,16 +49,7 @@ namespace MPT.Model
 
     }
 
-    public struct RangePair
-    {
-        public double? Low { get; set; }
-        public double? High { get; set; }
 
-        public override string ToString()
-        {
-            return string.Format("{0}; {1}", Low, High);
-        }
-    }
     
 
     public class AiPosition : Position
@@ -68,6 +59,17 @@ namespace MPT.Model
         public RangePair Reglament { get; set; }
         public RangePair Alarming { get; set; }
         public RangePair Blocking { get; set; }
+    }
+
+    public struct RangePair
+    {
+        public double? Low { get; set; }
+        public double? High { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", Low, High);
+        }
     }
 
     public class AoPosition : Position

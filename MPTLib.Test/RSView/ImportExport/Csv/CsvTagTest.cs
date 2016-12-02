@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.RSView;
 using MPT.RSView.ImportExport.Csv;
+using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPTLib.Test.RSView.ImportExport.Csv
 {
@@ -88,5 +89,29 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
 
             Assert.AreEqual(expected, actual, true);
         }
+
+        [TestMethod]
+        public void TestDigitalAlarm()
+        {
+            var expected =
+                @" ""D"",""AI\FRCA3013_2\NAN"",""ON"",""FRCA3013_2 обрыв"",""5"",""S"","""","""",""S"","""","""",""S"","""","""","""","""","""",""N"","""",""N""";
+            expected = _regexSpace.Replace(expected, "");
+
+            var tag = new RsViewDigitalTag(@"AI\FRCA3013_2\NAN")
+            {
+                Alarm = new RsViewDigitalTag.DigitalAlarm()
+                {
+                    Label = "FRCA3013_2 обрыв",
+                    Severity = 5,
+                    Type = RsViewDigitalAlarmType.ON
+                }
+            };
+
+            var actual = tag.ToCsvDigitalAlarm().ToString();
+            actual = _regexSpace.Replace(actual, "");
+
+            Assert.AreEqual(expected, actual, true);
+        }
+
     }
 }

@@ -493,7 +493,7 @@
           <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="PLC" Relationship="Self.FK_PLC_TO_PLC" FromRole="PLC_TO" ToRole="PLC" />
         </EntityType>
-        <EntityType Name="Project">
+        <EntityType Name="ProjectHMI">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -565,7 +565,7 @@
         </Association>
         <Association Name="FK_Project_Factory">
           <End Role="Factory" Type="Self.Factory" Multiplicity="1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <End Role="Project" Type="MPTModel.ProjectHMI" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Factory">
               <PropertyRef Name="Id" />
@@ -612,7 +612,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Workstation_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="MPTModel.ProjectHMI" Multiplicity="1" />
           <End Role="Workstation" Type="Self.Workstation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -634,7 +634,7 @@
           <EntitySet Name="PLCs" EntityType="Self.PLC" />
           <EntitySet Name="PLCDescriptions" EntityType="MPTModel.PLCDescription" />
           <EntitySet Name="PLC_TOs" EntityType="Self.PLC_TO" />
-          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="ProjectHMIs" EntityType="MPTModel.ProjectHMI" />
           <EntitySet Name="Workstations" EntityType="Self.Workstation" />
           <AssociationSet Name="FK_Events_PLC" Association="Self.FK_Events_PLC">
             <End Role="PLC" EntitySet="PLCs" />
@@ -650,7 +650,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_Project_Factory" Association="Self.FK_Project_Factory">
             <End Role="Factory" EntitySet="Factories" />
-            <End Role="Project" EntitySet="Projects" />
+            <End Role="Project" EntitySet="ProjectHMIs" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_PLC" Association="Self.FK_Messages_PLC">
             <End Role="PLC" EntitySet="PLCs" />
@@ -665,7 +665,7 @@
             <End Role="PLC_TO" EntitySet="PLC_TOs" />
           </AssociationSet>
           <AssociationSet Name="FK_Workstation_Project" Association="Self.FK_Workstation_Project">
-            <End Role="Project" EntitySet="Projects" />
+            <End Role="Project" EntitySet="ProjectHMIs" />
             <End Role="Workstation" EntitySet="Workstations" />
           </AssociationSet>
           <FunctionImport Name="GetPlcEventsCount" ReturnType="Collection(MPTModel.GetPlcEventsCount_Result)">
@@ -722,13 +722,13 @@
         </Association>
         <EntityType Name="Ws_Data">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WorkstationId" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="Int64" Nullable="false" />
-          <Property Name="active_window" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="work_time" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int64" Nullable="false" />
+          <Property Name="ActiveWindow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WorkTime" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="activity" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CPU" Type="Int64" Nullable="false" />
           <Property Name="MB" Type="Int64" Nullable="false" />
@@ -891,8 +891,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="MPTModel.Project">
+          <EntitySetMapping Name="ProjectHMIs">
+            <EntityTypeMapping TypeName="MPTModel.ProjectHMI">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -941,11 +941,11 @@
                 <ScalarProperty Name="MB" ColumnName="MB" />
                 <ScalarProperty Name="CPU" ColumnName="CPU" />
                 <ScalarProperty Name="activity" ColumnName="activity" />
-                <ScalarProperty Name="work_time" ColumnName="work_time" />
-                <ScalarProperty Name="active_window" ColumnName="active_window" />
-                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="WorkTime" ColumnName="work_time" />
+                <ScalarProperty Name="ActiveWindow" ColumnName="active_window" />
+                <ScalarProperty Name="Status" ColumnName="status" />
                 <ScalarProperty Name="WorkstationId" ColumnName="workstation_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

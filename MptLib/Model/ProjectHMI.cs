@@ -12,10 +12,10 @@ namespace MPT.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Project
+    public partial class ProjectHMI
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Project()
+        public ProjectHMI()
         {
             this.Workstations = new HashSet<Workstation>();
         }

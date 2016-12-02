@@ -110,16 +110,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Webmpt.NET\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\ExcelDataReader.2.1.2.3\lib\net20\Excel.dll</HintPath>
+    <Reference Include="Ionic.Zip, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Webmpt.NET\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\NLog.3.2.1\lib\net40\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\Webmpt.NET\packages\NLog.4.0.0\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -133,12 +129,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WmiLight">
-      <HintPath>..\..\RemoteWorkstation\packages\WmiLight.2.0.0.5\lib\net40\WmiLight.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\TreeNode.cs" />
+    <Compile Include="BaseTypeHelpers\EnumExtension.cs" />
     <Compile Include="Model\DataLogAlarm.cs">
       <DependentUpon>DataLogModel.tt</DependentUpon>
     </Compile>
@@ -185,6 +179,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Model\MPTModelExt.cs" />
+    <Compile Include="Model\MPTModelMetadata.cs" />
     <Compile Include="Model\PcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
@@ -215,7 +210,7 @@
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PositionModel.cs" />
-    <Compile Include="Model\Project.cs">
+    <Compile Include="Model\ProjectHMI.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Workstation.cs">
@@ -229,30 +224,30 @@
     <Compile Include="Positions\PlcMessagesMerge.cs" />
     <Compile Include="Positions\PositionList.cs" />
     <Compile Include="RSLogix\PositionExtension.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDerivedTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDerivedTag.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="RSView\ImportExport\XElementExtension.cs" />
     <Compile Include="Model\RsViewAiPositionExtension.cs" />
     <Compile Include="RSView\RsViewAnalogTag.cs" />
     <Compile Include="RSView\RsViewDigitalTag.cs" />
     <Compile Include="RSView\ImportExport\PositionConvertDefaultExtension.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDataLog.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDigitalAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvConverter.cs" />
+    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDataLog.cs" />
+    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDigitalAlarm.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvGenerator.cs" />
     <Compile Include="RSView\DataLog\DataLogFloat.cs" />
     <Compile Include="RSView\DataLog\DataLogArchive.cs" />
     <Compile Include="RSView\DataLog\DataLogHelper.cs" />
     <Compile Include="DBF\DbfDataBase.cs" />
     <Compile Include="Excel\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvAnalogAlarm.cs" />
+    <Compile Include="RSView\ImportExport\Csv\Tag\CsvAnalogAlarm.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvExtensions.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\Tag\CsvTag.cs" />
     <Compile Include="RSView\RsViewStringTag.cs" />
     <Compile Include="RSView\RsViewTag.cs" />
     <Compile Include="RSView\ImportExport\PositionConvertXmlExtension.cs" />
     <Compile Include="RSView\RsViewTypeExtension.cs" />
-    <Compile Include="Strings\StringExtension.cs" />
+    <Compile Include="BaseTypeHelpers\StringExtension.cs" />
     <Compile Include="WorkSchedule\ScheduleDay.cs" />
     <Compile Include="WorkSchedule\ScheduleMonth.cs" />
   </ItemGroup>
@@ -274,9 +269,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MPTModel.cs</LastGenOutput>
       <DependentUpon>MPTModel.edmx</DependentUpon>
-    </None>
-    <None Include="WorkSchedule\App.Config">
-      <SubType>Designer</SubType>
     </None>
     <EntityDeploy Include="Model\DataLogModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

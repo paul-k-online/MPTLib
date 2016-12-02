@@ -11,8 +11,8 @@ namespace MPT.RSView.ImportExport
 {
     public class PositionListConverter
     {
-        public PositionList PositionList { get; private set; }
-        public XElement Shema { get; set; }
+        PositionList PositionList { get; set; }
+        XElement Shema { get; set; }
         
         public string NodeName { get; private set; }
 
@@ -23,11 +23,16 @@ namespace MPT.RSView.ImportExport
             NodeName = nodeName;
         }
 
+
         private static IEnumerable<RsViewTag> ConvertTags(IEnumerable<Position> positions, XElement shema, string nodeName)
         {
-            var test = positions.SelectMany(x => x.GetTags(shema, nodeName));
+            if (positions == null) return null;
+            if (shema == null) return null;
+            
+            var test = positions.SelectMany(x => x.GetTags(shema, nodeName)).ToList();
             return test;
         }
+
 
         public IEnumerable<RsViewTag> GetAiTags()
         {
@@ -35,17 +40,20 @@ namespace MPT.RSView.ImportExport
             return ConvertTags(PositionList.AiPositions.Values, shema, NodeName);
         }
 
+
         public IEnumerable<RsViewTag> GetDioTags()
         {
             var shema = Shema.GetElement("DIGITAL_POSITION");
             return ConvertTags(PositionList.DioPositions.Values, shema, NodeName);
         }
 
+
         public IEnumerable<RsViewTag> GetAoTags()
         {
             var shema = Shema.GetElement("REGULATOR_POSITION");
             return ConvertTags(PositionList.AoPositions.Values, shema, NodeName);
         }
+
 
         public IEnumerable<RsViewTag> GetAllTags()
         {

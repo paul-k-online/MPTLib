@@ -1,8 +1,8 @@
 using System;
 using System.Data;
+using MPT.BaseTypeHelpers;
 using MPT.Model;
 using MPT.RSView;
-using MPT.Strings;
 
 namespace MPT.Positions
 {
@@ -13,17 +13,23 @@ namespace MPT.Positions
             Number = 3,
             Name = 4,
             Description = 5,
+            
             ScaleLow = 6,
             ScaleHigh = 7,
+            
             Dimension = 8,
+            
             ReglamentLow = 9,
             ReglamentHigh = 10,
+            
             AlarmLow = 11,
             AlarmHigh = 12,
+
             BlockLow = 13,
             BlockHigh = 14,
+            
             Note = 17,
-            GroupId = 19,
+            GroupId = 20,
         }
 
         public static AiPosition ToAiPosition(this DataRow row)
@@ -40,48 +46,46 @@ namespace MPT.Positions
 
             try
             {
-                var number = row.Field<double?>((int)AiExcelField.Number);
-                var name = row.Field<string>((int)AiExcelField.Name);
-                if (number == null || string.IsNullOrWhiteSpace(name))
+                var number = row.Field<object>((int)AiExcelField.Number);
+                var name = row.Field<object>((int)AiExcelField.Name);
+                if (number == null || name == null)
                     return null;
 
                 // ReSharper disable once UseObjectOrCollectionInitializer
                 var ai = new AiPosition();
                 ai.Number = Convert.ToInt32(number);
-                ai.Name = name;
-
-                ai.Description = row.Field<string>((int) AiExcelField.Description);
-                ai.Units = row.Field<string>((int)AiExcelField.Dimension);
+                ai.Name = Convert.ToString(name);
+                ai.Description = Convert.ToString(row.Field<object>((int)AiExcelField.Description));
+                ai.Units = Convert.ToString(row.Field<object>((int)AiExcelField.Dimension));
 
                 ai.Scale = new RangePair
                 {
-                    Low = row.Field<double?>((int) AiExcelField.ScaleLow),
-                    High = row.Field<double?>((int) AiExcelField.ScaleHigh)
+                    Low = Convert.ToDouble(row.Field<object>((int)AiExcelField.ScaleLow)),
+                    High = Convert.ToDouble(row.Field<object>((int)AiExcelField.ScaleHigh))
                 };
                 ai.Reglament = new RangePair()
                 {
-                    Low = row.Field<double?>((int) AiExcelField.ReglamentLow),
-                    High = row.Field<double?>((int) AiExcelField.ReglamentHigh)
+                    Low = Convert.ToDouble(row.Field<object>((int)AiExcelField.ReglamentLow)),
+                    High = Convert.ToDouble(row.Field<object>((int)AiExcelField.ReglamentHigh))
                 };
                 ai.Alarming = new RangePair
                 {
-                    Low = row.Field<double?>((int) AiExcelField.AlarmLow),
-                    High = row.Field<double?>((int) AiExcelField.AlarmHigh)
+                    Low = Convert.ToDouble(row.Field<object>((int)AiExcelField.AlarmLow)),
+                    High = Convert.ToDouble(row.Field<object>((int)AiExcelField.AlarmHigh))
                 };
                 ai.Blocking = new RangePair
                 {
-                    Low = row.Field<double?>((int) AiExcelField.BlockLow),
-                    High = row.Field<double?>((int) AiExcelField.BlockHigh)
+                    Low = Convert.ToDouble(row.Field<object>((int)AiExcelField.BlockLow)),
+                    High = Convert.ToDouble(row.Field<object>((int)AiExcelField.BlockHigh))
                 };
 
-                ai.Note = row.Field<string>((int)AiExcelField.Note);
-
-                ai.GroupId = Convert.ToInt32(row.Field<double?>((int)AiExcelField.GroupId));
+                ai.Note = Convert.ToString(row.Field<object>((int)AiExcelField.Note));
+                ai.GroupId = Convert.ToInt32(row.Field<object>((int)AiExcelField.GroupId));
                 return ai;
             }
             catch (Exception e)
-            {
-                throw new Exception("ToAiPosition", e);
+            {                
+                return null;
             }
         }
         
@@ -106,30 +110,22 @@ namespace MPT.Positions
             if (row == null)
                 return null;
 
-            /*
-            var maxIndex = (int)Enum.GetValues(typeof(AiField)).Cast<AiField>().Max();
-
-            if (row.ItemArray.Length < maxIndex)
-                throw new IndexOutOfRangeException("row length");
-            */
-
             try
             {
-                var number = row.Field<double?>((int)AoExcelField.Number);
-                var name = row.Field<string>((int)AoExcelField.Name);
-                if (number == null || string.IsNullOrWhiteSpace(name))
+                var number = row.Field<object>((int)AoExcelField.Number);
+                var name = row.Field<object>((int)AoExcelField.Name);
+                if (number == null || name == null)
                     return null;
 
                 // ReSharper disable once UseObjectOrCollectionInitializer
                 var aoPosition = new AoPosition();
                 aoPosition.Number = Convert.ToInt32(number);
-                aoPosition.Name = name;
-                aoPosition.Description = row.Field<string>((int)AoExcelField.Description);
+                aoPosition.Name = Convert.ToString(name);
+                aoPosition.Description = Convert.ToString(row.Field<object>((int)AoExcelField.Description));
 
                 try
                 {
-                    var aiNumStr = row.Field<double?>((int)AoExcelField.AiNum);
-                    aoPosition.AiNum = Convert.ToInt32(aiNumStr);
+                    aoPosition.AiNum = Convert.ToInt32(row.Field<object>((int)AoExcelField.AiNum));
                 }
                 catch (Exception)
                 {
@@ -138,30 +134,22 @@ namespace MPT.Positions
 
                 try
                 {
-                    var aoTypeString = row.Field<string>((int)AoExcelField.AoType);
+                    var aoTypeString = Convert.ToString(row.Field<object>((int)AoExcelField.AoType));
                     aoPosition.AoType = aoTypeString.OnlyLetterAndDigit().ToEnum<AoPosition.AoTypeEnum>();
                 }
                 catch
                 {
                     aoPosition.AoType = default(AoPosition.AoTypeEnum);
                 }
-                
-                aoPosition.Note = row.Field<string>((int)AoExcelField.Note);
 
-                try
-                {
-                    aoPosition.GroupId = Convert.ToInt32(row.Field<double?>((int)AoExcelField.GroupId));
-                }
-                catch (Exception)
-                {
-                    aoPosition.GroupId = 0;
-                }
-                
+                aoPosition.Note = Convert.ToString(row.Field<object>((int)AoExcelField.Note));
+                aoPosition.GroupId = Convert.ToInt32(row.Field<object>((int)AoExcelField.GroupId));
                 return aoPosition;
             }
             catch (Exception e)
             {
-                throw new Exception("ToAoPosition", e);
+                //throw new Exception("ToAoPosition", e);
+                return null;
             }
         }
         
@@ -185,25 +173,27 @@ namespace MPT.Positions
 
             try
             {
-                var number = row.Field<double?>((int)DioExcelField.Number);
-                var name = row.Field<string>((int)DioExcelField.Name);
-                if (number == null || string.IsNullOrWhiteSpace(name))
+                var number = row.Field<object>((int)DioExcelField.Number);
+                var name = row.Field<object>((int)DioExcelField.Name);
+                if (number == null || name == null)
                     return null;
 
-                // ReSharper disable once UseObjectOrCollectionInitializer
-                var dioPosition = new DioPosition();
-                dioPosition.Number = Convert.ToInt32(number);
-                dioPosition.Name = name;
-                dioPosition.Description = row.Field<string>((int)DioExcelField.Description);
-                dioPosition.AlarmText = row.Field<string>((int)DioExcelField.AlarmText);
-                dioPosition.NormValue = Convert.ToBoolean(row.Field<double?>((int)DioExcelField.NormValue));
-                dioPosition.IsAlarm = Convert.ToBoolean(row.Field<double?>((int)DioExcelField.IsAlarm));
-                dioPosition.GroupId = Convert.ToInt32(row.Field<double?>((int)DioExcelField.GroupId));
+                var dioPosition = new DioPosition
+                {
+                    Number =        Convert.ToInt32(number),
+                    Name =          Convert.ToString(name),
+                    Description =   Convert.ToString(row.Field<object>((int) DioExcelField.Description)),
+                    AlarmText =     Convert.ToString(row.Field<object>((int) DioExcelField.AlarmText)),
+                    NormValue =     Convert.ToBoolean(row.Field<object>((int) DioExcelField.NormValue)),
+                    IsAlarm =       Convert.ToBoolean(row.Field<object>((int) DioExcelField.IsAlarm)),
+                    GroupId =       Convert.ToInt32(row.Field<object>((int) DioExcelField.GroupId))
+                };
                 return dioPosition;
             }
             catch (Exception e)
             {
-                throw new Exception("ToDioPosition", e);
+                //throw new Exception("ToDioPosition", e);
+                return null;
             }
         }
 
@@ -222,21 +212,22 @@ namespace MPT.Positions
 
             try
             {
-                var number = row.Field<double?>((int) MessageExcelField.Number);
-                var text = row.Field<string>((int) MessageExcelField.Text);
-                if (number == null || string.IsNullOrWhiteSpace(text))
+                var number = row.Field<object>((int) MessageExcelField.Number);
+                var text = row.Field<object>((int) MessageExcelField.Text);
+                if (number == null || text == null)
                     return null;
 
                 var plcMessage = new PlcMessage()
                 {
                     Number = Convert.ToInt32(number),
-                    Text = text,
+                    Text = Convert.ToString(text),
                 };
                 return plcMessage;
             }
             catch (Exception e)
             {
-                throw new Exception("ToPlcMessage", e);
+                //throw new Exception("ToPlcMessage", e);
+                return null;
             }
         }
     }

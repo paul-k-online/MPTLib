@@ -35,12 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\ExcelDataReader.2.1.2.3\lib\net20\Excel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="Ionic.Zip, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Webmpt.NET\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -78,6 +74,8 @@
     <Compile Include="OtherTest.cs" />
     <Compile Include="WorkSchedule\WorkScheduleTest.cs" />
     <Compile Include="TreeNodeTest.cs" />
+    <Compile Include="Xml\Xpath\XPathTest.cs" />
+    <Compile Include="ZipTest\UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MptLib\MptLib.csproj">
@@ -99,7 +97,9 @@
     <None Include="_TestData\101_PP23\101_pp23-Tags.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\ExcelFile\101_PP23.xls" />
+    <None Include="_TestData\ExcelFile\101_PP23.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="_TestData\ExcelFile\102_KMP2.xlsx" />
     <None Include="_TestData\ExcelFile\102_Polymer.xlsx" />
     <None Include="_TestData\ExcelFile\104_MAF.xls" />
