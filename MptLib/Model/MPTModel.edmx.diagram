@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6024ef713c9d46b2b761b860a5df3b55" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="MPTModel.PlcEventCode" Width="1.5" PointX="6.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcEvent" Width="1.5" PointX="4" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PcEvent" Width="1.5" PointX="6.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcEventsOld" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.Factory" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcMessage" Width="1.5" PointX="6.375" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PcEventIgnoreWord" Width="1.5" PointX="10.125" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PLC" Width="1.5" PointX="3.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PLCDescription" Width="1.5" PointX="5.375" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PLC_TO" Width="1.5" PointX="3.125" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.Project" Width="1.5" PointX="2.125" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.Workstation" Width="1.5" PointX="4.25" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="MPTModel.FK_Events_PLC" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_EventsOld_PLC" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_PLC_Factory" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_Project_Factory" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_Messages_PLC" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_PLC_Description_PLC" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_PLC_TO_PLC" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_Workstation_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="MPTModel.FK_Events_Pc_Workstation" />
+        <AssociationConnector Association="MPTModel.FK_Events_Codes" />
+        <EntityTypeShape EntityType="MPTModel.Ws_Data" Width="1.5" PointX="8.25" PointY="11.75" />
+        <AssociationConnector Association="MPTModel.FK_Ws_Data_Workstation" />
+        <AssociationConnector Association="MPTModel.PlcMessagePlcEvent" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

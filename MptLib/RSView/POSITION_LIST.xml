@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<POSITION_LIST>
+  <ANALOG_POSITION>
+    <TAG type="D" folder="AI/{SHORTNAME}" name="EN" dataSource="D" address="{LOGIXAI}.EN"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="current" description="Ток" min="0" max="20" units="мА" dataSource="D" address="{LOGIXAI}.i"/>  
+    <TAG type="A" folder="AI/{SHORTNAME}" name="value" description="{FullName}" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="D" address="{LOGIXAI}.v">
+        <DATALOG name ="DLG_SEC"/>
+    </TAG>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="valueAvr" description="{FullName}" dataSource="D" address="{LOGIXAI}.vAvr">
+        <DATALOG name ="DLG_MIN"/>
+    </TAG>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="bMin" description="Блокировка по MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{BLOKING.LOW}"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="bMax" description="Блокировка по MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{BLOKING.HIGH}"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="sMin" description="Сигнализация MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.LOW}"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="sMax" description="Сигнализация MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.HIGH}"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="rMin" description="Регламент MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.LOW}"/>
+    <TAG type="A" folder="AI/{SHORTNAME}" name="rMax" description="Регламент MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.HIGH}"/>
+  
+
+    <STR_TAG_AI_BMAX>"A","AI\%POSITION%\bMax","Блокировка по MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMAX>
+    <STR_TAG_AI_BMIN>"A","AI\%POSITION%\bMin","Блокировка по MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMIN>
+    <STR_TAG_AI_SMAX>"A","AI\%POSITION%\sMax","Сигнализация MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMAX>
+    <STR_TAG_AI_SMIN>"A","AI\%POSITION%\sMin","Сигнализация MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMIN>
+    <STR_TAG_AI_RMAX>"A","AI\%POSITION%\rMax","Регламент MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMAX>
+    <STR_TAG_AI_RMIN>"A","AI\%POSITION%\rMin","Регламент MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMIN>
+    <STR_TAG_AI_NAN>"D","AI\%POSITION%\NAN","Состояние по обрыву","F","D","*","T","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","AI[%POS_NUMBER%].Break.sgn","A",,,,,,</STR_TAG_AI_NAN>
+    <STR_TAG_AI_I>"A","AI\%POSITION%\i","Ток/Напряжение","F","D","*","F","F","D","L",-50,50,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].i","A",,,,,,</STR_TAG_AI_I>
+    <STR_TAG_AI_VAL>"A","AI\%POSITION%\v","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].v","A",,,,,,</STR_TAG_AI_VAL>
+    <STR_TAG_AI_TMIN>"A","AI\%POSITION%\vAvr","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].vAvr","A",,,,,,</STR_TAG_AI_TMIN>
+    <STR_TAG_AI_DESC>"S","AI\%POSITION%\Name","%DESCRIPTION%","F","M","*","F","F",,,,,,,,,,,,,200,"%POSITION_REG%",,,,,,,,,</STR_TAG_AI_DESC>
+    <STR_TAG_AI_STATE>"A","AI\%POSITION%\State","%POS_DESCRIPTION%","F","D","*","T","F","D","F",0.0,8.0,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].State","A",,,,,,</STR_TAG_AI_STATE>
+
+    <STR_TAG_SEL>"D","SEL\s%POS_NUMBER_INC%","AI\%POSITION%","F","M","*","F","F",,,,,,,,,,"Off","On","Off",,,,,,,,,,,</STR_TAG_SEL>
+    <STR_TAG_SEL_S>"S","SEL\s%POS_NUMBER_INC%s","","F","M","*","F","F",,,,,,,,,,,,,100,"%POS_DESCRIPTION_ALIGN%",,,,,,,,,</STR_TAG_SEL_S>
+
+
+  </ANALOG_POSITION>
+
+  <DIGITAL_TAGS>
+    <STR_TAG_DIO_FOLDER>"F","DIO\%POSITION%","","F"</STR_TAG_DIO_FOLDER>
+    <STR_TAG_DIO_VALUE>"D","DIO\%POSITION%\v","%POS_DESCRIPTION%","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","DIO[%POS_NUMBER%].v","A",,,,,,</STR_TAG_DIO_VALUE>
+    <STR_TAG_DIO_STATE>"A","DIO\%POSITION%\State","%POS_DESCRIPTION%","F","D","*","T","F","D","F",0.0,8.0,0,1,0,0,"",,,,,,"%NODE%","DIO[%POS_NUMBER%].State","A",,,,,,</STR_TAG_DIO_STATE>
+  </DIGITAL_TAGS>
+  <REGUL_TAGS>
+    <STR_CREATE_FOLDER_REGUL>"F","AO\%POSITION%","","F"</STR_CREATE_FOLDER_REGUL>
+    <STR_REGUL_1>"A","AO\%POSITION%\Enter","Ввод задания (=1) или выхода (=2) с клавиатуры","F","M","*","F","F","D","L",0,10,0,1,0,0,"",,,,,,,,,,,,,,</STR_REGUL_1>
+    <STR_REGUL_2>"A","AO\%POSITION%\PV","%PV_DESC%","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].PV","A",,,,,,</STR_REGUL_2>
+    <STR_REGUL_3>"A","AO\%POSITION%\ScaleMax","Шкала максимум","F","D","*","F","F","D","L",0,50000,5000,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMax","A",,,,,,</STR_REGUL_3>
+    <STR_REGUL_4>"A","AO\%POSITION%\ScaleMin","Шкала минимум","F","D","*","F","F","D","L",0,50000,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMin","A",,,,,,</STR_REGUL_4>
+    <STR_REGUL_5>"D","AO\%POSITION%\Mode","Режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].mode","A",,,,,,</STR_REGUL_5>
+    <STR_REGUL_6>"D","AO\%POSITION%\set_mode","Установить режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnMode","A",,,,,,</STR_REGUL_6>
+    <STR_REGUL_7>"A","AO\%POSITION%\k_Kp","Коэф. Kp","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Kp","A",,,,,,</STR_REGUL_7>
+    <STR_REGUL_8>"A","AO\%POSITION%\k_Td","Коэф. Td","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Td","A",,,,,,</STR_REGUL_8>
+    <STR_REGUL_9>"A","AO\%POSITION%\k_Ti","Коэф. Ti","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Ti","A",,,,,,</STR_REGUL_9>
+    <STR_REGUL_10>"A","AO\%POSITION%\set_k_kp","Установить коэф. Kp","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Kp","A",,,,,,</STR_REGUL_10>
+    <STR_REGUL_11>"A","AO\%POSITION%\set_k_td","Установить коэф. Td","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Td","A",,,,,,</STR_REGUL_11>
+    <STR_REGUL_12>"A","AO\%POSITION%\set_k_ti","Установить коэф. Ti","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Ti","A",,,,,,</STR_REGUL_12>
+    <STR_REGUL_13>"D","AO\%POSITION%\set_koeff_btn","Apply koeff","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSetKoeff","A",,,,,,</STR_REGUL_13>
+    <STR_REGUL_14>"A","AO\%POSITION%\SO","Выход регуятора (положение клапана)","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].SO","A",,,,,,</STR_REGUL_14>
+    <STR_REGUL_15>"A","AO\%POSITION%\set_SO","Установить выход регуятора (положение клапана)","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setSO","A",,,,,,</STR_REGUL_15>
+    <STR_REGUL_16>"D","AO\%POSITION%\SO_minus","SO- Выход минус","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSOminus","A",,,,,,</STR_REGUL_16>
+    <STR_REGUL_17>"D","AO\%POSITION%\SO_plus","SO+ Выход плюс","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSOplus","A",,,,,,</STR_REGUL_17>
+    <STR_REGUL_18>"A","AO\%POSITION%\SP","Задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].SP","A",,,,,,</STR_REGUL_18>
+    <STR_REGUL_19>"A","AO\%POSITION%\set_SP","Установить задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setSP","A",,,,,,</STR_REGUL_19>
+    <STR_REGUL_20>"D","AO\%POSITION%\SP_minus","SP- Задание минус","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPminus","A",,,,,,</STR_REGUL_20>
+    <STR_REGUL_21>"D","AO\%POSITION%\SP_plus","SP+ Задание плюс","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPplus","A",,,,,,</STR_REGUL_21>
+    <STR_REGUL_22>"D","AO\%POSITION%\SPPV","Тип клапана: 0 - SP-PV (НЗ), 1- PV-SP (НО)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].sppv","A",,,,,,</STR_REGUL_22>
+    <STR_REGUL_23>"D","AO\%POSITION%\set_SPPV","Установить тип клапана","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSpPv","A",,,,,,</STR_REGUL_23>
+    <STR_REGUL_24>"D","AO\%POSITION%\casc","Cascade PID control (1-cascad on; 0-cascad off)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].casc","A",,,,,,</STR_REGUL_24>
+  </REGUL_TAGS>
+  <ALARMS>
+    <STR_ALM_D_NAN>"D","AI\%POSITION%\NAN","ON","%POSITION_NAN_DESC%","5","S","","","S","","","S","","","","","","N","","N"</STR_ALM_D_NAN>
+    <STR_ALM_A_STATE>"A","AI\%POSITION%\State","","N","","N",0,"A","","","","","S","","","S","C","1.5","%POSITION_BMIN_DESC%","S","","","D","1","C","2.5","%POSITION_SMIN_DESC%","S","","","D","1","C","3.5","%POSITION_RMIN_DESC%","S","","","D","1","C","4.5","%POSITION_RMAX_DESC%","S","","","I","1","C","5.5","%POSITION_SMAX_DESC%","S","","","I","1","C","6.5","%POSITION_BMAX_DESC%","S","","","I","1","","","","S","","","","","","","","S","","","",""</STR_ALM_A_STATE>
+    <STR_ALM_DIO_STATE>"A","DIO\%POSITION%\State","","N","","N",0,"A","","","","","S","","","S","C","3.5","%DIO_SGN_DESCR%","S","","","D","1","C","4.5","%DIO_BLOCK_DESCR%","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1"</STR_ALM_DIO_STATE>
+    <!--<STR_ALM_DIO>"D","DIO\%POSITION%\v","%DIO_SGN%","%DIO_SGN_DESCR%","1","S","","","S","","","S","","","","","","N","","N"</STR_ALM_DIO>-->
+  </ALARMS>
+  <DATALOGGERS>
+    <STR_DLG_SEC>"AI\%POSITION%\v","Dlg_sec"</STR_DLG_SEC>
+    <STR_DLG_MIN>"AI\%POSITION%\vAvr","Dlg_min"</STR_DLG_MIN>
+    <STR_DLG_DIO>"DIO\%POSITION%\v","Dlg_dio"</STR_DLG_DIO>
+    <STR_DLG_PID_1>"AO\%POSITION%\Mode","Dlg_PID"</STR_DLG_PID_1>
+    <STR_DLG_PID_2>"AO\%POSITION%\SP","Dlg_PID"</STR_DLG_PID_2>
+    <STR_DLG_PID_3>"AO\%POSITION%\SO","Dlg_PID"</STR_DLG_PID_3>
+    <STR_DLG_PID_4>"AO\%POSITION%\PV","Dlg_PID"</STR_DLG_PID_4>
+  </DATALOGGERS>
+</POSITION_LIST>

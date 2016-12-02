@@ -1,0 +1,975 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MPTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Codes">
+          <Key>
+            <PropertyRef Name="CodeId" />
+          </Key>
+          <Property Name="CodeId" Type="int" Nullable="false" />
+          <Property Name="CodeDescr" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Severity" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlcId" Type="int" Nullable="false" />
+          <Property Name="LogPos" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="msec" Type="int" Nullable="false" />
+          <Property Name="n" Type="int" Nullable="false" />
+          <Property Name="s" Type="int" Nullable="false" />
+          <Property Name="v" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Events_Pc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Workstation_id" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventsOld">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlcId" Type="int" Nullable="false" />
+          <Property Name="LogPos" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Msec" Type="int" Nullable="false" />
+          <Property Name="n" Type="int" Nullable="false" />
+          <Property Name="v" Type="real" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Factory">
+          <Key>
+            <PropertyRef Name="FactoryId" />
+          </Key>
+          <Property Name="FactoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Descr" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Enable" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="PlcID" />
+            <PropertyRef Name="MessageNum" />
+          </Key>
+          <Property Name="PlcID" Type="int" Nullable="false" />
+          <Property Name="MessageNum" Type="int" Nullable="false" />
+          <Property Name="MessageText" Type="nvarchar" MaxLength="255" />
+          <Property Name="MessageGroup" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PcEventIgnoreWords">
+          <Key>
+            <PropertyRef Name="Word" />
+          </Key>
+          <Property Name="Word" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Enable" Type="tinyint" Nullable="false" />
+          <Property Name="Level" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLC">
+          <Key>
+            <PropertyRef Name="PlcId" />
+          </Key>
+          <Property Name="PlcId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Descr" Type="nvarchar" MaxLength="255" />
+          <Property Name="PlcTypeId" Type="int" />
+          <Property Name="FactoryId" Type="int" />
+          <Property Name="Topic" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProtocolType" Type="int" />
+          <Property Name="LastEventIndex" Type="int" />
+          <Property Name="LastEventDateTime" Type="datetime" />
+          <Property Name="LastEventMsec" Type="int" />
+          <Property Name="Faults" Type="int" />
+          <Property Name="href" Type="nvarchar" MaxLength="255" />
+          <Property Name="OpcDataLoggerId" Type="int" />
+          <Property Name="PositionNumber" Type="int" Nullable="false" />
+          <Property Name="Disassembled" Type="bit" />
+        </EntityType>
+        <EntityType Name="PLC_Description">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="NameFull" Type="nvarchar(max)" />
+          <Property Name="Position" Type="nvarchar" MaxLength="32" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="32" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="Inn" Type="nvarchar" MaxLength="32" />
+          <Property Name="DateBegin" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PLC_TO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlcId" Type="int" Nullable="false" />
+          <Property Name="DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="255" />
+          <Property Name="Version" Type="nvarchar" MaxLength="45" />
+          <Property Name="IDE" Type="nvarchar" MaxLength="45" />
+          <Property Name="Descr" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="FactoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workstation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Factory_id" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Project_Id" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="128" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" />
+          <Property Name="IP" Type="nvarchar" MaxLength="15" />
+          <Property Name="Enable" Type="tinyint" Nullable="false" />
+          <Property Name="WorkstationName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MAC" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Ws_Data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="workstation_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="bigint" Nullable="false" />
+          <Property Name="active_window" Type="nvarchar" MaxLength="200" />
+          <Property Name="work_time" Type="nvarchar" MaxLength="45" />
+          <Property Name="activity" Type="nvarchar" MaxLength="64" />
+          <Property Name="CPU" Type="bigint" Nullable="false" />
+          <Property Name="MB" Type="bigint" Nullable="false" />
+          <Property Name="HDD" Type="bigint" Nullable="false" />
+          <Property Name="GPU" Type="bigint" Nullable="false" />
+          <Property Name="Fan" Type="bigint" Nullable="false" />
+          <Property Name="GPUFan" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Events_Codes">
+          <End Role="Codes" Type="Self.Codes" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Codes">
+              <PropertyRef Name="CodeId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="s" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Pc_Workstation">
+          <End Role="Workstation" Type="Self.Workstation" Multiplicity="1" />
+          <End Role="Events_Pc" Type="Self.Events_Pc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workstation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events_Pc">
+              <PropertyRef Name="Workstation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="PlcId" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventsOld_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="EventsOld" Type="Self.EventsOld" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="PlcId" />
+            </Principal>
+            <Dependent Role="EventsOld">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="PlcId" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="PlcID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_Description_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="PLC_Description" Type="Self.PLC_Description" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="PlcId" />
+            </Principal>
+            <Dependent Role="PLC_Description">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_Factory">
+          <End Role="Factory" Type="Self.Factory" Multiplicity="0..1" />
+          <End Role="PLC" Type="Self.PLC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factory">
+              <PropertyRef Name="FactoryId" />
+            </Principal>
+            <Dependent Role="PLC">
+              <PropertyRef Name="FactoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_TO_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="PLC_TO" Type="Self.PLC_TO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="PlcId" />
+            </Principal>
+            <Dependent Role="PLC_TO">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Factory">
+          <End Role="Factory" Type="Self.Factory" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factory">
+              <PropertyRef Name="FactoryId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="FactoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workstation_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Workstation" Type="Self.Workstation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workstation">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ws_Data_Workstation">
+          <End Role="Workstation" Type="Self.Workstation" Multiplicity="1" />
+          <End Role="Ws_Data" Type="Self.Ws_Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workstation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ws_Data">
+              <PropertyRef Name="workstation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetPlcEventsCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="Severity" Type="smallint" Mode="In" />
+        </Function>
+        <EntityContainer Name="MPTModelStoreContainer">
+          <EntitySet Name="Codes" EntityType="Self.Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events_Pc" EntityType="Self.Events_Pc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventsOld" EntityType="Self.EventsOld" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factory" EntityType="Self.Factory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC" EntityType="Self.PLC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC_Description" EntityType="Self.PLC_Description" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC_TO" EntityType="Self.PLC_TO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workstation" EntityType="Self.Workstation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ws_Data" EntityType="Self.Ws_Data" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Events_Codes" Association="Self.FK_Events_Codes">
+            <End Role="Codes" EntitySet="Codes" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Pc_Workstation" Association="Self.FK_Events_Pc_Workstation">
+            <End Role="Workstation" EntitySet="Workstation" />
+            <End Role="Events_Pc" EntitySet="Events_Pc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_PLC" Association="Self.FK_Events_PLC">
+            <End Role="PLC" EntitySet="PLC" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventsOld_PLC" Association="Self.FK_EventsOld_PLC">
+            <End Role="PLC" EntitySet="PLC" />
+            <End Role="EventsOld" EntitySet="EventsOld" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_PLC" Association="Self.FK_Messages_PLC">
+            <End Role="PLC" EntitySet="PLC" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_Description_PLC" Association="Self.FK_PLC_Description_PLC">
+            <End Role="PLC" EntitySet="PLC" />
+            <End Role="PLC_Description" EntitySet="PLC_Description" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_Factory" Association="Self.FK_PLC_Factory">
+            <End Role="Factory" EntitySet="Factory" />
+            <End Role="PLC" EntitySet="PLC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_TO_PLC" Association="Self.FK_PLC_TO_PLC">
+            <End Role="PLC" EntitySet="PLC" />
+            <End Role="PLC_TO" EntitySet="PLC_TO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Factory" Association="Self.FK_Project_Factory">
+            <End Role="Factory" EntitySet="Factory" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workstation_Project" Association="Self.FK_Workstation_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Workstation" EntitySet="Workstation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ws_Data_Workstation" Association="Self.FK_Ws_Data_Workstation">
+            <End Role="Workstation" EntitySet="Workstation" />
+            <End Role="Ws_Data" EntitySet="Ws_Data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MPTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PlcEventCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Severity" Type="Int16" />
+          <NavigationProperty Name="PlcEvents" Relationship="MPTModel.FK_Events_Codes" FromRole="PlcEventCode" ToRole="PlcEvent" />
+        </EntityType>
+        <EntityType Name="PlcEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlcId" Type="Int32" Nullable="false" />
+          <Property Name="LogPos" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Msec" Type="Int32" Nullable="false" />
+          <Property Name="MessageNumber" Type="Int32" Nullable="false" />
+          <Property Name="CodeId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PLC" Relationship="Self.FK_Events_PLC" FromRole="Events" ToRole="PLC" />
+          <NavigationProperty Name="PlcEventCode" Relationship="MPTModel.FK_Events_Codes" FromRole="PlcEvent" ToRole="PlcEventCode" />
+          <NavigationProperty Name="PlcMessage" Relationship="MPTModel.PlcMessagePlcEvent" FromRole="PlcEvent" ToRole="PlcMessage" />
+        </EntityType>
+        <EntityType Name="PcEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkstationId" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Workstation" Relationship="MPTModel.FK_Events_Pc_Workstation" FromRole="PcEvents" ToRole="Workstation" />
+        </EntityType>
+        <EntityType Name="PlcEventsOld">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlcId" Type="Int32" Nullable="false" />
+          <Property Name="LogPos" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Msec" Type="Int32" Nullable="false" />
+          <Property Name="n" Type="Int32" Nullable="false" />
+          <Property Name="v" Type="Single" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PLC" Relationship="Self.FK_EventsOld_PLC" FromRole="EventsOld" ToRole="PLC" />
+        </EntityType>
+        <EntityType Name="Factory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Enable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PLCs" Relationship="Self.FK_PLC_Factory" FromRole="Factory" ToRole="PLC" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Factory" FromRole="Factory" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="PlcMessage">
+          <Key>
+            <PropertyRef Name="PlcId" />
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="PlcId" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Group" Type="Int16" />
+          <NavigationProperty Name="PLC" Relationship="Self.FK_Messages_PLC" FromRole="Messages" ToRole="PLC" />
+          <NavigationProperty Name="PlcEvents" Relationship="MPTModel.PlcMessagePlcEvent" FromRole="PlcMessage" ToRole="PlcEvent" />
+        </EntityType>
+        <EntityType Name="PcEventIgnoreWord">
+          <Key>
+            <PropertyRef Name="Word" />
+          </Key>
+          <Property Name="Word" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Enable" Type="Byte" Nullable="false" />
+          <Property Name="Level" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLC">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PlcTypeId" Type="Int32" />
+          <Property Name="FactoryId" Type="Int32" />
+          <Property Name="Topic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ProtocolType" Type="Int32" />
+          <Property Name="LastEventIndex" Type="Int32" />
+          <Property Name="LastEventDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastEventMsec" Type="Int32" />
+          <Property Name="Faults" Type="Int32" />
+          <Property Name="href" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OpcDataLoggerId" Type="Int32" />
+          <Property Name="PositionNumber" Type="Int32" Nullable="false" />
+          <Property Name="Disassembled" Type="Boolean" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_PLC" FromRole="PLC" ToRole="Events" />
+          <NavigationProperty Name="EventsOlds" Relationship="Self.FK_EventsOld_PLC" FromRole="PLC" ToRole="EventsOld" />
+          <NavigationProperty Name="Factory" Relationship="Self.FK_PLC_Factory" FromRole="PLC" ToRole="Factory" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_PLC" FromRole="PLC" ToRole="Messages" />
+          <NavigationProperty Name="PLC_Description" Relationship="Self.FK_PLC_Description_PLC" FromRole="PLC" ToRole="PLC_Description" />
+          <NavigationProperty Name="PLC_TO" Relationship="Self.FK_PLC_TO_PLC" FromRole="PLC" ToRole="PLC_TO" />
+        </EntityType>
+        <EntityType Name="PLCDescription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameFull" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="SerialNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Inn" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DateBegin" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PLC" Relationship="Self.FK_PLC_Description_PLC" FromRole="PLC_Description" ToRole="PLC" />
+        </EntityType>
+        <EntityType Name="PLC_TO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlcId" Type="Int32" Nullable="false" />
+          <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PLC" Relationship="Self.FK_PLC_TO_PLC" FromRole="PLC_TO" ToRole="PLC" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="IDE" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="FactoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Factory" Relationship="Self.FK_Project_Factory" FromRole="Project" ToRole="Factory" />
+          <NavigationProperty Name="Workstations" Relationship="Self.FK_Workstation_Project" FromRole="Project" ToRole="Workstation" />
+        </EntityType>
+        <EntityType Name="Workstation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FactoryId" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Enable" Type="Byte" Nullable="false" />
+          <Property Name="NetworkName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MAC" Type="Int64" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Workstation_Project" FromRole="Workstation" ToRole="Project" />
+          <NavigationProperty Name="Events_Pc" Relationship="MPTModel.FK_Events_Pc_Workstation" FromRole="Workstation" ToRole="PcEvents" />
+          <NavigationProperty Name="Ws_Data" Relationship="MPTModel.FK_Ws_Data_Workstation" FromRole="Workstation" ToRole="Ws_Data" />
+        </EntityType>
+        <Association Name="FK_Events_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="Events" Type="MPTModel.PlcEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventsOld_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="EventsOld" Type="MPTModel.PlcEventsOld" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventsOld">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_Factory">
+          <End Role="Factory" Type="Self.Factory" Multiplicity="0..1" />
+          <End Role="PLC" Type="Self.PLC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PLC">
+              <PropertyRef Name="FactoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Factory">
+          <End Role="Factory" Type="Self.Factory" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="FactoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="Messages" Type="MPTModel.PlcMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_Description_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="PLC_Description" Type="MPTModel.PLCDescription" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PLC_Description">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLC_TO_PLC">
+          <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
+          <End Role="PLC_TO" Type="Self.PLC_TO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLC">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PLC_TO">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workstation_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Workstation" Type="Self.Workstation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workstation">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MPTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PlcEventCodes" EntityType="MPTModel.PlcEventCode" />
+          <EntitySet Name="PlcEvents" EntityType="MPTModel.PlcEvent" />
+          <EntitySet Name="PcEvents" EntityType="MPTModel.PcEvent" />
+          <EntitySet Name="PlcEventsOlds" EntityType="MPTModel.PlcEventsOld" />
+          <EntitySet Name="Factories" EntityType="Self.Factory" />
+          <EntitySet Name="PlcMessages" EntityType="MPTModel.PlcMessage" />
+          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWord" />
+          <EntitySet Name="PLCs" EntityType="Self.PLC" />
+          <EntitySet Name="PLCDescriptions" EntityType="MPTModel.PLCDescription" />
+          <EntitySet Name="PLC_TOs" EntityType="Self.PLC_TO" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Workstations" EntityType="Self.Workstation" />
+          <AssociationSet Name="FK_Events_PLC" Association="Self.FK_Events_PLC">
+            <End Role="PLC" EntitySet="PLCs" />
+            <End Role="Events" EntitySet="PlcEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventsOld_PLC" Association="Self.FK_EventsOld_PLC">
+            <End Role="PLC" EntitySet="PLCs" />
+            <End Role="EventsOld" EntitySet="PlcEventsOlds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_Factory" Association="Self.FK_PLC_Factory">
+            <End Role="Factory" EntitySet="Factories" />
+            <End Role="PLC" EntitySet="PLCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Factory" Association="Self.FK_Project_Factory">
+            <End Role="Factory" EntitySet="Factories" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_PLC" Association="Self.FK_Messages_PLC">
+            <End Role="PLC" EntitySet="PLCs" />
+            <End Role="Messages" EntitySet="PlcMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_Description_PLC" Association="Self.FK_PLC_Description_PLC">
+            <End Role="PLC" EntitySet="PLCs" />
+            <End Role="PLC_Description" EntitySet="PLCDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLC_TO_PLC" Association="Self.FK_PLC_TO_PLC">
+            <End Role="PLC" EntitySet="PLCs" />
+            <End Role="PLC_TO" EntitySet="PLC_TOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workstation_Project" Association="Self.FK_Workstation_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Workstation" EntitySet="Workstations" />
+          </AssociationSet>
+          <FunctionImport Name="GetPlcEventsCount" ReturnType="Collection(MPTModel.GetPlcEventsCount_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="Severity" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <AssociationSet Name="FK_Events_Pc_Workstation" Association="MPTModel.FK_Events_Pc_Workstation">
+            <End Role="Workstation" EntitySet="Workstations" />
+            <End Role="PcEvents" EntitySet="PcEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Codes" Association="MPTModel.FK_Events_Codes">
+            <End Role="PlcEventCode" EntitySet="PlcEventCodes" />
+            <End Role="PlcEvent" EntitySet="PlcEvents" />
+          </AssociationSet>
+          <EntitySet Name="Ws_Data" EntityType="MPTModel.Ws_Data" />
+          <AssociationSet Name="FK_Ws_Data_Workstation" Association="MPTModel.FK_Ws_Data_Workstation">
+            <End Role="Workstation" EntitySet="Workstations" />
+            <End Role="Ws_Data" EntitySet="Ws_Data" />
+          </AssociationSet>
+          <AssociationSet Name="PlcMessagePlcEvent" Association="MPTModel.PlcMessagePlcEvent">
+            <End Role="PlcMessage" EntitySet="PlcMessages" />
+            <End Role="PlcEvent" EntitySet="PlcEvents" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="GetPlcEventsCount_Result">
+          <Property Type="Int32" Name="PlcId" Nullable="false" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="Int32" Name="AlarmCount" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK_Events_Pc_Workstation">
+          <End Type="MPTModel.Workstation" Role="Workstation" Multiplicity="1" />
+          <End Type="MPTModel.PcEvent" Role="PcEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workstation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PcEvents">
+              <PropertyRef Name="WorkstationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Codes">
+          <End Type="MPTModel.PlcEventCode" Role="PlcEventCode" Multiplicity="1" />
+          <End Type="MPTModel.PlcEvent" Role="PlcEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlcEventCode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlcEvent">
+              <PropertyRef Name="CodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ws_Data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkstationId" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int64" Nullable="false" />
+          <Property Name="active_window" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="work_time" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="activity" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CPU" Type="Int64" Nullable="false" />
+          <Property Name="MB" Type="Int64" Nullable="false" />
+          <Property Name="HDD" Type="Int64" Nullable="false" />
+          <Property Name="GPU" Type="Int64" Nullable="false" />
+          <Property Name="Fan" Type="Int64" Nullable="false" />
+          <Property Name="GPUFan" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Workstation" Relationship="MPTModel.FK_Ws_Data_Workstation" FromRole="Ws_Data" ToRole="Workstation" />
+        </EntityType>
+        <Association Name="FK_Ws_Data_Workstation">
+          <End Type="MPTModel.Workstation" Role="Workstation" Multiplicity="1" />
+          <End Type="MPTModel.Ws_Data" Role="Ws_Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workstation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ws_Data">
+              <PropertyRef Name="WorkstationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PlcMessagePlcEvent">
+          <End Type="MPTModel.PlcMessage" Role="PlcMessage" Multiplicity="1" />
+          <End Type="MPTModel.PlcEvent" Role="PlcEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlcMessage">
+              <PropertyRef Name="PlcId" />
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="PlcEvent">
+              <PropertyRef Name="PlcId" />
+              <PropertyRef Name="MessageNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MPTModelStoreContainer" CdmEntityContainer="MPTEntities">
+          <EntitySetMapping Name="PlcEventCodes">
+            <EntityTypeMapping TypeName="MPTModel.PlcEventCode">
+              <MappingFragment StoreEntitySet="Codes">
+                <ScalarProperty Name="Id" ColumnName="CodeId" />
+                <ScalarProperty Name="Text" ColumnName="CodeDescr" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlcEvents">
+            <EntityTypeMapping TypeName="MPTModel.PlcEvent">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Id" ColumnName="EventId" />
+                <ScalarProperty Name="PlcId" ColumnName="PlcId" />
+                <ScalarProperty Name="LogPos" ColumnName="LogPos" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Msec" ColumnName="msec" />
+                <ScalarProperty Name="MessageNumber" ColumnName="n" />
+                <ScalarProperty Name="CodeId" ColumnName="s" />
+                <ScalarProperty Name="Value" ColumnName="v" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PcEvents">
+            <EntityTypeMapping TypeName="MPTModel.PcEvent">
+              <MappingFragment StoreEntitySet="Events_Pc">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateTime" ColumnName="Time" />
+                <ScalarProperty Name="Message" ColumnName="Text" />
+                <ScalarProperty Name="WorkstationId" ColumnName="Workstation_id" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlcEventsOlds">
+            <EntityTypeMapping TypeName="MPTModel.PlcEventsOld">
+              <MappingFragment StoreEntitySet="EventsOld">
+                <ScalarProperty Name="Id" ColumnName="EventId" />
+                <ScalarProperty Name="PlcId" ColumnName="PlcId" />
+                <ScalarProperty Name="LogPos" ColumnName="LogPos" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Msec" ColumnName="Msec" />
+                <ScalarProperty Name="n" ColumnName="n" />
+                <ScalarProperty Name="v" ColumnName="v" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factories">
+            <EntityTypeMapping TypeName="MPTModel.Factory">
+              <MappingFragment StoreEntitySet="Factory">
+                <ScalarProperty Name="Id" ColumnName="FactoryId" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Description" ColumnName="Descr" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlcMessages">
+            <EntityTypeMapping TypeName="MPTModel.PlcMessage">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="PlcId" ColumnName="PlcID" />
+                <ScalarProperty Name="Number" ColumnName="MessageNum" />
+                <ScalarProperty Name="Text" ColumnName="MessageText" />
+                <ScalarProperty Name="Group" ColumnName="MessageGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PcEventIgnoreWords">
+            <EntityTypeMapping TypeName="MPTModel.PcEventIgnoreWord">
+              <MappingFragment StoreEntitySet="PcEventIgnoreWords">
+                <ScalarProperty Name="Word" ColumnName="Word" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLCs">
+            <EntityTypeMapping TypeName="MPTModel.PLC">
+              <MappingFragment StoreEntitySet="PLC">
+                <ScalarProperty Name="Id" ColumnName="PlcId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Descr" />
+                <ScalarProperty Name="PlcTypeId" ColumnName="PlcTypeId" />
+                <ScalarProperty Name="FactoryId" ColumnName="FactoryId" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="ProtocolType" ColumnName="ProtocolType" />
+                <ScalarProperty Name="LastEventIndex" ColumnName="LastEventIndex" />
+                <ScalarProperty Name="LastEventDateTime" ColumnName="LastEventDateTime" />
+                <ScalarProperty Name="LastEventMsec" ColumnName="LastEventMsec" />
+                <ScalarProperty Name="Faults" ColumnName="Faults" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="OpcDataLoggerId" ColumnName="OpcDataLoggerId" />
+                <ScalarProperty Name="PositionNumber" ColumnName="PositionNumber" />
+                <ScalarProperty Name="Disassembled" ColumnName="Disassembled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLCDescriptions">
+            <EntityTypeMapping TypeName="MPTModel.PLCDescription">
+              <MappingFragment StoreEntitySet="PLC_Description">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameFull" ColumnName="NameFull" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="Inn" ColumnName="Inn" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLC_TOs">
+            <EntityTypeMapping TypeName="MPTModel.PLC_TO">
+              <MappingFragment StoreEntitySet="PLC_TO">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlcId" ColumnName="PlcId" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="MPTModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="ProjectName" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="IDE" ColumnName="IDE" />
+                <ScalarProperty Name="Description" ColumnName="Descr" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="FactoryId" ColumnName="FactoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workstations">
+            <EntityTypeMapping TypeName="MPTModel.Workstation">
+              <MappingFragment StoreEntitySet="Workstation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FactoryId" ColumnName="Factory_id" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ProjectId" ColumnName="Project_Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="NetworkName" ColumnName="WorkstationName" />
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPlcEventsCount" FunctionName="MPTModel.Store.GetPlcEventsCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MPTModel.GetPlcEventsCount_Result">
+                <ScalarProperty Name="PlcId" ColumnName="PlcId" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="AlarmCount" ColumnName="AlarmCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Ws_Data">
+            <EntityTypeMapping TypeName="MPTModel.Ws_Data">
+              <MappingFragment StoreEntitySet="Ws_Data">
+                <ScalarProperty Name="GPUFan" ColumnName="GPUFan" />
+                <ScalarProperty Name="Fan" ColumnName="Fan" />
+                <ScalarProperty Name="GPU" ColumnName="GPU" />
+                <ScalarProperty Name="HDD" ColumnName="HDD" />
+                <ScalarProperty Name="MB" ColumnName="MB" />
+                <ScalarProperty Name="CPU" ColumnName="CPU" />
+                <ScalarProperty Name="activity" ColumnName="activity" />
+                <ScalarProperty Name="work_time" ColumnName="work_time" />
+                <ScalarProperty Name="active_window" ColumnName="active_window" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="WorkstationId" ColumnName="workstation_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
