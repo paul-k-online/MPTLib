@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.IO;
 using System.Text;
@@ -20,8 +21,10 @@ namespace MPT.RSView
             get { return string.IsNullOrWhiteSpace(NodeName); }
         }
 
-        public string NodeName;
-        public string Address;
+        public string NodeName = null;
+        public string Address = null;
+
+        public HashSet<string> Datalog = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
     }
 
     public class StringTag : Tag

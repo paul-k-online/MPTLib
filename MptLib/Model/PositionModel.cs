@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+
 
 namespace MPT.Model
 {
@@ -55,7 +55,7 @@ namespace MPT.Model
         
         public override string ToString()
         {
-            return FullName;
+            return Name;
         }
     }
 
@@ -97,36 +97,6 @@ namespace MPT.Model
         }
 
 
-        //protected static Regex NameRegex = new Regex(@" ^ ((?<prefix>\d?)[\.-_\s])? (?<letters>\a+)[\.-_\s]? (?<digits>[\d\/-_]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
-        protected static Regex NameRegex = new Regex(@"^  ((?<Prefix>\d+)[\.-_%])?   (?<Letters>[A-Za-z]+)([-_\.]?)(?<Digits>[\d\/]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// буквенный шифр
-        /// </summary>
-        public string Letters
-        {
-            get
-            {
-                var m = NameRegex.Match(Name);
-                return m.Groups["Letters"].Value;
-
-                //var n = Name.IndexOf('-');
-                //return Name.Substring(0, n);
-            }
-        }
-
-        /// <summary>
-        /// только тип и цифры
-        /// </summary>
-        public string ShortName
-        {
-            get
-            {
-                //return Name.Replace(Letters, Letters[0].ToString()); 
-                var l = Letters;
-                return string.IsNullOrWhiteSpace(l) ? Name : Name.Replace(l, l[0].ToString());
-            }
-        }
 
         /*
         public void CopyFrom(AiPosition pos)

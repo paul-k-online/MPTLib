@@ -215,9 +215,10 @@
     </Compile>
     <Compile Include="RSLogix\PositionExtension.cs" />
     <Compile Include="RSView\AnalogTag.cs" />
+    <Compile Include="RSView\AiPositionExt.cs" />
     <Compile Include="RSView\DigitalTag.cs" />
     <Compile Include="RSView\PositionConvertDefault.cs" />
-    <Compile Include="RSView\Xml\AiPositionConvert.cs" />
+    <Compile Include="RSView\Xml\PositionConvert.cs" />
     <Compile Include="RSView\Csv\AlarmMessage.cs" />
     <Compile Include="RSView\Csv\DataLog.cs" />
     <Compile Include="RSView\Csv\DigitalAlarm.cs" />
@@ -233,7 +234,7 @@
     <Compile Include="RSView\Csv\ConvertExtensions.cs" />
     <Compile Include="RSView\Csv\Tag.cs" />
     <Compile Include="RSView\Tag.cs" />
-    <Compile Include="RSView\Xml\DioPositionConvert.cs" />
+    <Compile Include="RSView\Xml\AiPositionExtension.cs" />
     <Compile Include="RSView\Xml\XElementExt.cs" />
     <Compile Include="StringWork\NamedFormat.cs" />
     <Compile Include="WorkSchedule\ScheduleEnum.cs" />
@@ -284,10 +285,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="RSView\Xml\POSITIONLIST.xml">
+    <Content Include="RSView\Xml\POSITIONLIST.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

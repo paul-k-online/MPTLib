@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
@@ -17,23 +19,6 @@ namespace MPT.RSView
             return value == null ? defaultValue : string.Format(template, value, defaultValue);
         }
         
-        public static double RSMin(this AiPosition position)
-        {
-            return (double)(position.Scale.Low + position.Scale1());
-        }
-
-        public static double RSMax(this AiPosition position)
-        {
-            return (double)(position.Scale.High + position.Scale1());
-        }
-        
-        public static double Scale1(this AiPosition position)
-        {
-            if (position.Scale.High != null && position.Scale.Low != null)
-            return (position.Scale.High.Value - position.Scale.Low.Value) / 100;
-            return 0;
-        }
-
         public static AnalogTag CreateAnalogTagDefault(this AiPosition position, string folder, string name, string descriprion,
                                                 double initialValue = 0, string nodeName = null, string address = null)
         {
@@ -47,8 +32,8 @@ namespace MPT.RSView
                           NodeName = nodeName,
                           Address = address,
 
-                          Min = position.RSMin(),
-                          Max = position.RSMax(),
+                          Min = position.Scale.Low ?? 0,
+                          Max = position.Scale.High ?? 0,
                           Units = position.Units,
                       };
             return tag;
@@ -62,7 +47,7 @@ namespace MPT.RSView
 
             var folderTag = new Tag()
             {
-                Address = string.Format(RSAiFolderTemplate, position.ShortName),
+                Address = string.Format(RSAiFolderTemplate, position.RSViewName()),
             };
             tags.Add(folderTag);
 
@@ -73,7 +58,7 @@ namespace MPT.RSView
                 Name = "EN",
                 Desctiption = "Позиция в обработке",
                 NodeName = nodeName,
-                Address = position.GetItemAddress("EN"),
+                Address = position.GetAiItemAddress("EN"),
             };
             tags.Add(enTag);
 
@@ -87,7 +72,7 @@ namespace MPT.RSView
                 Max = 21,
                 Units = "мА",
                 NodeName = nodeName,
-                Address = position.GetItemAddress("i"),
+                Address = position.GetAiItemAddress("i"),
             };
             tags.Add(currentTag);
 
@@ -97,11 +82,11 @@ namespace MPT.RSView
                 Folder = folderTag.FullName,
                 Name = "v",
                 Desctiption = position.FullName,
-                Min = position.RSMin(),
-                Max = position.RSMax(),
+                Min = position.Scale.Low.Value,
+                Max = position.Scale.High.Value,
                 Units = position.Units,
                 NodeName = nodeName,
-                Address = position.GetItemAddress("v"),
+                Address = position.GetAiItemAddress("v"),
             };
             tags.Add(vTag);
 
@@ -111,11 +96,11 @@ namespace MPT.RSView
                 Folder = folderTag.FullName,
                 Name = "vMin",
                 Desctiption = position.FullName,
-                Min = position.RSMin(),
-                Max = position.RSMax(),
+                Min = position.Scale.Low.Value,
+                Max = position.Scale.High.Value,
                 Units = position.Units,
                 NodeName = nodeName,
-                Address = position.GetItemAddress("vMin"),
+                Address = position.GetAiItemAddress("vMin"),
             };
             tags.Add(vMinTag);
 
@@ -144,7 +129,7 @@ namespace MPT.RSView
                 Name = "break",
                 Desctiption = position.FullName,
                 NodeName = nodeName,
-                Address = position.GetItemAddress("break", "sgn"),
+                Address = position.GetAiItemAddress("break.sgn"),
                 Alarm = new DigitalTag.DigitalAlarm()
                 {
                     Label = "Обрыв",
@@ -155,7 +140,7 @@ namespace MPT.RSView
             tags.Add(breakTag);
 
             var stateTag = position.CreateAnalogTagDefault(folderTag.FullName, "State", position.Description,
-                0, nodeName, position.GetItemAddress("state"));
+                0, nodeName, position.GetAiItemAddress("state"));
 
             const string lowTemplate = "< {0} ({1})";
             const string highTemplate = "> {0} ({1})";

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,10 +14,15 @@ namespace MPT.StringWork
         private static readonly ConcurrentDictionary<string, object> PrecompiledExpressions = new ConcurrentDictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
         //private static readonly Regex RegexFormatArgs = new Regex(@"([^{]|^){(\w+)}([^}]|$)|([^{]|^){(\w+)\:(.+)}([^}]|$)", RegexOptions.Compiled);
-        private static readonly Regex RegexFormatArgs = new Regex(@"([^{]|^) {([A-Za-z0-9_\.]+)       } ([^}]|$)   
-                                                                    |   
-                                                                    ([^{]|^) {([A-Za-z0-9_\.]+) \:(.+)} ([^}]|$)", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+        private static readonly Regex RegexFormatArgs = new Regex(
+                                                        //@"  ([^{]|^)  {([A-Za-z0-9_\.]+)} ([^}]|$)   |   ([^{]|^) {([A-Za-z0-9_\.]+) \:(.+)} ([^}]|$)"
+                                                        //@" ([^{]|^)   {([A-Za-z0-9_\.]+)}   ([^}]|$)  "
+                                                        @" ( { (?<KEY> [A-Za-z0-9_\.]+ ) } ) "
+                                                        //@"{([A-Za-z0-9_\.]+)}"
 
+                                                                                    , RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+
+        /*
         public static string Format<T>(string pattern, T item)
         {
             // If we already have a compiled expression, just execute it.
@@ -60,25 +66,39 @@ namespace MPT.StringWork
             return func(item);
         }
 
-        
+        */
+
 
         public static string FormatDict(this string pattern, IDictionary<string, object> dict)
         {
-            string replacedPattern;
-            var argumentList = ParsePattern(pattern, out replacedPattern);
+            string replacedPattern = pattern;
+            //var argumentList = ParsePattern(pattern, out replacedPattern);
+            var argumentList = new List<string>();
 
-            var valueList = new List<object>();
-            foreach (var arg in argumentList)
+            var matches = RegexFormatArgs.Matches(pattern);
+            foreach (Match match in matches)
             {
-                var key = dict.Keys.FirstOrDefault(x => x.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
-                valueList.Add(!string.IsNullOrEmpty(key) ? dict[key].ToString() : "");
+
+                var arg = match.Value;
+                var argKey = match.Groups["KEY"].Value;
+                var dictKey = dict.Keys.FirstOrDefault(x => x.Equals(argKey, StringComparison.InvariantCultureIgnoreCase));
+                if (dictKey == null)
+                    continue;
+                var value = dict[dictKey].ToString();
+                replacedPattern = replacedPattern.Replace("{" + argKey + "}", value);
             }
 
+                /*
+                var key = dict.Keys.FirstOrDefault(x => x.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
+                valueList.Add(!string.IsNullOrEmpty(key) ? dict[key].ToString() : "");
+                 * */
+
             //var valueList = argumentList.Select(arg => dict.Keys.Contains(arg,StringComparer.OrdinalIgnoreCase) ? dict[arg] : "").ToList();
-            return string.Format(replacedPattern, valueList.ToArray());
+            //return string.Format(replacedPattern, valueList.ToArray());
+            return replacedPattern;
         }
 
-        public static IEnumerable<string> ParsePattern(string pattern, out string replacedPattern)
+        public static IDictionary<int, string> ParsePattern(string pattern, out string replacedPattern)
         {
             // Just replace each named format items with regular format items
             // and put all named format items in a list. Then return the
@@ -86,12 +106,13 @@ namespace MPT.StringWork
 
             var sb = new StringBuilder();
             var lastIndex = 0;
-            var arguments = new List<string>();
+            var arguments = new Dictionary<int,string>();
             var lowerarguments = new List<string>();
+            var matches = RegexFormatArgs.Matches(pattern);
 
-            foreach (var @group in from Match m in RegexFormatArgs.Matches(pattern)
-                                   select m.Groups[m.Groups[6].Success ? 5 : 2])
+            foreach (Match m in matches)
             {
+                var @group = m.Groups[m.Groups[6].Success ? 5 : 2];
                 var key = @group.Value;
                 var lkey = key.ToLowerInvariant();
                 var index = lowerarguments.IndexOf(lkey);
@@ -99,7 +120,7 @@ namespace MPT.StringWork
                 {
                     index = lowerarguments.Count;
                     lowerarguments.Add(lkey);
-                    arguments.Add(key);
+                    arguments.Add(index,key);
                 }
 
                 sb.Append(pattern.Substring(lastIndex, @group.Index - lastIndex));

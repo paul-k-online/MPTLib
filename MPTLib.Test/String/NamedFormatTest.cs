@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.StringWork;
@@ -12,20 +13,21 @@ namespace MPTLib.Test.String
         [TestMethod]
         public void TestParsePattern()
         {
-            var a = "AI[{NumBer}].{Field}.sgn = {break.sgn}";
             var dict = new Dictionary<string, object>()
                        {
                            {"Field", "break"},
                            {"number", 1},
-                           {"break.sgn", false}
+                           {"break.sgn.Value", false},
+                           {"UnitS", "Т/ч"},
+                           {"BlOckinG.LoW", 1.1.ToString(CultureInfo.InvariantCulture)},
                        };
 
-            //var a1 = "";
-            //var s = NamedFormat.ParsePattern(a, out a1);
+            var a = "AI[{NumBer}].{Field}.sgn = {break.sgn.Value}".FormatDict(dict);
+            Assert.AreEqual(a, "AI[1].break.sgn = false", true);
 
-            var test = NamedFormat.FormatDict(a, dict);
-
-            Assert.AreEqual(test, "AI[1].break.sgn = false", true);
+            var b = "<{Blocking.LOW} {UNITs} (LL)".FormatDict(dict);
+            Assert.AreEqual(b, "<1.1 Т/ч (Ll)", true);
+            
         }
     }
 }
