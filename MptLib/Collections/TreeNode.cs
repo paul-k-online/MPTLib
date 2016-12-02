@@ -23,11 +23,6 @@ namespace MPT.Collections
             Value = value;
         }
         
-
-        public TreeNode()
-        {
-        }
-
         public TreeNode<T> this[int i]
         {
             get { return _children[i]; }

@@ -4,6 +4,15 @@ using System.Linq;
 
 namespace MPT.WorkSchedule
 {
+    public enum Smena
+    {
+        Day = 0,
+        A = 3,
+        B = 5,
+        C = 1,
+        D = 7,
+    }
+
     public class ScheduleDay
     {
         public class SmenaDay

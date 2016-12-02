@@ -3,23 +3,25 @@ using System.Collections.Generic;
 
 namespace MPT.WorkSchedule
 {
+    public enum MonthOfYear
+    {
+        NotSet = 0,
+        January = 1,
+        February = 2,
+        March = 3,
+        April = 4,
+        May = 5,
+        June = 6,
+        July = 7,
+        August = 8,
+        September = 9,
+        October = 10,
+        November = 11,
+        December = 12
+    }
+
     public class ScheduleMonth
     {
-        /*
-        public static int JANUARY = 0;
-        public static int FEBRUARY = 1;
-        public static int MARCH = 2;
-        public static int APRIL = 3;
-        public static int MAY = 4;
-        public static int JUNE = 5;
-        public static int JULY = 6;
-        public static int AUGUST = 7;
-        public static int SEPTEMBER = 8;
-        public static int OCTOBER = 9;
-        public static int NOVEMBER = 10;
-        public static int DECEMBER = 11;
-        */
-
         public string MonthName
         {
             get{ return _monthFirstDay.ToString("MMMM"); }
@@ -30,15 +32,11 @@ namespace MPT.WorkSchedule
             get { return _monthFirstDay.ToString("yyyy MMMM"); }
 
         }
+
         public List<ScheduleDay> Days;
 
-
-
-
-
         public Dictionary<Smena, SmenaMonth> SmenaList;
-
-
+        
         public class SmenaMonth
         {
             public int OverTime;

@@ -14,6 +14,7 @@ namespace MPT.Model
     
     public partial class Workstation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Workstation()
         {
             this.Events_Pc = new HashSet<PcEvent>();
@@ -32,7 +33,9 @@ namespace MPT.Model
         public Nullable<long> MAC { get; set; }
     
         public virtual Project Project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PcEvent> Events_Pc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ws_Data> Ws_Data { get; set; }
     }
 }

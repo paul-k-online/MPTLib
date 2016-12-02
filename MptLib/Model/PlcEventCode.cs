@@ -14,6 +14,7 @@ namespace MPT.Model
     
     public partial class PlcEventCode
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlcEventCode()
         {
             this.PlcEvents = new HashSet<PlcEvent>();
@@ -23,6 +24,7 @@ namespace MPT.Model
         public string Text { get; set; }
         public Nullable<short> Severity { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> PlcEvents { get; set; }
     }
 }

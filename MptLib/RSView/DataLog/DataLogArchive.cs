@@ -17,17 +17,18 @@ namespace MPT.RSView.DataLog
         public class DatalogFilePair
         {
             public FileInfo TagTableFile { get; set; }
-            public FileInfo FloatTableFile { get; set; }
-            public FileInfo StringTableFile { get; set; }
-
             public string TagTableName
             {
                 get { return Path.GetFileNameWithoutExtension(TagTableFile.Name); }
             }
+            
+            public FileInfo FloatTableFile { get; set; }
             public string FloatTableName
             {
                 get { return Path.GetFileNameWithoutExtension(FloatTableFile.Name); }
             }
+            
+            public FileInfo StringTableFile { get; set; }
             public string StringTableName
             {
                 get { return Path.GetFileNameWithoutExtension(StringTableFile.Name); }

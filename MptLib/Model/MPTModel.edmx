@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MPTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MPTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Codes">
           <Key>
             <PropertyRef Name="CodeId" />
@@ -301,19 +301,19 @@
           <Parameter Name="Severity" Type="smallint" Mode="In" />
         </Function>
         <EntityContainer Name="MPTModelStoreContainer">
-          <EntitySet Name="Codes" EntityType="Self.Codes" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Events_Pc" EntityType="Self.Events_Pc" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="EventsOld" EntityType="Self.EventsOld" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Factory" EntityType="Self.Factory" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWords" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PLC" EntityType="Self.PLC" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PLC_Description" EntityType="Self.PLC_Description" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PLC_TO" EntityType="Self.PLC_TO" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Workstation" EntityType="Self.Workstation" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Ws_Data" EntityType="Self.Ws_Data" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Codes" EntityType="Self.Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events_Pc" EntityType="Self.Events_Pc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventsOld" EntityType="Self.EventsOld" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factory" EntityType="Self.Factory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC" EntityType="Self.PLC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC_Description" EntityType="Self.PLC_Description" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLC_TO" EntityType="Self.PLC_TO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workstation" EntityType="Self.Workstation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ws_Data" EntityType="Self.Ws_Data" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Events_Codes" Association="Self.FK_Events_Codes">
             <End Role="Codes" EntitySet="Codes" />
             <End Role="Events" EntitySet="Events" />
@@ -499,7 +499,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Version" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="IDE" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -508,6 +507,7 @@
           <Property Name="FactoryId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Factory" Relationship="Self.FK_Project_Factory" FromRole="Project" ToRole="Factory" />
           <NavigationProperty Name="Workstations" Relationship="Self.FK_Workstation_Project" FromRole="Project" ToRole="Workstation" />
+          <Property Name="Path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Workstation">
           <Key>
@@ -894,9 +894,9 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="MPTModel.Project">
               <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="ProjectName" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="IDE" ColumnName="IDE" />
                 <ScalarProperty Name="Description" ColumnName="Descr" />
@@ -967,6 +967,7 @@
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

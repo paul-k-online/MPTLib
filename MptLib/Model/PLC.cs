@@ -14,6 +14,7 @@ namespace MPT.Model
     
     public partial class PLC
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PLC()
         {
             this.Events = new HashSet<PlcEvent>();
@@ -38,11 +39,15 @@ namespace MPT.Model
         public int PositionNumber { get; set; }
         public Nullable<bool> Disassembled { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> Events { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEventsOld> EventsOlds { get; set; }
         public virtual Factory Factory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcMessage> Messages { get; set; }
         public virtual PLCDescription PLC_Description { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLC_TO> PLC_TO { get; set; }
     }
 }

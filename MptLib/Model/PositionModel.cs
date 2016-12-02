@@ -4,29 +4,31 @@ using System.Collections.Generic;
 
 namespace MPT.Model
 {
-    public class Position
+    public abstract class Position
     {
-        private const string FullNameTemplate = "{0} - {1}";
-        
-        public int PlcId { get; set; }
-
+        public int? PlcId { get; set; }
         public int Number { get; set; }
-
         public string Name { get; set; }
-
         public string Description { get; set; }
-
         public string Note { get; set; }
-
         public int? GroupId { get; set; }
-
         
         /// <summary>
         /// полное название
         /// </summary>
         public string FullName
         {
-            get { return string.Format(FullNameTemplate, Name, Description); }
+            get
+            {
+                const string fullNameTemplate = "{0} - {1}";
+                return string.Format(fullNameTemplate, Name, Description);
+            }
+        }
+
+        public override string ToString()
+        {
+            //return string.Format("{0}: {1}", Number, Name);
+            return Name;
         }
 
         /// <summary>
@@ -38,90 +40,62 @@ namespace MPT.Model
             {
                 return x.PlcId == y.PlcId && x.Number == y.Number ;
             }
+
             public int GetHashCode(Position x)
             {
                 return (x.PlcId ^ x.Number).GetHashCode();
             }
         }
 
-        public virtual void CopyFrom(Position pos)
-        {
-            PlcId = pos.PlcId;
-            Number = pos.Number;
-            Name = pos.Name;
-            Description = pos.Description;
-            GroupId = pos.GroupId;
-        }
-        
+    }
+
+    public struct RangePair
+    {
+        public double? Low { get; set; }
+        public double? High { get; set; }
+
         public override string ToString()
         {
-            return Name;
+            return string.Format("{0}; {1}", Low, High);
         }
     }
+    
 
     public class AiPosition : Position
     {
-        public class AlarmPair
-        {
-            public double? Low { get; set; }
-            public double? High { get; set; }
-
-            public AlarmPair(double? low = null, double? high = null)
-            {
-                Low = low;
-                High = high;
-            }
-
-            public override string ToString()
-            {
-                return String.Format("{0}; {1}", Low, High);
-            }
-        }
-
         public string Units { get; set; }
-
-        public AlarmPair Scale { get; set; }
-
-        public AlarmPair Reglament { get; set; }
-        
-        public AlarmPair Alarming { get; set; }
-
-        public AlarmPair Blocking { get; set; }
-
-        public AiPosition()
-        {
-            Scale = new AlarmPair();
-            Reglament = new AlarmPair();
-            Alarming = new AlarmPair();
-            Blocking = new AlarmPair();
-        }
-
-
-
-        /*
-        public void CopyFrom(AiPosition pos)
-        {
-            base.CopyFrom(pos);
-            Scale = new AlarmPair(pos.Scale.Low, pos.Scale.High);
-            Units = pos.Units;
-            Reglament = new AlarmPair(pos.Reglament.Low, pos.Reglament.High);
-            Alarming = new AlarmPair(pos.Alarming.Low, pos.Alarming.High);
-            Blocking = new AlarmPair(pos.Blocking.Low, pos.Blocking.High);
-        }
-        */
+        public RangePair Scale { get; set; }
+        public RangePair Reglament { get; set; }
+        public RangePair Alarming { get; set; }
+        public RangePair Blocking { get; set; }
     }
 
-
     public class AoPosition : Position
-    {        
+    {
+        public enum AoTypeEnum
+        {
+            // ReSharper disable once InconsistentNaming
+            SPPV,
+            // ReSharper disable once InconsistentNaming
+            PVSP
+        }
+
+        public RangePair Scale { get; set; }
+
+        public int? AiNum { get; set; }
+        public AiPosition AiPosition { get; set; }
+
+        public AoTypeEnum AoType { get; set; }
+        public bool IsCascade { get; set; }
+        public bool IsCascadeSlave { get; set; }
+        public uint? CascadeMasterNumber { get; set; }
+
     }
 
     public class DioPosition : Position
     {
         public bool NormValue { get; set; }
-
         public bool IsAlarm { get; set; }
-
         public string AlarmText { get; set; }
     }
 }

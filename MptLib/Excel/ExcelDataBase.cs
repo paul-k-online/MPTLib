@@ -12,13 +12,18 @@ namespace MPT.Excel
         const string ConnectionStringTemplate = @"provider=Microsoft.Jet.OLEDB.4.0; Data Source='{0}'; Extended Properties=Excel 8.0;";//HDR=Yes;"; //IMEX=1
         const string TableQueryTemplate = "SELECT * FROM [{0}$]";
 
-        public FileInfo File { get; private set; }
+        private string ConnectionString
+        {
+            get { return string.Format(ConnectionStringTemplate, FilePath); }
+        }
 
         private string FilePath
         {
             get { return File.FullName; }
         }
-
+        
+        public FileInfo File { get; private set; }
+                
         public string Name
         {
             get
@@ -27,12 +32,7 @@ namespace MPT.Excel
                 return fileNameWithoutExtension != null ? fileNameWithoutExtension.ToUpper() : null;
             }
         }
-
-        private string ConnectionString
-        {
-            get { return string.Format(ConnectionStringTemplate, FilePath); }
-        }
-
+                
         public ExcelDataBase(FileInfo file) 
         {
             if (file == null) 
@@ -43,11 +43,8 @@ namespace MPT.Excel
             File = file;
         }
 
-        public ExcelDataBase(string filePath)
-            : this(new FileInfo(filePath))
-        {
-        }
-
+        public ExcelDataBase(string filePath) : this(new FileInfo(filePath))
+        {}
 
         public DataTable GetDataTableFromSheet(string tableName)
         {
@@ -67,21 +64,18 @@ namespace MPT.Excel
                 adapter.Fill(dataTable);
                 return dataTable;
             }
-            catch
+            catch (Exception e)
             {
-                return null;
+                throw new Exception(string.Format("GetDataTableFromSheet \"{0}\"",tableName), e);
             }
         }
 
         public IEnumerable<T> GetDataList<T>(string sheetName, Func<DataRow, T> convertRowFunc)
         {
             var dataTable = GetDataTableFromSheet(sheetName);
-
-            return dataTable.AsEnumerable()
-                .Select(convertRowFunc)
-                .Where(pos => pos != null)
-                //.ToList()
-                ;
+            var rows = dataTable.AsEnumerable();
+            var convertedList = rows.Select(convertRowFunc).Where(pos => pos != null);
+            return convertedList.ToList();
         }
 
         public List<string> SheetList
@@ -96,21 +90,20 @@ namespace MPT.Excel
                         var excelTables = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables,
                             new Object[] {null, null, null, "TABLE"});
                         connection.Close();
-                        return excelTables.AsEnumerable().Select(x => x["TABLE_NAME"].ToString()).ToList();
+                        return excelTables == null ? null : 
+                            excelTables.AsEnumerable().Select(x => x["TABLE_NAME"].ToString()).ToList();
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return null;
+                    throw new Exception("Sheet list error", e);
                 }
             }
         }
-
 
         public override string ToString()
         {
             return Name;
         }
-
     }
 }

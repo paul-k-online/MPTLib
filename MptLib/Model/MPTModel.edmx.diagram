@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6024ef713c9d46b2b761b860a5df3b55" Name="Diagram1" ZoomLevel="93">
+      <Diagram DiagramId="6024ef713c9d46b2b761b860a5df3b55" Name="Diagram1" ZoomLevel="80">
         <EntityTypeShape EntityType="MPTModel.PlcEventCode" Width="1.5" PointX="6.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PlcEvent" Width="1.5" PointX="4" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PcEvent" Width="1.5" PointX="6.25" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PlcEventsOld" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.Factory" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PlcMessage" Width="1.5" PointX="6.375" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcMessage" Width="1.5" PointX="6.125" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PcEventIgnoreWord" Width="1.5" PointX="10.125" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PLC" Width="1.5" PointX="3.125" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PLCDescription" Width="1.5" PointX="5.375" PointY="5.125" IsExpanded="true" />

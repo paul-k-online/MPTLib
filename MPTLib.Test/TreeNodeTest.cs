@@ -15,9 +15,6 @@ namespace MPTLib.Test
     [TestClass()]
     public class TreeNodeTest
     {
-
-
-
         [TestMethod()]
         public void TestAddChild()
         {

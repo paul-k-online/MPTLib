@@ -35,6 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\..\Webmpt.NET\packages\ExcelDataReader.2.1.2.3\lib\net20\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\Webmpt.NET\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -55,15 +63,19 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RSView\AiPositionExtensionTest.cs" />
+    <Compile Include="Positions\ExcelPositionListTest.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvConverterTest.cs" />
+    <Compile Include="RSView\TestData.cs" />
+    <Compile Include="RSView\TestAiPositionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSView\Csv\ExtensionsTest.cs" />
-    <Compile Include="RSView\Csv\AlarmTest.cs" />
-    <Compile Include="RSView\Csv\TagTest.cs" />
-    <Compile Include="RSView\Csv\DataLogTest.cs" />
-    <Compile Include="RSView\Xml\PositionConvertTest.cs" />
-    <Compile Include="RSView\RSTypeTest.cs" />
-    <Compile Include="String\NamedFormatTest.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvExtensionsTest.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvAlarmTest.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvTagTest.cs" />
+    <Compile Include="RSView\ImportExport\PositionConvertTest.cs" />
+    <Compile Include="RSView\ImportExport\PositionListConverterTest.cs" />
+    <Compile Include="RSView\TestRSType.cs" />
+    <Compile Include="Strings\NamedFormatTest.cs" />
+    <Compile Include="OtherTest.cs" />
     <Compile Include="WorkSchedule\WorkScheduleTest.cs" />
     <Compile Include="TreeNodeTest.cs" />
   </ItemGroup>
@@ -74,21 +86,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\101_pp23-Alarms.CSV">
+    <None Include="packages.config" />
+    <None Include="_TestData\101_PP23\101_pp23-Alarms.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\101_pp23-DataLog.CSV">
+    <None Include="_TestData\101_PP23\101_pp23-DataLog.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\101_pp23-DerivedTags.CSV">
+    <None Include="_TestData\101_PP23\101_pp23-DerivedTags.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\101_pp23-Tags.CSV">
+    <None Include="_TestData\101_PP23\101_pp23-Tags.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\101_PP23.xls">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="_TestData\ExcelFile\101_PP23.xls" />
+    <None Include="_TestData\ExcelFile\102_KMP2.xlsx" />
+    <None Include="_TestData\ExcelFile\102_Polymer.xlsx" />
+    <None Include="_TestData\ExcelFile\104_MAF.xls" />
+    <None Include="_TestData\ExcelFile\104_PP12.xls" />
+    <None Include="_TestData\RsView\100_Test.rar" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

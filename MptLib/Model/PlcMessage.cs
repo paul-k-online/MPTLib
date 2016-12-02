@@ -14,6 +14,7 @@ namespace MPT.Model
     
     public partial class PlcMessage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlcMessage()
         {
             this.PlcEvents = new HashSet<PlcEvent>();
@@ -25,6 +26,7 @@ namespace MPT.Model
         public Nullable<short> Group { get; set; }
     
         public virtual PLC PLC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> PlcEvents { get; set; }
     }
 }
