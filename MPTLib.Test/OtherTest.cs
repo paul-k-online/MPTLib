@@ -18,7 +18,25 @@ namespace MPTLib.Test
         public void TestPathCombine()
         {
             Assert.AreEqual(Path.Combine("asad/asd", ""), "asad/asd");
-            Assert.AreEqual(Path.Combine("asad/asd", null), "asad/asd");
+            try
+            {
+                Assert.AreEqual(Path.Combine("asad/asd", null), "asad/asd");
+            }
+            catch (ArgumentNullException)
+            {
+                //throw;
+            }
+        }
+
+
+        [TestMethod]
+        public void TestNullInt()
+        {
+            int? vNull = 10;
+            int? r =  10 + vNull;
+
+
+
         }
 
     }

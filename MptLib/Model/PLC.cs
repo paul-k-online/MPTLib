@@ -18,16 +18,17 @@ namespace MPT.Model
         public PLC()
         {
             this.Events = new HashSet<PlcEvent>();
-            this.EventsOlds = new HashSet<PlcEventsOld>();
+            this.EventsOlds = new HashSet<PlcOldEvent>();
             this.Messages = new HashSet<PlcMessage>();
             this.PLC_TO = new HashSet<PLC_TO>();
+            this.AlarmTags = new HashSet<AlarmTag>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<int> PlcTypeId { get; set; }
-        public Nullable<int> FactoryId { get; set; }
+        public int FactoryId { get; set; }
         public string Topic { get; set; }
         public Nullable<int> ProtocolType { get; set; }
         public Nullable<int> LastEventIndex { get; set; }
@@ -38,16 +39,21 @@ namespace MPT.Model
         public Nullable<int> OpcDataLoggerId { get; set; }
         public int PositionNumber { get; set; }
         public Nullable<bool> Disassembled { get; set; }
+        public Nullable<int> OrderIndex { get; set; }
+        public string FullDescription { get; set; }
+        public bool ProtocolEnabled { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlcEventsOld> EventsOlds { get; set; }
-        public virtual Factory Factory { get; set; }
+        public virtual ICollection<PlcOldEvent> EventsOlds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcMessage> Messages { get; set; }
         public virtual PLCDescription PLC_Description { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLC_TO> PLC_TO { get; set; }
+        public virtual Factory Factory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlarmTag> AlarmTags { get; set; }
     }
 }

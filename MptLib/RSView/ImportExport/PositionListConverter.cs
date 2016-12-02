@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
 using MPT.Model;
@@ -11,12 +10,12 @@ namespace MPT.RSView.ImportExport
 {
     public class PositionListConverter
     {
-        PositionList PositionList { get; set; }
-        XElement Shema { get; set; }
-        
-        public string NodeName { get; private set; }
+        private IPositionList PositionList { get; }
+        private XElement Shema { get; }
+        public string NodeName { get; }
 
-        public PositionListConverter(PositionList positionList, XElement shema, string nodeName)
+
+        public PositionListConverter(IPositionList positionList, XElement shema, string nodeName)
         {
             PositionList = positionList;
             Shema = shema;
@@ -24,44 +23,44 @@ namespace MPT.RSView.ImportExport
         }
 
 
-        private static IEnumerable<RsViewTag> ConvertTags(IEnumerable<Position> positions, XElement shema, string nodeName)
+        #region ConvertToRsViewTags
+
+        public IEnumerable<RSViewTag> ConvertPositionsToRsViewTags(IEnumerable<Position> positions)
         {
             if (positions == null) return null;
-            if (shema == null) return null;
-            
-            var test = positions.SelectMany(x => x.GetTags(shema, nodeName)).ToList();
-            return test;
+            return PositionConvertXmlExtension.ConvertPositionsToRsviewTags(positions, Shema, NodeName);
         }
 
-
-        public IEnumerable<RsViewTag> GetAiTags()
+        public IEnumerable<RSViewTag> ConvertAiPositionsToRsViewTags()
         {
-            var shema = Shema.GetElement("ANALOG_POSITION");
-            return ConvertTags(PositionList.AiPositions.Values, shema, NodeName);
+            var positions = PositionList.AiPositions;
+            if (positions == null) return null;
+            return ConvertPositionsToRsViewTags(positions.Values.ToList());
         }
 
-
-        public IEnumerable<RsViewTag> GetDioTags()
+        public IEnumerable<RSViewTag> ConvertDioPositionsToRsViewTags()
         {
-            var shema = Shema.GetElement("DIGITAL_POSITION");
-            return ConvertTags(PositionList.DioPositions.Values, shema, NodeName);
+            var positions = PositionList.DioPositions;
+            if (positions == null) return null;
+            return ConvertPositionsToRsViewTags(positions.Values.ToList());
         }
 
-
-        public IEnumerable<RsViewTag> GetAoTags()
+        public IEnumerable<RSViewTag> ConvertAoPositionsToRsViewTags()
         {
-            var shema = Shema.GetElement("REGULATOR_POSITION");
-            return ConvertTags(PositionList.AoPositions.Values, shema, NodeName);
+            var positions = PositionList.AoPositions;
+            if (positions == null) return null;
+            return ConvertPositionsToRsViewTags(positions.Values.ToList());
         }
 
-
-        public IEnumerable<RsViewTag> GetAllTags()
+        public IEnumerable<RSViewTag> ConvertAllPositionsToRsViewTags()
         {
-            var tagList = new List<RsViewTag>();
-            tagList.AddRange(GetAiTags());
-            tagList.AddRange(GetDioTags());
-            tagList.AddRange(GetAoTags());
-            return tagList;
+            var positions = PositionList.AllPositions;
+            if (positions == null) return null;
+            return ConvertPositionsToRsViewTags(positions);
         }
+
+        #endregion
+
+
     }
 }

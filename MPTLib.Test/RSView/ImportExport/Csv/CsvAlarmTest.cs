@@ -19,7 +19,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
             expected = RegexSpace.Replace(expected, "");
             var actual = alarmTreshold.ToString();
             actual = RegexSpace.Replace(actual, "");
-            Assert.AreEqual(expected, actual, true);  
+            Assert.AreEqual(expected, actual, true);
         }
 
         [TestMethod]
@@ -191,17 +191,12 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
             var act5 = RegexSpace.Replace(a5.ToString(), "");
 
 
-
             Assert.AreEqual(act0, a[0], true);
             Assert.AreEqual(act1, a[1], true);
             Assert.AreEqual(act2, a[2], true);
             Assert.AreEqual(act3, a[3], true);
             Assert.AreEqual(act4, a[4], true);
             Assert.AreEqual(act5, a[5], true);
-
-
-
-
 
         }
     }

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PositionList>
+  <AiPosition>
+    <TAG type="D" name="AI\{SHORTNAME}\en"    description="Enable"              dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].EN"/>
+    <TAG type="S" name="AI\{SHORTNAME}\name"  description="{Description}"       length="200" dataSource="M" initialValue="{NAME}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\i"     description="signal"        min="0" max="20" units="мА" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].i">
+      <DATALOG name ="DLG_KIP"/>
+    </TAG>
+    <TAG type="D" name="AI\{SHORTNAME}\break" description="{FULLNAME}"          initialValue="0" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].Break.sgn">
+      <ALARM type="On" Label="Обрыв" Severity="4"/>
+    </TAG>
+
+    <TAG type="A" name="AI\{SHORTNAME}\v"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+      <DATALOG name ="DLG_KIP"/>
+      <DATALOG name ="DLG_SEC"/>
+    </TAG>
+
+    <TAG type="A" name="AI\{SHORTNAME}\vAvr"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].vMin">
+      <DATALOG name ="DLG_MIN"/>
+    </TAG>
+    
+    <TAG type="A" name="AI\{SHORTNAME}\state" description="{FULLNAME}"          dataSource="D" min="0" max="8" address="AI[{NUMBER}].State">
+      <ALARM number="1" threshold="0.9" label="{SHORTNAME} &lt;&lt; {BLOCKING.Low} {UNITS}"   direction="D" Severity="1"/>
+      <ALARM number="5" threshold="5.9" label="{SHORTNAME} &gt; {ALARMING.High} {UNITS}"      direction="I" Severity="2"/>
+    </TAG>
+
+    <TAG type="A" name="AI\{SHORTNAME}\rMax" description="Регламент MAX" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.High}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\sMin" description="Сигнализация MIN" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.Low}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\sMax" description="Сигнализация MAX" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.High}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\bMin" description="Блокировка по MIN" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="M" initialValue="{BLOCKING.Low}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\bMax" description="Блокировка по MAX" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="M" initialValue="{BLOCKING.High}"/>
+
+  </AiPosition>
+</PositionList>

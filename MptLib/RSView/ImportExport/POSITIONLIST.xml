@@ -1,44 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<POSITION_LIST>
-  <ANALOG_POSITION>
-    <TAG type="A" name="AI\{SHORTNAME}\rMin" description="Регламент MIN" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.LOW}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\rMax" description="Регламент MAX" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.HIGH}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\sMin" description="Сигнализация MIN" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.LOW}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\sMax" description="Сигнализация MAX" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.HIGH}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\bMin" description="Блокировка по MIN" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{Blocking.LOW}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\bMax" description="Блокировка по MAX" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="M" initialValue="{Blocking.HIGH}"/>
-
-    <TAG type="S" name="AI\{SHORTNAME}\Name" description="{Description}" length="200" dataSource="M" initialValue="{NAME}"/>
-    
-    <TAG type="D" name="AI\{SHORTNAME}\EN" description="Enable" dataSource="D" address="AI[{NUMBER}].EN"  initialValue="1"/>
-    <TAG type="A" name="AI\{SHORTNAME}\Current" description="Ток" min="0" max="20" units="мА" dataSource="D" address="AI[{NUMBER}].i"/>  
-   
-    <TAG type="A" name="AI\{SHORTNAME}\Value" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
-      <DATALOG name ="DLG_SEC"/>
-      <DATALOG name ="DLG_TEST"/>
+<PositionList>
+  <!--
+      "Number" => position.Number
+      "Name" => position.Name
+      "FullName" => position.FullName
+      "Description" => position.Description
+      "SHORTNAME" => position.RsViewShortName()
+      "UNITS" => position.Units
+      "Scale.Low" => position.Scale.Low
+      "Scale.High" => position.Scale.High
+      "Reglament.Low" => position.Reglament.Low == null ? "0" : position.Reglament.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Reglament.High" => position.Reglament.High == null ? "0" : position.Reglament.High.Value.ToString(CultureInfo.InvariantCulture)
+      "Alarming.Low" => position.Alarming.Low == null ? "0" : position.Alarming.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Alarming.High" => position.Alarming.High == null ? "0" : position.Alarming.High.Value.ToString(CultureInfo.InvariantCulture)
+      "Blocking.Low" => position.Blocking.Low == null ? "0" : position.Blocking.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Blocking.High" => position.Blocking.High == null ? "0" : position.Blocking.High.Value.ToString(CultureInfo.InvariantCulture)
+  -->
+  
+  <AiPosition>
+    <TAG type="D" name="AI\{SHORTNAME}\en"    description="Enable"              dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].EN"  initialValue="1"/>
+    <TAG type="S" name="AI\{SHORTNAME}\name"  description="{Description}"       length="200" nodeName="{NODE}" dataSource="M" initialValue="{NAME}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\i"     description="Signal value"        min="0" max="20" units="мА" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].i">
+      <DATALOG name ="DLG_KIP"/>
     </TAG>
-    
-    <TAG type="A" name="AI\{SHORTNAME}\ValueAvr" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.HIGH}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].vAvr">
-      <DATALOG name ="DLG_MIN"/>
-    </TAG>
-
-    <TAG type="D" name="AI\{SHORTNAME}\Break" description="{FULLNAME}" initialValue="0" dataSource="D"  address="AI[{NUMBER}].break.sgn">
+    <TAG type="D" name="AI\{SHORTNAME}\break" description="{FULLNAME}"          initialValue="0" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].Break.sgn">
       <ALARM type="On" Label="Обрыв" Severity="4"/>
-      <DATALOG name ="DLG_SEC"/>
-      <DATALOG name ="DLG_MIN"/>
-      <DATALOG name ="DLG_TEST"/>
+      <DATALOG name ="DLG_KIP"/>
     </TAG>
 
-    <TAG type="A" name="AI\{SHORTNAME}\State" description="{FULLNAME}" dataSource="D" min="0" max="8" address="AI[{NUMBER}].state">
-      <ALARM number="1" threshold="0.9" label="&lt;{Blocking.LOW} {UNITS} (LL)" direction="D" Severity="1"/>
-      <ALARM number="2" threshold="1.9" label="&lt;{ALARMING.LOW} {UNITS} (L)" direction="D" Severity="2"/>
-      <ALARM number="3" threshold="2.9" label="&lt;{REGLAMENT.LOW} {UNITS} (RL)" direction="D" Severity="3"/>
-      <ALARM number="4" threshold="4.9" label="&gt;{REGLAMENT.HIGH} {UNITS} (RH)" direction="I" Severity="3"/>
-      <ALARM number="5" threshold="5.9" label="&gt;{ALARMING.HIGH} {UNITS} (H)" direction="I" Severity="2"/>
-      <ALARM number="6" threshold="6.9" label="&gt;{Blocking.HIGH} {UNITS} (HH)" direction="I" Severity="1"/>
+    <TAG type="A" name="AI\{SHORTNAME}\v"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+      <DATALOG name ="DLG_SEC"/>
+      <DATALOG name ="DLG_MIN"/>
+      <DATALOG name ="DLG_KIP"/>
     </TAG>
     
+    <TAG type="A" name="AI\{SHORTNAME}\state" description="{FULLNAME}"          dataSource="D" min="0" max="8" nodeName="{NODE}" address="AI[{NUMBER}].State">
+      <ALARM number="1" threshold="0.9" label="{SHORTNAME} &lt;&lt; {BLOCKING.Low} {UNITS}"   direction="D" Severity="1"/>
+      <ALARM number="2" threshold="1.9" label="{SHORTNAME} &lt; {ALARMING.Low} {UNITS}"       direction="D" Severity="2"/>
+      <ALARM number="3" threshold="2.9" label="{SHORTNAME} &lt; {REGLAMENT.Low} {UNITS}"      direction="D" Severity="3"/>
+      <ALARM number="4" threshold="4.9" label="{SHORTNAME} &gt; {REGLAMENT.High} {UNITS}"     direction="I" Severity="3"/>
+      <ALARM number="5" threshold="5.9" label="{SHORTNAME} &gt; {ALARMING.High} {UNITS}"      direction="I" Severity="2"/>
+      <ALARM number="6" threshold="6.9" label="{SHORTNAME} &gt;&gt; {BLOCKING.High} {UNITS}"  direction="I" Severity="1"/>
+      <DATALOG name ="DLG_KIP"/>
+    </TAG>
+    
+    <TAG type="D" name="AI\{SHORTNAME}\select" description="MultiTrend"                     dataSource="M" initialValue="off"/>
+    <TAG type="D" name="AI\{SHORTNAME}\RL\en" description=""                                dataSource="M" initialValue="{REGLAMENT.Low.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\RL\v"  description="" min="0" max="100" units=""     dataSource="M" initialValue="{REGLAMENT.Low}"/>
+    <TAG type="D" name="AI\{SHORTNAME}\RH\en" description=""                                dataSource="M" initialValue="{REGLAMENT.High.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\RH\v"  description="" min="0" max="100" units=""     dataSource="M" initialValue="{REGLAMENT.High}"/>
+    <TAG type="D" name="AI\{SHORTNAME}\L\en" description=""                                 dataSource="M" initialValue="{ALARMING.Low.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\L\v"  description="" min="0" max="100" units=""      dataSource="M" initialValue="{ALARMING.Low}"/>
+    <TAG type="D" name="AI\{SHORTNAME}\H\en" description=""                                 dataSource="M" initialValue="{ALARMING.High.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\H\v"  description="" min="0" max="100" units=""      dataSource="M" initialValue="{ALARMING.High}"/>
+    <TAG type="D" name="AI\{SHORTNAME}\LL\en" description=""                                dataSource="M" initialValue="{BLOCKING.Low.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\LL\v"  description="" min="0" max="100" units=""     dataSource="M" initialValue="{BLOCKING.Low}"/>
+    <TAG type="D" name="AI\{SHORTNAME}\HH\en" description=""                                dataSource="M" initialValue="{BLOCKING.High.En}"/>
+    <TAG type="A" name="AI\{SHORTNAME}\HH\v"  description="" min="0" max="100" units=""     dataSource="M" initialValue="{BLOCKING.High}"/>
+
     <!--
+-->
+
+    <ECONOM_POSITION>
+    </ECONOM_POSITION>
+    
+<!--
     <STR_TAG_AI_NAN>"D","AI\%POSITION%\NAN","Состояние по обрыву","F","D","*","T","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","AI[%POS_NUMBER%].Break.sgn","A",,,,,,</STR_TAG_AI_NAN>
     <STR_TAG_AI_DESC>"S","AI\%POSITION%\Name","%DESCRIPTION%","F","M","*","F","F",,,,,,,,,,,,,200,"%POSITION_REG%",,,,,,,,,</STR_TAG_AI_DESC>
     <STR_TAG_AI_STATE>"A","AI\%POSITION%\State","%POS_DESCRIPTION%","F","D","*","T","F","D","F",0.0,8.0,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].State","A",,,,,,</STR_TAG_AI_STATE>
@@ -58,12 +84,13 @@
     
     <STR_ALM_D_NAN>"D","AI\%POSITION%\NAN","ON","%POSITION_NAN_DESC%","5","S","","","S","","","S","","","","","","N","","N"</STR_ALM_D_NAN>
     <STR_ALM_A_STATE>"A","AI\%POSITION%\State","","N","","N",0,"A","","","","","S","","","S","C","1.5","%POSITION_BMIN_DESC%","S","","","D","1","C","2.5","%POSITION_SMIN_DESC%","S","","","D","1","C","3.5","%POSITION_RMIN_DESC%","S","","","D","1","C","4.5","%POSITION_RMAX_DESC%","S","","","I","1","C","5.5","%POSITION_SMAX_DESC%","S","","","I","1","C","6.5","%POSITION_BMAX_DESC%","S","","","I","1","","","","S","","","","","","","","S","","","",""</STR_ALM_A_STATE>
-    -->
-  </ANALOG_POSITION>
+-->
+  </AiPosition>
 
-  
-  <DIGITAL_POSITION>
-    <TAG type="D" name="DIO\{Name}\Value" description="{FULLNAME}" dataSource="D" address="DIO[{NUMBER}].V">
+
+
+  <DioPosition>
+    <TAG type="D" name="DIO\{Name}\v" description="{FULLNAME}" dataSource="D" address="DIO[{NUMBER}].v">
       <DATALOG name ="DLG_SEC"/>
       <DATALOG name ="DLG_MIN"/>
       <DATALOG name ="DLG_TEST"/>
@@ -78,7 +105,7 @@
 
     <TAG type="A" name="DIO\{Name}\State" description="{FULLNAME}" dataSource="D" min="0" max="8" address="DIO[{NUMBER}].State">
       <ALARM number="1" threshold="0.9" label="(BLOCK) state" direction="D" Severity="1"/>
-      <ALARM number="2" threshold="1.9" label="(ALARM) states" direction="D" Severity="2"/>
+      <ALARM number="2" threshold="1.9" label="(ALARM) state" direction="D" Severity="2"/>
     </TAG>
     
     <!--
@@ -89,27 +116,27 @@
     <STR_ALM_DIO_STATE>"A","DIO\%POSITION%\State","","N","","N",0,"A","","","","","S","","","S","C","3.5","%DIO_SGN_DESCR%","S","","","D","1","C","4.5","%DIO_BLOCK_DESCR%","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1","","","","S","","","I","1"</STR_ALM_DIO_STATE>
     <STR_ALM_DIO>"D","DIO\%POSITION%\v","%DIO_SGN%","%DIO_SGN_DESCR%","1","S","","","S","","","S","","","","","","N","","N"</STR_ALM_DIO>
     -->
-  </DIGITAL_POSITION>
+  </DioPosition>
   
   
-  <REGULATOR_POSITION>
-  
+  <AoPosition>
+    
+    <!--
     <STR_REGUL_1>"A","AO\%POSITION%\Enter","Ввод задания (=1) или выхода (=2) с клавиатуры","F","M","*","F","F","D","L",0,10,0,1,0,0,"",,,,,,,,,,,,,,</STR_REGUL_1>
     <TAG type="A" name="AO\{NAME}\Enter" description="Ввод задания (=1) или выхода (=2) с клавиатуры" min="0" max="10" dataSource="M" initialValue="0"/>
     
     <STR_REGUL_2>"A","AO\%POSITION%\PV","%PV_DESC%","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].PV","A",,,,,,</STR_REGUL_2>
-    <TAG type="A" name="AO\{NAME}\PV" description="{FULLNAME}" min="{SCALE.LOW}" max="{SCALE.HIGH}" dataSource="D" address="ao[{NUMBER}].pv"/>
+    <TAG type="A" name="AO\{NAME}\PV" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" dataSource="D" address="ao[{NUMBER}].pv"/>
     
     <STR_REGUL_3>"A","AO\%POSITION%\ScaleMax","Шкала максимум","F","D","*","F","F","D","L",0,50000,5000,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMax","A",,,,,,</STR_REGUL_3>
     <STR_REGUL_4>"A","AO\%POSITION%\ScaleMin","Шкала минимум","F","D","*","F","F","D","L",0,50000,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMin","A",,,,,,</STR_REGUL_4>
-    <TAG type="A" name="AO\{NAME}\ScaleMax" description="Шкала минимум" min="{SCALE.LOW}" max="{SCALE.HIGH}" dataSource="M" initialValue="{SCALE.LOW}"/>
-    <TAG type="A" name="AO\{NAME}\ScaleMin" description="Шкала максимум" min="{SCALE.LOW}" max="{SCALE.HIGH}" dataSource="M" initialValue="{SCALE.HIGH}"/>
+    <TAG type="A" name="AO\{NAME}\ScaleMax" description="Шкала минимум" min="{SCALE.Low}" max="{SCALE.High}" dataSource="M" initialValue="{SCALE.Low}"/>
+    <TAG type="A" name="AO\{NAME}\ScaleMin" description="Шкала максимум" min="{SCALE.Low}" max="{SCALE.High}" dataSource="M" initialValue="{SCALE.High}"/>
     
     <STR_REGUL_5>"D","AO\%POSITION%\Mode","Режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].mode","A",,,,,,</STR_REGUL_5>
     <STR_REGUL_6>"D","AO\%POSITION%\set_mode","Установить режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnMode","A",,,,,,</STR_REGUL_6>
     <TAG type="D" name="AO\{NAME}\Mode" description="Режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].Mode"/>
     <TAG type="D" name="AO\{NAME}\set_Mode" description="Установить режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].btnMode"/>
-
 
 
     <STR_REGUL_7>"A","AO\%POSITION%\k_Kp","Коэф. Kp","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Kp","A",,,,,,</STR_REGUL_7>
@@ -142,8 +169,8 @@
 
     <STR_REGUL_18>"A","AO\%POSITION%\SP","Задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].SP","A",,,,,,</STR_REGUL_18>
     <STR_REGUL_19>"A","AO\%POSITION%\set_SP","Установить задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setSP","A",,,,,,</STR_REGUL_19>
-    <TAG type="A" name="AO\{NAME}\SP" description="Задание регуятора" min="{SCALE.LOW}" max="{SCALE.HIGH}" dataSource="D" address="AO[{NUMBER}].SP"/>
-    <TAG type="A" name="AO\{NAME}\set_SP" description="Установить задание регуятора" min="{SCALE.LOW}" max="{SCALE.HIGH}" dataSource="D" address="AO[{NUMBER}].setSP"/>
+    <TAG type="A" name="AO\{NAME}\SP" description="Задание регуятора" min="{SCALE.Low}" max="{SCALE.High}" dataSource="D" address="AO[{NUMBER}].SP"/>
+    <TAG type="A" name="AO\{NAME}\set_SP" description="Установить задание регуятора" min="{SCALE.Low}" max="{SCALE.High}" dataSource="D" address="AO[{NUMBER}].setSP"/>
 
     <STR_REGUL_20>"D","AO\%POSITION%\SP_minus","SP- Задание минус","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPminus","A",,,,,,</STR_REGUL_20>
     <STR_REGUL_21>"D","AO\%POSITION%\SP_plus","SP+ Задание плюс","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPplus","A",,,,,,</STR_REGUL_21>
@@ -157,37 +184,10 @@
 
     <STR_REGUL_24>"D","AO\%POSITION%\casc","Cascade PID control (1-cascad on; 0-cascad off)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].casc","A",,,,,,</STR_REGUL_24>
     <TAG type="D" name="AO\{NAME}\casc" description="Установить в Каскад" dataSource="D" address="AO[{NUMBER}].Сasc"/>
-
-    <!--
-    <STR_CREATE_FOLDER_REGUL>"F","AO\%POSITION%","","F"</STR_CREATE_FOLDER_REGUL>
-    <STR_REGUL_1>"A","AO\%POSITION%\Enter","Ввод задания (=1) или выхода (=2) с клавиатуры","F","M","*","F","F","D","L",0,10,0,1,0,0,"",,,,,,,,,,,,,,</STR_REGUL_1>
-    <STR_REGUL_2>"A","AO\%POSITION%\PV","%PV_DESC%","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].PV","A",,,,,,</STR_REGUL_2>
-    <STR_REGUL_3>"A","AO\%POSITION%\ScaleMax","Шкала максимум","F","D","*","F","F","D","L",0,50000,5000,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMax","A",,,,,,</STR_REGUL_3>
-    <STR_REGUL_4>"A","AO\%POSITION%\ScaleMin","Шкала минимум","F","D","*","F","F","D","L",0,50000,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].ScaleMin","A",,,,,,</STR_REGUL_4>
-    <STR_REGUL_5>"D","AO\%POSITION%\Mode","Режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].mode","A",,,,,,</STR_REGUL_5>
-    <STR_REGUL_6>"D","AO\%POSITION%\set_mode","Установить режим работы: 1-ручной, 0-автомат","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnMode","A",,,,,,</STR_REGUL_6>
-    <STR_REGUL_7>"A","AO\%POSITION%\k_Kp","Коэф. Kp","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Kp","A",,,,,,</STR_REGUL_7>
-    <STR_REGUL_8>"A","AO\%POSITION%\k_Td","Коэф. Td","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Td","A",,,,,,</STR_REGUL_8>
-    <STR_REGUL_9>"A","AO\%POSITION%\k_Ti","Коэф. Ti","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].koeff.Ti","A",,,,,,</STR_REGUL_9>
-    <STR_REGUL_10>"A","AO\%POSITION%\set_k_kp","Установить коэф. Kp","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Kp","A",,,,,,</STR_REGUL_10>
-    <STR_REGUL_11>"A","AO\%POSITION%\set_k_td","Установить коэф. Td","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Td","A",,,,,,</STR_REGUL_11>
-    <STR_REGUL_12>"A","AO\%POSITION%\set_k_ti","Установить коэф. Ti","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setKoeff.Ti","A",,,,,,</STR_REGUL_12>
-    <STR_REGUL_13>"D","AO\%POSITION%\set_koeff_btn","Apply koeff","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSetKoeff","A",,,,,,</STR_REGUL_13>
-    <STR_REGUL_14>"A","AO\%POSITION%\SO","Выход регуятора (положение клапана)","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].SO","A",,,,,,</STR_REGUL_14>
-    <STR_REGUL_15>"A","AO\%POSITION%\set_SO","Установить выход регуятора (положение клапана)","F","D","*","F","F","D","L",0,100,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setSO","A",,,,,,</STR_REGUL_15>
-    <STR_REGUL_16>"D","AO\%POSITION%\SO_minus","SO- Выход минус","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSOminus","A",,,,,,</STR_REGUL_16>
-    <STR_REGUL_17>"D","AO\%POSITION%\SO_plus","SO+ Выход плюс","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSOplus","A",,,,,,</STR_REGUL_17>
-    <STR_REGUL_18>"A","AO\%POSITION%\SP","Задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].SP","A",,,,,,</STR_REGUL_18>
-    <STR_REGUL_19>"A","AO\%POSITION%\set_SP","Установить задание регуятора","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].setSP","A",,,,,,</STR_REGUL_19>
-    <STR_REGUL_20>"D","AO\%POSITION%\SP_minus","SP- Задание минус","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPminus","A",,,,,,</STR_REGUL_20>
-    <STR_REGUL_21>"D","AO\%POSITION%\SP_plus","SP+ Задание плюс","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSPplus","A",,,,,,</STR_REGUL_21>
-    <STR_REGUL_22>"D","AO\%POSITION%\SPPV","Тип клапана: 0 - SP-PV (НЗ), 1- PV-SP (НО)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].sppv","A",,,,,,</STR_REGUL_22>
-    <STR_REGUL_23>"D","AO\%POSITION%\set_SPPV","Установить тип клапана","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSpPv","A",,,,,,</STR_REGUL_23>
-    <STR_REGUL_24>"D","AO\%POSITION%\casc","Cascade PID control (1-cascad on; 0-cascad off)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].casc","A",,,,,,</STR_REGUL_24>
     -->
-  </REGULATOR_POSITION>
-  <!--
-  
+  </AoPosition>
+
+<!--
   <ALARMS>
   </ALARMS>
 
@@ -201,4 +201,5 @@
     <STR_DLG_PID_4>"AO\%POSITION%\PV","Dlg_PID"</STR_DLG_PID_4>
   </DATALOGGERS>
   -->
-</POSITION_LIST>
+
+</PositionList>

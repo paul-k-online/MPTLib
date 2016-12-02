@@ -17,6 +17,8 @@
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Webmpt.NET\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +61,7 @@
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -102,190 +105,246 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\_Leg0\RemoteWorkStation.MY\packages\AutoMapper.4.1.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\..\Mpt.Net\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Webmpt.NET\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\..\MPT.Net\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\..\MPT.Net\packages\EntityFramework.Extended.6.1.0.168\lib\net40\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Webmpt.NET\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\MPT.Net\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ionic.Zip, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\Mpt.Net\packages\MySql.Data.6.9.9\lib\net40\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\Mpt.Net\packages\MySql.Data.Entity.6.9.9\lib\net40\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\Webmpt.NET\packages\NLog.4.0.0\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\..\MPT.Net\packages\NLog.4.3.11\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\TreeNode.cs" />
-    <Compile Include="BaseTypeHelpers\EnumExtension.cs" />
-    <Compile Include="Model\DataLogAlarm.cs">
-      <DependentUpon>DataLogModel.tt</DependentUpon>
+    <Compile Include="Model\Holiday.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataLogFloat.cs">
-      <DependentUpon>DataLogModel.tt</DependentUpon>
+    <Compile Include="Model\MPTModel\Holiday.cs" />
+    <Compile Include="PrimitiveType\DataRowExtension.cs" />
+    <Compile Include="PrimitiveType\DateTimeExtension.cs" />
+    <Compile Include="DataBase\TreeNode.cs" />
+    <Compile Include="PrimitiveType\EnumExtension.cs" />
+    <Compile Include="Model\AlarmEvent.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\DataLogModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataLogModel.Context.tt</DependentUpon>
+    <Compile Include="Model\AlarmTag.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\DataLogModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataLogModel.tt</DependentUpon>
+    <Compile Include="Model\AlarmValue.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\DataLogModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataLogModel.edmx</DependentUpon>
+    <Compile Include="Model\EventsAlarm.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataLogTag.cs">
-      <DependentUpon>DataLogModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\MPTModel\PlcEvent.cs" />
+    <Compile Include="Model\MPTModel\Plc.cs" />
+    <Compile Include="Model\Positions\AiPosition.cs" />
+    <Compile Include="Model\Positions\AoPosition.cs" />
+    <Compile Include="Model\Positions\DioPosition.cs" />
     <Compile Include="Model\Factory.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\GetPlcEventsCount_Result.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MPTModel.Context.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.Designer.cs">
       <DependentUpon>MPTModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\MPTModelExt.cs" />
-    <Compile Include="Model\MPTModelMetadata.cs" />
+    <Compile Include="Model\MPTModel\MPTModel.cs" />
     <Compile Include="Model\PcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PcEventIgnoreWord.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PLC.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PLCDescription.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PlcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PlcEventCode.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\PlcEventsOld.cs">
-      <DependentUpon>MPTModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PlcExt.cs" />
     <Compile Include="Model\PlcMessage.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\PlcMessageExt.cs" />
+    <Compile Include="Model\MPTModel\PlcMessage.cs" />
+    <Compile Include="Model\PlcOldEvent.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Model\PLC_TO.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\PositionModel.cs" />
+    <Compile Include="Model\Positions\IPlcPosition.cs" />
+    <Compile Include="Model\Positions\Position.cs" />
+    <Compile Include="Model\Positions\RangePair.cs" />
     <Compile Include="Model\ProjectHMI.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Model\RsViewProjectTag.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Model\Severity.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Model\User.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Workstation.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Model\Ws_Data.cs">
-      <DependentUpon>MPTModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Positions\ExcelPositionConvert.cs" />
-    <Compile Include="Positions\ExcelPositionList.cs" />
-    <Compile Include="Positions\PlcMessagesMerge.cs" />
-    <Compile Include="Positions\PositionList.cs" />
+    <Compile Include="Model\MPTModel\Workstation.cs" />
+    <Compile Include="PrimitiveType\NullableNumericExtension.cs" />
+    <Compile Include="PositionList\ExcelPositionConvert.cs" />
+    <Compile Include="PositionList\ExcelPositionList.cs" />
+    <Compile Include="PositionList\PlcMessagesMerge.cs" />
+    <Compile Include="PositionList\IPositionList.cs" />
+    <Compile Include="PrimitiveType\OrderAttribute.cs" />
     <Compile Include="RSLogix\PositionExtension.cs" />
+    <Compile Include="RSView\ActivityLog\ActivityLogRecord.cs" />
+    <Compile Include="RSView\AlarmLog\AlarmLogDataBase.cs" />
+    <Compile Include="RSView\AlarmLog\AlarmLogRecord.cs" />
+    <Compile Include="RSView\DataLog\DataLogFloatDBF.cs" />
+    <Compile Include="RSView\DataLog\DataLogTagDBF.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\AlarmLogRecord.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\DataLogFloat.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\DataLogTag.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\IProjectId.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\MultiProjectsDataLogEntities.cs" />
+    <Compile Include="RSView\DataLog\DataLogEntities.cs" />
+    <Compile Include="RSView\DataLog\DataLogTag.cs" />
+    <Compile Include="RSView\AlarmLog\AlarmLogRecordDBF.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDerivedTag.cs" />
+    <Compile Include="RSView\ImportExport\ParamValueDictionaryExtension.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
-    <Compile Include="RSView\ImportExport\XElementExtension.cs" />
-    <Compile Include="Model\RsViewAiPositionExtension.cs" />
-    <Compile Include="RSView\RsViewAnalogTag.cs" />
-    <Compile Include="RSView\RsViewDigitalTag.cs" />
-    <Compile Include="RSView\ImportExport\PositionConvertDefaultExtension.cs" />
+    <Compile Include="PrimitiveType\XElementExtension.cs" />
+    <Compile Include="RSView\UserAccount\RSViewUserAccount.cs" />
+    <Compile Include="RSView\RsViewAiPositionExtension.cs" />
+    <Compile Include="RSView\Model\AnalogTag.cs" />
+    <Compile Include="RSView\Model\DigitalTag.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDataLog.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDigitalAlarm.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvGenerator.cs" />
     <Compile Include="RSView\DataLog\DataLogFloat.cs" />
-    <Compile Include="RSView\DataLog\DataLogArchive.cs" />
-    <Compile Include="RSView\DataLog\DataLogHelper.cs" />
-    <Compile Include="DBF\DbfDataBase.cs" />
-    <Compile Include="Excel\ExcelDataBase.cs" />
+    <Compile Include="RSView\DataLog\DataLogDBF.cs" />
+    <Compile Include="DataBase\DBFDataBase.cs" />
+    <Compile Include="DataBase\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvAnalogAlarm.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvExtensions.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvTag.cs" />
-    <Compile Include="RSView\RsViewStringTag.cs" />
-    <Compile Include="RSView\RsViewTag.cs" />
+    <Compile Include="RSView\Model\StringTag.cs" />
+    <Compile Include="RSView\Model\Tag.cs" />
     <Compile Include="RSView\ImportExport\PositionConvertXmlExtension.cs" />
-    <Compile Include="RSView\RsViewTypeExtension.cs" />
-    <Compile Include="BaseTypeHelpers\StringExtension.cs" />
-    <Compile Include="WorkSchedule\ScheduleDay.cs" />
-    <Compile Include="WorkSchedule\ScheduleMonth.cs" />
+    <Compile Include="PrimitiveType\StringExtension.cs" />
+    <Compile Include="RSView\TagDB\AllTagItem.cs" />
+    <Compile Include="RSView\TagDB\OBDCTagReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="Model\MPTModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MPTModel.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EntityDeploy>
     <None Include="Model\MPTModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MPTModel.Context.cs</LastGenOutput>
       <DependentUpon>MPTModel.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\MPTModel.edmx.diagram">
       <DependentUpon>MPTModel.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\MPTModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MPTModel.cs</LastGenOutput>
       <DependentUpon>MPTModel.edmx</DependentUpon>
-    </None>
-    <EntityDeploy Include="Model\DataLogModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataLogModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\DataLogModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataLogModel.edmx</DependentUpon>
-      <LastGenOutput>DataLogModel.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Model\DataLogModel.edmx.diagram">
-      <DependentUpon>DataLogModel.edmx</DependentUpon>
-    </None>
-    <None Include="Model\DataLogModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataLogModel.edmx</DependentUpon>
-      <LastGenOutput>DataLogModel.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -293,8 +352,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RSView\ImportExport\POSITIONLIST_K31.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RSView\ImportExport\POSITIONLIST_K32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="RSView\ImportExport\POSITIONLIST.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RSView\ImportExport\POSITIONLIST_TEST.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -306,7 +376,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <Import Project="..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

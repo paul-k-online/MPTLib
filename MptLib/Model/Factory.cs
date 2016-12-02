@@ -17,18 +17,18 @@ namespace MPT.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Factory()
         {
-            this.PLCs = new HashSet<PLC>();
             this.Projects = new HashSet<ProjectHMI>();
+            this.PLCs = new HashSet<PLC>();
         }
     
         public int Id { get; set; }
-        public int Number { get; set; }
+        public Nullable<int> Number { get; set; }
         public string Description { get; set; }
         public int Enable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PLC> PLCs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectHMI> Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PLC> PLCs { get; set; }
     }
 }

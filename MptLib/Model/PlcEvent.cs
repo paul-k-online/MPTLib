@@ -26,5 +26,6 @@ namespace MPT.Model
         public virtual PLC PLC { get; set; }
         public virtual PlcEventCode PlcEventCode { get; set; }
         public virtual PlcMessage PlcMessage { get; set; }
+        public virtual EventsAlarm EventsAlarm { get; set; }
     }
 }

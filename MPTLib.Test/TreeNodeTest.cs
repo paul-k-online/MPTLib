@@ -1,8 +1,8 @@
-﻿using MPT.Collections;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MPT.DataBase;
 
 namespace MPTLib.Test
 {
@@ -36,7 +36,15 @@ namespace MPTLib.Test
             Assert.AreEqual(tree.Value, rootValue);
             Assert.AreEqual(child.Parent.Value, rootValue);
 
+        }
 
+
+        [TestMethod]
+        public void TestDictionaryValues()
+        {
+            IDictionary<int,string> dict = new Dictionary<int, string>();
+            var values = dict.Values;
+            Assert.AreEqual(values.Count, 0);
         }
     }
 }

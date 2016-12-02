@@ -18,24 +18,22 @@ namespace MPT.Model
         public Workstation()
         {
             this.Events_Pc = new HashSet<PcEvent>();
-            this.Ws_Data = new HashSet<Ws_Data>();
         }
     
         public int Id { get; set; }
-        public int FactoryId { get; set; }
+        public Nullable<int> FactoryId { get; set; }
         public int Number { get; set; }
-        public int ProjectId { get; set; }
+        public Nullable<int> ProjectId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string IP { get; set; }
         public byte Enable { get; set; }
         public string NetworkName { get; set; }
-        public Nullable<long> MAC { get; set; }
+        public string MAC { get; set; }
+        public Nullable<bool> UseMstsc { get; set; }
     
-        public virtual ProjectHMI Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PcEvent> Events_Pc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ws_Data> Ws_Data { get; set; }
+        public virtual ProjectHMI Project { get; set; }
     }
 }

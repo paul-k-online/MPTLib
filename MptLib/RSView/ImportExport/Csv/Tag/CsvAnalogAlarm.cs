@@ -112,7 +112,7 @@ Thresh8 type, Threshold, Label,                   MessageSource, File msg, Print
 "A"      ,"Logic\P1\MODE" , ""              , "N"               , ""        , "N"         , 0            , "A"         , ""             , ""                 , ""          , ""                 , "S"               , ""                 , ""                    , "S"                      , "C"         , "1.1"    , "П-1: Режим - Простой" , "S"          , ""      , ""         , "D"      , "1"     , "C"         , "1.9"    , "П-1: Режим - В Работе", "S"          ,"","","I","1",                                  "","","","S","","","","",                                                                "","","",                   "S","","","","",                                         "","","",     "S","","","","",                                                        "","","",        "S","","","","",                                                     "","","","S","","","","",                                                             "","","","S","","","",""
  * */
 
-        public RsViewTagType TagType = RsViewTagType.A;
+        public RSViewTagType TagType = RSViewTagType.A;
         public string TagName;
 
         public string HandshakeTagName = "";
@@ -121,7 +121,7 @@ Thresh8 type, Threshold, Label,                   MessageSource, File msg, Print
         public string AckAutoreset = "N";
 
         public double Deadbandvalue = 0;
-        public RsViewTagType DeadbandType = RsViewTagType.A;
+        public RSViewTagType DeadbandType = RSViewTagType.A;
         public string Outofalarmlabel = "";
         public string AlarmIdentification = "";
 
@@ -141,9 +141,16 @@ Thresh8 type, Threshold, Label,                   MessageSource, File msg, Print
                 {8, new CsvAnalogAlarmTreshold()},
             };
 
-        public CsvAnalogAlarm(string name)
+        public CsvAnalogAlarm(string name, Dictionary<int, RsViewAnalogTag.RsViewAnalogAlarm> alarmList = null)
         {
             TagName = name;
+
+            if (alarmList == null) 
+                return;
+            foreach (var alarm in alarmList)
+            {
+                Tresholds[alarm.Key] = alarm.Value.ToCsvAnalogAlarmTreshold();
+            }
         }
 
 

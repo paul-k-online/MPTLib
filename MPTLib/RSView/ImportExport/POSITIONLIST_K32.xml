@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PositionList>
+  <!--
+      "Number" => position.Number
+      "Name" => position.Name
+      "FullName" => position.FullName
+      "FirstLetter" => position.FirstLetter
+      "Description" => position.Description
+      "SHORTNAME" => position.RsViewShortName()
+      "UNITS" => position.Units
+      "Scale.Low" => position.Scale.Low
+      "Scale.High" => position.Scale.High
+      "Reglament.Low" => position.Reglament.Low == null ? "0" : position.Reglament.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Reglament.High" => position.Reglament.High == null ? "0" : position.Reglament.High.Value.ToString(CultureInfo.InvariantCulture)
+      "Alarming.Low" => position.Alarming.Low == null ? "0" : position.Alarming.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Alarming.High" => position.Alarming.High == null ? "0" : position.Alarming.High.Value.ToString(CultureInfo.InvariantCulture)
+      "Blocking.Low" => position.Blocking.Low == null ? "0" : position.Blocking.Low.Value.ToString(CultureInfo.InvariantCulture)
+      "Blocking.High" => position.Blocking.High == null ? "0" : position.Blocking.High.Value.ToString(CultureInfo.InvariantCulture)
+  -->
+
+  <AiPosition>
+    <TAG type="A" name="{FirstLetter}\{SHORTNAME}" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+      <DATALOG name ="DLG_Short"/>
+      <DATALOG name ="DLG_Long"/>
+    </TAG>
+
+    <TAG type="A" name="{FirstLetter}\{SHORTNAME}_state" description="{FULLNAME}" dataSource="D" min="0" max="8" nodeName="{NODE}" address="AI[{NUMBER}].State">
+      <ALARM number="1" threshold="0.9" label="{SHORTNAME}&lt;{BLOCKING.Low} (LL)"   direction="D" Severity="1"/>
+      <ALARM number="2" threshold="1.9" label="{SHORTNAME}&lt;{ALARMING.Low} (L)"    direction="D" Severity="2"/>
+      <ALARM number="3" threshold="2.9" label="{SHORTNAME}&lt;{REGLAMENT.Low} (RL)"  direction="D" Severity="3"/>
+      <ALARM number="4" threshold="4.1" label="{SHORTNAME}&gt;{REGLAMENT.High} (RH)" direction="I" Severity="3"/>
+      <ALARM number="5" threshold="5.1" label="{SHORTNAME}&gt;{ALARMING.High} (H)"   direction="I" Severity="2"/>
+      <ALARM number="6" threshold="6.1" label="{SHORTNAME}&gt;{BLOCKING.High} (HH)"  direction="I" Severity="1"/>
+      <DATALOG name ="DLG_KIP"/>
+    </TAG>
+  </AiPosition>
+</PositionList>

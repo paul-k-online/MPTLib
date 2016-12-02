@@ -17,6 +17,7 @@ namespace MPT.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProjectHMI()
         {
+            this.RsViewProjectTags = new HashSet<RsViewProjectTag>();
             this.Workstations = new HashSet<Workstation>();
         }
     
@@ -29,8 +30,11 @@ namespace MPT.Model
         public Nullable<System.DateTime> EditDate { get; set; }
         public int FactoryId { get; set; }
         public string Path { get; set; }
+        public Nullable<int> OrderIndex { get; set; }
     
         public virtual Factory Factory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RsViewProjectTag> RsViewProjectTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Workstation> Workstations { get; set; }
     }

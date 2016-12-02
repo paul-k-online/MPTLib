@@ -30,7 +30,7 @@ namespace MPT.Model
         public virtual DbSet<PlcEventCode> PlcEventCodes { get; set; }
         public virtual DbSet<PlcEvent> PlcEvents { get; set; }
         public virtual DbSet<PcEvent> PcEvents { get; set; }
-        public virtual DbSet<PlcEventsOld> PlcEventsOlds { get; set; }
+        public virtual DbSet<PlcOldEvent> PlcEventsOld { get; set; }
         public virtual DbSet<Factory> Factories { get; set; }
         public virtual DbSet<PlcMessage> PlcMessages { get; set; }
         public virtual DbSet<PcEventIgnoreWord> PcEventIgnoreWords { get; set; }
@@ -39,7 +39,14 @@ namespace MPT.Model
         public virtual DbSet<PLC_TO> PLC_TOs { get; set; }
         public virtual DbSet<ProjectHMI> ProjectHMIs { get; set; }
         public virtual DbSet<Workstation> Workstations { get; set; }
-        public virtual DbSet<Ws_Data> Ws_Data { get; set; }
+        public virtual DbSet<RsViewProjectTag> RsViewProjectTags { get; set; }
+        public virtual DbSet<Severity> Severities { get; set; }
+        public virtual DbSet<AlarmEvent> AlarmEvents { get; set; }
+        public virtual DbSet<AlarmTag> AlarmTags { get; set; }
+        public virtual DbSet<AlarmValue> AlarmValues { get; set; }
+        public virtual DbSet<EventsAlarm> EventsAlarms { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Holiday> Holidays { get; set; }
     
         public virtual ObjectResult<GetPlcEventsCount_Result> GetPlcEventsCount(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<short> severity)
         {

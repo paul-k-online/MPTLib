@@ -17,7 +17,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         [TestMethod]
         public void TestEnumToString()
         {
-            Assert.AreEqual(RsViewTagType.A.ToRsViewFormat(), "\"A\"");
+            Assert.AreEqual(RSViewTagType.A.ToRsViewFormat(), "\"A\"");
         }
 
         [TestMethod]
@@ -97,13 +97,13 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
                 @" ""D"",""AI\FRCA3013_2\NAN"",""ON"",""FRCA3013_2 обрыв"",""5"",""S"","""","""",""S"","""","""",""S"","""","""","""","""","""",""N"","""",""N""";
             expected = _regexSpace.Replace(expected, "");
 
-            var tag = new RsViewDigitalTag(@"AI\FRCA3013_2\NAN")
+            var tag = new RSViewDigitalTag(@"AI\FRCA3013_2\NAN")
             {
-                Alarm = new RsViewDigitalTag.DigitalAlarm()
+                Alarm = new RSViewDigitalTag.DigitalAlarm()
                 {
                     Label = "FRCA3013_2 обрыв",
                     Severity = 5,
-                    Type = RsViewDigitalAlarmType.ON
+                    Type = RSViewDigitalAlarmType.ON
                 }
             };
 
