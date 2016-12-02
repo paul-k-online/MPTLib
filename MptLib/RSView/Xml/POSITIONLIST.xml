@@ -1,47 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <POSITION_LIST>
   <ANALOG_POSITION>
-    <TAG type="D" folder="AI/{SHORTNAME}" name="EN" dataSource="D" address="{LOGIXAI}.EN"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="current" description="Ток" min="0" max="20" units="мА" dataSource="D" address="{LOGIXAI}.i"/>  
-    <TAG type="A" folder="AI/{SHORTNAME}" name="value" description="{FullName}" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="D" address="{LOGIXAI}.v">
-        <DATALOG name ="DLG_SEC"/>
-    </TAG>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="valueAvr" description="{FullName}" dataSource="D" address="{LOGIXAI}.vAvr">
-        <DATALOG name ="DLG_MIN"/>
-    </TAG>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="bMin" description="Блокировка по MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{BLOKING.LOW}"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="bMax" description="Блокировка по MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{BLOKING.HIGH}"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="sMin" description="Сигнализация MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.LOW}"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="sMax" description="Сигнализация MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.HIGH}"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="rMin" description="Регламент MIN" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.LOW}"/>
-    <TAG type="A" folder="AI/{SHORTNAME}" name="rMax" description="Регламент MAX" min="{SCALE.MIN}" max="{SCALE.MAX}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.HIGH}"/>
-  
+    <TAG type="A" folder="AI\{SHORTNAME}" name="rMin" description="Регламент MIN" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.LOW}"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="rMax" description="Регламент MAX" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{REGLAMENT.HIGH}"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="sMin" description="Сигнализация MIN" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.LOW}"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="sMax" description="Сигнализация MAX" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{ALARMING.HIGH}"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="bMin" description="Блокировка по MIN" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{Blocking.LOW}"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="bMax" description="Блокировка по MAX" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="M" initialValue="{Blocking.HIGH}"/>
 
-    <STR_TAG_AI_BMAX>"A","AI\%POSITION%\bMax","Блокировка по MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMAX>
-    <STR_TAG_AI_BMIN>"A","AI\%POSITION%\bMin","Блокировка по MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMIN>
-    <STR_TAG_AI_SMAX>"A","AI\%POSITION%\sMax","Сигнализация MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMAX>
-    <STR_TAG_AI_SMIN>"A","AI\%POSITION%\sMin","Сигнализация MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMIN>
-    <STR_TAG_AI_RMAX>"A","AI\%POSITION%\rMax","Регламент MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMAX>
-    <STR_TAG_AI_RMIN>"A","AI\%POSITION%\rMin","Регламент MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMIN>
+    <TAG type="S" folder="AI\{SHORTNAME}" name="Name" description="{Description}" length="200" dataSource="M" initialValue="{NAME}"/>
+    
+    <TAG type="D" folder="AI\{SHORTNAME}" name="EN" description="Enable" dataSource="D" address="AI[{NUMBER}].EN"/>
+    <TAG type="A" folder="AI\{SHORTNAME}" name="Current" description="Ток" min="0" max="20" units="мА" dataSource="D" address="AI[{NUMBER}].i"/>  
+   
+    <TAG type="A" folder="AI\{SHORTNAME}" name="Value" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
+      <DATALOG name ="DLG_SEC"/>
+      <DATALOG name ="DLG_TEST"/>
+    </TAG>
+    
+    <TAG type="A" folder="AI\{SHORTNAME}" name="ValueAvr" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.high}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].vAvr">
+      <DATALOG name ="DLG_MIN"/>
+    </TAG>
+
+    <TAG type="D" folder="AI\{SHORTNAME}" name="Break" description="{FULLNAME}" dataSource="D"  address="AI[{NUMBER}].break.sgn">
+      <ALARM type="On" Label="Обрыв" Severity="4"/>
+    </TAG>
+
+    <TAG type="A" folder="AI\{SHORTNAME}" name="State" description="{FULLNAME}" dataSource="D" min="0" max="8" address="AI[{NUMBER}].state">
+      <ALARM number="1" threshold="0.9" label="&lt;{Blocking.LOW} {UNITS} (LL)" direction="D"/>
+      <ALARM number="2" threshold="1.9" label="&lt;{ALARMING.LOW} {UNITS} (L)" direction="D"/>
+      <ALARM number="3" threshold="2.9" label="&lt;{REGLAMENT.LOW} {UNITS} (RL)" direction="D"/>
+      <ALARM number="4" threshold="4.9" label="&gt;{REGLAMENT.HIGH} {UNITS} (RH)" direction="I"/>
+      <ALARM number="5" threshold="5.9" label="&gt;{ALARMING.HIGH} {UNITS} (H)" direction="I"/>
+      <ALARM number="6" threshold="6.9" label="&gt;{Blocking.HIGH} {UNITS} (HH)" direction="I"/>
+    </TAG>
+    
+<!--
     <STR_TAG_AI_NAN>"D","AI\%POSITION%\NAN","Состояние по обрыву","F","D","*","T","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","AI[%POS_NUMBER%].Break.sgn","A",,,,,,</STR_TAG_AI_NAN>
-    <STR_TAG_AI_I>"A","AI\%POSITION%\i","Ток/Напряжение","F","D","*","F","F","D","L",-50,50,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].i","A",,,,,,</STR_TAG_AI_I>
-    <STR_TAG_AI_VAL>"A","AI\%POSITION%\v","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].v","A",,,,,,</STR_TAG_AI_VAL>
-    <STR_TAG_AI_TMIN>"A","AI\%POSITION%\vAvr","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].vAvr","A",,,,,,</STR_TAG_AI_TMIN>
     <STR_TAG_AI_DESC>"S","AI\%POSITION%\Name","%DESCRIPTION%","F","M","*","F","F",,,,,,,,,,,,,200,"%POSITION_REG%",,,,,,,,,</STR_TAG_AI_DESC>
     <STR_TAG_AI_STATE>"A","AI\%POSITION%\State","%POS_DESCRIPTION%","F","D","*","T","F","D","F",0.0,8.0,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].State","A",,,,,,</STR_TAG_AI_STATE>
 
     <STR_TAG_SEL>"D","SEL\s%POS_NUMBER_INC%","AI\%POSITION%","F","M","*","F","F",,,,,,,,,,"Off","On","Off",,,,,,,,,,,</STR_TAG_SEL>
     <STR_TAG_SEL_S>"S","SEL\s%POS_NUMBER_INC%s","","F","M","*","F","F",,,,,,,,,,,,,100,"%POS_DESCRIPTION_ALIGN%",,,,,,,,,</STR_TAG_SEL_S>
 
-
+    <STR_TAG_AI_I>"A","AI\%POSITION%\i","Ток/Напряжение","F","D","*","F","F","D","L",-50,50,0,1,0,0,"",,,,,,"%NODE%","AI[%POS_NUMBER%].i","A",,,,,,</STR_TAG_AI_I>
+    <STR_TAG_AI_VAL>"A","AI\%POSITION%\v","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].v","A",,,,,,</STR_TAG_AI_VAL>
+    <STR_TAG_AI_TMIN>"A","AI\%POSITION%\vAvr","%POS_DESCRIPTION%","F","D","*","F","F","D","F",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"%UNITS%",,,,,,"%NODE%","AI[%POS_NUMBER%].vAvr","A",,,,,,</STR_TAG_AI_TMIN>
+    <STR_TAG_AI_BMAX>"A","AI\%POSITION%\bMax","Блокировка по MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMAX>
+    <STR_TAG_AI_BMIN>"A","AI\%POSITION%\bMin","Блокировка по MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%B_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_BMIN>
+    <STR_TAG_AI_SMAX>"A","AI\%POSITION%\sMax","Сигнализация MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMAX>
+    <STR_TAG_AI_SMIN>"A","AI\%POSITION%\sMin","Сигнализация MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%S_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_SMIN>
+    <STR_TAG_AI_RMAX>"A","AI\%POSITION%\rMax","Регламент MAX","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MAX%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMAX>
+    <STR_TAG_AI_RMIN>"A","AI\%POSITION%\rMin","Регламент MIN","F","M","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,%REG_MIN%,1,0,0,"%UNITS%",,,,,,,,,,,,,,</STR_TAG_AI_RMIN>
+-->
   </ANALOG_POSITION>
 
-  <DIGITAL_TAGS>
+  <DIGITAL_POSITION>
+    <TAG />
+    
+    
     <STR_TAG_DIO_FOLDER>"F","DIO\%POSITION%","","F"</STR_TAG_DIO_FOLDER>
     <STR_TAG_DIO_VALUE>"D","DIO\%POSITION%\v","%POS_DESCRIPTION%","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","DIO[%POS_NUMBER%].v","A",,,,,,</STR_TAG_DIO_VALUE>
     <STR_TAG_DIO_STATE>"A","DIO\%POSITION%\State","%POS_DESCRIPTION%","F","D","*","T","F","D","F",0.0,8.0,0,1,0,0,"",,,,,,"%NODE%","DIO[%POS_NUMBER%].State","A",,,,,,</STR_TAG_DIO_STATE>
-  </DIGITAL_TAGS>
-  <REGUL_TAGS>
+  </DIGITAL_POSITION>
+  <REGULATOR_POSITION>
     <STR_CREATE_FOLDER_REGUL>"F","AO\%POSITION%","","F"</STR_CREATE_FOLDER_REGUL>
     <STR_REGUL_1>"A","AO\%POSITION%\Enter","Ввод задания (=1) или выхода (=2) с клавиатуры","F","M","*","F","F","D","L",0,10,0,1,0,0,"",,,,,,,,,,,,,,</STR_REGUL_1>
     <STR_REGUL_2>"A","AO\%POSITION%\PV","%PV_DESC%","F","D","*","F","F","D","L",%SCALE_MIN%,%SCALE_MAX%,0,1,0,0,"",,,,,,"%NODE%","mPID[%NUM_REGUL%].PV","A",,,,,,</STR_REGUL_2>
@@ -67,7 +89,7 @@
     <STR_REGUL_22>"D","AO\%POSITION%\SPPV","Тип клапана: 0 - SP-PV (НЗ), 1- PV-SP (НО)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].sppv","A",,,,,,</STR_REGUL_22>
     <STR_REGUL_23>"D","AO\%POSITION%\set_SPPV","Установить тип клапана","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].btnSpPv","A",,,,,,</STR_REGUL_23>
     <STR_REGUL_24>"D","AO\%POSITION%\casc","Cascade PID control (1-cascad on; 0-cascad off)","F","D","*","F","F",,,,,,,,,,"Off","On","Off",,,"%NODE%","mPID[%NUM_REGUL%].casc","A",,,,,,</STR_REGUL_24>
-  </REGUL_TAGS>
+  </REGULATOR_POSITION>
   <ALARMS>
     <STR_ALM_D_NAN>"D","AI\%POSITION%\NAN","ON","%POSITION_NAN_DESC%","5","S","","","S","","","S","","","","","","N","","N"</STR_ALM_D_NAN>
     <STR_ALM_A_STATE>"A","AI\%POSITION%\State","","N","","N",0,"A","","","","","S","","","S","C","1.5","%POSITION_BMIN_DESC%","S","","","D","1","C","2.5","%POSITION_SMIN_DESC%","S","","","D","1","C","3.5","%POSITION_RMIN_DESC%","S","","","D","1","C","4.5","%POSITION_RMAX_DESC%","S","","","I","1","C","5.5","%POSITION_SMAX_DESC%","S","","","I","1","C","6.5","%POSITION_BMAX_DESC%","S","","","I","1","","","","S","","","","","","","","S","","","",""</STR_ALM_A_STATE>

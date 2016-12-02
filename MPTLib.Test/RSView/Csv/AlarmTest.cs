@@ -26,26 +26,16 @@ namespace MPTLib.Test.RSView.Csv
         [TestMethod]
         public void TestRSViewAlarmTresholdDefault()
         {
-
-            
-
             var alarmTreshold = new CsvAlarmTreshold();
-
             var threshType = alarmTreshold.Type.ToString().ToRS();
             Assert.AreEqual("\"\"", threshType);
-
-            
             var expected = @" """","""","""",""S"","""","""","""",""""     ";
             expected = regexSpace.Replace(expected, "");
             var actual = alarmTreshold.ToString();
             actual = regexSpace.Replace(actual, "");
-
             Assert.AreEqual(expected, actual, true);
         }
-
-
-
-
+        
         [TestMethod]
         public void TestAlarmMessageDefault()
         {
@@ -125,7 +115,6 @@ namespace MPTLib.Test.RSView.Csv
 """","""","""",""S"","""","""","""","""",                                                             
 """","""","""",""S"","""","""","""",""""";
            
-
             var alarm = new AnalogAlarm()
             {
                 TagName = @"Logic\P1\KEY",
@@ -133,22 +122,18 @@ namespace MPTLib.Test.RSView.Csv
             alarm.Tresholds[1] = new CsvAlarmTreshold(1.5, "ABC", RSTresholdDirection.D, 1);
             alarm.Tresholds[2] = new CsvAlarmTreshold(1.7, "?-1: ???? - ???????", RSTresholdDirection.I, 1);
             alarm.Tresholds[3] = new CsvAlarmTreshold(2.5, "?-1: ???? - ??????", RSTresholdDirection.I, 1);
-
-
-
+            
             var expected = b;
             expected = regexSpace.Replace(expected, "");
 
             var actual = alarm.ToString();
             actual = regexSpace.Replace(actual, "");
-
             Assert.AreEqual(expected, actual, true);
         }
 
         [TestMethod]
         public void TestAnalogAlarm3()
         {
-
             var c = 
 @" ""A""      ,""Logic\P1\MODE"" , """"              , ""N""               , """"        , ""N""         , 0            , ""A""         , """"             , """"                 , """"          , """"                 , ""S""               , """"                 , """"                    , ""S""                      , 
 ""C""         , ""1.1""    , ""ABC:ABC"" , ""S""          , """"      , """"         , ""D""      , ""1""     , 
@@ -161,9 +146,9 @@ namespace MPTLib.Test.RSView.Csv
 """","""","""",""S"","""","""","""",""""";
             
             var alarm = new AnalogAlarm()
-            {
-                TagName = @"Logic\P1\MODE",
-            };
+                        {
+                            TagName = @"Logic\P1\MODE",
+                        };
             alarm.Tresholds[1] = new CsvAlarmTreshold(1.1, "ABC:ABC", RSTresholdDirection.D, 1);
             alarm.Tresholds[2] = new CsvAlarmTreshold(1.9, "?-1: ????? - ? ??????", RSTresholdDirection.I, 1);
 

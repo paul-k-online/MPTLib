@@ -41,9 +41,6 @@ namespace MPT.RSView.DataLog
         public string UserStn { get; set; }
         // c15
         public string LoggingStn { get; set; }
-
-
-
     }
 
     public static class DatalogHelper

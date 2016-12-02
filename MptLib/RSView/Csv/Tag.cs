@@ -37,17 +37,7 @@ namespace MPT.RSView.Csv
 
     public class Tag
     {
-        public enum RSDataSource
-        {
-            /// <summary>
-            /// Device
-            /// </summary>
-            D,
-            /// <summary>
-            /// Memory
-            /// </summary>
-            M,
-        }
+
 
         // Generic
         public RSTagType TagType = RSTagType.F;
@@ -56,7 +46,7 @@ namespace MPT.RSView.Csv
         public RSBoolEnum ReadOnly = RSBoolEnum.F;
 
         // Data
-        public RSDataSource DataSource;
+        public RSDataSource DataSource = RSDataSource.M;
         public string SecurityCode = "*";
         public RSBoolEnum Alarmed = RSBoolEnum.F;
         public RSBoolEnum DataLogged = RSBoolEnum.F;

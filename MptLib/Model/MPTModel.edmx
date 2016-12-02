@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MPTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MPTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Codes">
           <Key>
             <PropertyRef Name="CodeId" />
@@ -301,19 +301,19 @@
           <Parameter Name="Severity" Type="smallint" Mode="In" />
         </Function>
         <EntityContainer Name="MPTModelStoreContainer">
-          <EntitySet Name="Codes" EntityType="Self.Codes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Events_Pc" EntityType="Self.Events_Pc" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventsOld" EntityType="Self.EventsOld" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Factory" EntityType="Self.Factory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWords" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PLC" EntityType="Self.PLC" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PLC_Description" EntityType="Self.PLC_Description" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PLC_TO" EntityType="Self.PLC_TO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Workstation" EntityType="Self.Workstation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ws_Data" EntityType="Self.Ws_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Codes" EntityType="Self.Codes" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Events_Pc" EntityType="Self.Events_Pc" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EventsOld" EntityType="Self.EventsOld" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Factory" EntityType="Self.Factory" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWords" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PLC" EntityType="Self.PLC" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PLC_Description" EntityType="Self.PLC_Description" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PLC_TO" EntityType="Self.PLC_TO" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Workstation" EntityType="Self.Workstation" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Ws_Data" EntityType="Self.Ws_Data" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Events_Codes" Association="Self.FK_Events_Codes">
             <End Role="Codes" EntitySet="Codes" />
             <End Role="Events" EntitySet="Events" />
@@ -362,7 +362,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MPTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MPTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityType Name="PlcEventCode">
           <Key>
             <PropertyRef Name="Id" />
@@ -768,7 +768,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MPTModelStoreContainer" CdmEntityContainer="MPTEntities">
           <EntitySetMapping Name="PlcEventCodes">
             <EntityTypeMapping TypeName="MPTModel.PlcEventCode">
@@ -954,7 +954,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -970,6 +970,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

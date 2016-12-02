@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace MPT.RSView.Csv
@@ -57,10 +59,12 @@ namespace MPT.RSView.Csv
 
         public override string ToString()
         {
+            var formatInfo = CultureInfo.InvariantCulture.NumberFormat;
+
             var fieldList = new List<object>()
                        {
                            Type.ToString(),
-                           Threshold.ToString(),
+                           Convert.ToString(Threshold, formatInfo),
                            Label,
                            AlarmMessage,
                            Direction.ToString(),

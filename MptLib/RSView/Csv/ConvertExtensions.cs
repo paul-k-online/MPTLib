@@ -1,8 +1,10 @@
-﻿using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using System;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Globalization;
 
 namespace MPT.RSView.Csv
 {
-    public static class Extensions
+    public static class ConvertExtensions
     {
         /*
         public static string ToRS(this RSTagType value)
@@ -47,7 +49,7 @@ namespace MPT.RSView.Csv
             if (value is double)
                 //return (value as double?).ToRS();
                 //return value == null ? "" : value.ToString();
-                return value.ToString();
+                return Convert.ToString(value,CultureInfo.InvariantCulture.NumberFormat);
 
             if (value is int)
                 //return (value as double?).ToRS();

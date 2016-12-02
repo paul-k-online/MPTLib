@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="DataLog_Alarm">
           <Key>
             <PropertyRef Name="DateTime" />
@@ -70,9 +70,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DataLogModelStoreContainer">
-          <EntitySet Name="DataLog_Alarm" EntityType="Self.DataLog_Alarm" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DataLog_Float" EntityType="Self.DataLog_Float" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DataLog_Tag" EntityType="Self.DataLog_Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataLog_Alarm" EntityType="Self.DataLog_Alarm" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="DataLog_Float" EntityType="Self.DataLog_Float" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="DataLog_Tag" EntityType="Self.DataLog_Tag" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Datalog_Float_Datalog_Tag" Association="Self.FK_Datalog_Float_Datalog_Tag">
             <End Role="DataLog_Tag" EntitySet="DataLog_Tag" />
             <End Role="DataLog_Float" EntitySet="DataLog_Float" />
@@ -82,7 +82,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DataLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DataLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityType Name="DataLogAlarm">
           <Key>
             <PropertyRef Name="DateTime" />
@@ -162,7 +162,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DataLogModelStoreContainer" CdmEntityContainer="DataLogEntities">
           <EntitySetMapping Name="DataLogAlarms">
             <EntityTypeMapping TypeName="DataLogModel.DataLogAlarm">
@@ -217,7 +217,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -233,6 +233,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

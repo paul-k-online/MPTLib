@@ -55,12 +55,15 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AipositionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSView\Csv\ExtensionsTest.cs" />
     <Compile Include="RSView\Csv\AlarmTest.cs" />
     <Compile Include="RSView\Csv\TagTest.cs" />
     <Compile Include="RSView\Csv\DataLogTest.cs" />
     <Compile Include="RSView\RSConvertTest.cs" />
+    <Compile Include="RSView\PositionExtensionTest.cs" />
+    <Compile Include="String\UnitTest1.cs" />
     <Compile Include="WorkSchedule\WorkScheduleTest.cs" />
     <Compile Include="TreeNodeTest.cs" />
   </ItemGroup>

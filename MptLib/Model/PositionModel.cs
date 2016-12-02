@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MPT.Model
 {
@@ -6,7 +8,6 @@ namespace MPT.Model
     {
         private const string FullNameTemplate = "{0} - {1}";
         
-
         public int PlcId { get; set; }
 
         public int Number { get; set; }
@@ -73,7 +74,7 @@ namespace MPT.Model
 
             public override string ToString()
             {
-                return string.Format("{0}; {1}", Low, High);
+                return String.Format("{0}; {1}", Low, High);
             }
         }
 
@@ -86,7 +87,18 @@ namespace MPT.Model
         public AlarmPair Alarming { get; set; }
 
         public AlarmPair Blocking { get; set; }
-        
+
+        public AiPosition()
+        {
+            Scale = new AlarmPair();
+            Reglament = new AlarmPair();
+            Alarming = new AlarmPair();
+            Blocking = new AlarmPair();
+        }
+
+
+        //protected static Regex NameRegex = new Regex(@" ^ ((?<prefix>\d?)[\.-_\s])? (?<letters>\a+)[\.-_\s]? (?<digits>[\d\/-_]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+        protected static Regex NameRegex = new Regex(@"^  ((?<Prefix>\d+)[\.-_%])?   (?<Letters>[A-Za-z]+)([-_\.]?)(?<Digits>[\d\/]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// буквенный шифр
@@ -95,8 +107,11 @@ namespace MPT.Model
         {
             get
             {
-                var n = Name.IndexOf('-');
-                return Name.Substring(0, n);
+                var m = NameRegex.Match(Name);
+                return m.Groups["Letters"].Value;
+
+                //var n = Name.IndexOf('-');
+                //return Name.Substring(0, n);
             }
         }
 
@@ -105,19 +120,25 @@ namespace MPT.Model
         /// </summary>
         public string ShortName
         {
-            get { return Name.Replace(Letters, Letters[0].ToString()); }
+            get
+            {
+                //return Name.Replace(Letters, Letters[0].ToString()); 
+                var l = Letters;
+                return string.IsNullOrWhiteSpace(l) ? Name : Name.Replace(l, l[0].ToString());
+            }
         }
 
+        /*
         public void CopyFrom(AiPosition pos)
         {
             base.CopyFrom(pos);
-
             Scale = new AlarmPair(pos.Scale.Low, pos.Scale.High);
             Units = pos.Units;
             Reglament = new AlarmPair(pos.Reglament.Low, pos.Reglament.High);
             Alarming = new AlarmPair(pos.Alarming.Low, pos.Alarming.High);
             Blocking = new AlarmPair(pos.Blocking.Low, pos.Blocking.High);
         }
+        */
     }
 
 
