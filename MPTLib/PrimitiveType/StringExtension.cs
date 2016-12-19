@@ -52,7 +52,7 @@ namespace MPT.PrimitiveType
             }
             return replacedPattern;
         }
-        
+
 
         public static string OnlyLetterAndDigit(this string str)
         {

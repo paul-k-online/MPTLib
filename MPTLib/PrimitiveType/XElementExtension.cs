@@ -12,14 +12,12 @@ namespace MPT.PrimitiveType
             return string.Equals(xElement.Name.ToString(), name, StringComparison.InvariantCultureIgnoreCase);
         }
 
-
         public static IEnumerable<XAttribute> GetAttributes(this XElement xElement, string name, bool ignoreCase = true)
         {
             var stringComparison = ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture;
             return xElement.Attributes().Where(x => string.Equals(x.Name.ToString(), name, stringComparison));
         }
-
-
+        
         public static string GetAttributeValue(this XElement xElement, string name, bool ignoreCase = true)
         {
             var attribute = xElement.GetAttributes(name, ignoreCase).FirstOrDefault();
@@ -45,7 +43,6 @@ namespace MPT.PrimitiveType
             var stringComparison = ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture;
             return xElement.Elements().Where(x => string.Equals(x.Name.ToString(), name, stringComparison));
         }
-
 
         public static XElement GetElement(this XElement xElement, string name, bool ignoreCase = true)
         {
