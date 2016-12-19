@@ -123,8 +123,7 @@ namespace MPT.RSView.ImportExport.Csv.Tag
             return tag;
         }
 
-        public static CsvTag CreateString(string name, string description,
-                                        string initial = "", ushort length = 200)
+        public static CsvTag CreateString(string name, string description, string initial = "", ushort length = 200)
         {
             var tag = new CsvTag()
             {
@@ -215,6 +214,5 @@ namespace MPT.RSView.ImportExport.Csv.Tag
             var fields = (TagType == RSViewTagType.F) ? FieldsGeneric : FieldsTotal;
             return string.Join(",", fields.Select(x => x.ToRsViewFormat()));
         }
-
     }
 }
