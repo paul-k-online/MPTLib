@@ -15,7 +15,7 @@ namespace MPT.RSView.ImportExport.Csv.Tag
                 PrinterMessage,
                 Source,
             };
-            return string.Join(",", fields.Select(x => CsvConvertExtensions.ToRsViewFormat(x)));
+            return string.Join(",", fields.Select(x => ConvertToCsvTag.ToRsViewFormat(x)));
         }
     }
 

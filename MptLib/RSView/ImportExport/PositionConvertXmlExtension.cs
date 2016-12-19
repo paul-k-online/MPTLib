@@ -28,9 +28,7 @@ namespace MPT.RSView.ImportExport
         }
 
 
-
         #region ToRsView
-
         public static IEnumerable<RSViewTag> ToRsViewTags(this XElement positionShema, IDictionary<string, object> paramDict, string nodeName)
         {
             var tagElements = positionShema.Elements("TAG");
@@ -210,8 +208,8 @@ namespace MPT.RSView.ImportExport
 
         public static void SetDataSource(this RSViewTag tag, XElement xElement,IDictionary<string, object> paramDict, string nodeName)
         {
-            var dataSource = xElement.GetAttributeValue("dataSource").FormatDict(paramDict).ToEnum<RSViewDataSourceType>();
-            if (dataSource != RSViewDataSourceType.D) 
+            var dataSource = xElement.GetAttributeValue("dataSource").FormatDict(paramDict).ToEnum<RSViewTagDataSourceType>();
+            if (dataSource != RSViewTagDataSourceType.D) 
                 return;
             tag.NodeName = nodeName;
             tag.Address = xElement.GetAttributeValue("Address").FormatDict(paramDict);

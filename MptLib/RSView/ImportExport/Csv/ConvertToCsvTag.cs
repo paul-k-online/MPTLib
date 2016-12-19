@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPT.RSView.ImportExport.Csv
 {
-    public static class CsvConvertExtensions
+    public static class ConvertToCsvTag
     {
         public static string ToRsViewFormat(this object value)
         {           

@@ -34,7 +34,7 @@ namespace MPT.RSView.ImportExport.Csv.Tag
         public RsViewBoolEnum ReadOnly = RsViewBoolEnum.F;
 
         // Data
-        public RSViewDataSourceType DataSource = RSViewDataSourceType.M;
+        public RSViewTagDataSourceType DataSource = RSViewTagDataSourceType.M;
         public string SecurityCode = "*";
         public RsViewBoolEnum Alarmed = RsViewBoolEnum.F;
         public RsViewBoolEnum DataLogged = RsViewBoolEnum.F;
@@ -64,7 +64,7 @@ namespace MPT.RSView.ImportExport.Csv.Tag
         public string Address;
         public string ScanClass
         {
-            get { return DataSource == RSViewDataSourceType.D ? "A" : null; }
+            get { return DataSource == RSViewTagDataSourceType.D ? "A" : null; }
         }
 
         // Other
@@ -138,9 +138,9 @@ namespace MPT.RSView.ImportExport.Csv.Tag
 
         }
         
-        public CsvTag SetDataSource(string nodeName, string address, RSViewDataSourceType dataSourceType = RSViewDataSourceType.D)
+        public CsvTag SetDataSource(string nodeName, string address, RSViewTagDataSourceType dataSourceType = RSViewTagDataSourceType.D)
         {
-            if (dataSourceType == RSViewDataSourceType.D)
+            if (dataSourceType == RSViewTagDataSourceType.D)
             {
                 DataSource = dataSourceType;
                 NodeName = nodeName;

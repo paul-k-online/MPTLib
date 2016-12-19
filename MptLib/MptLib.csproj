@@ -118,7 +118,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
-      <HintPath>..\..\MPT.Net\packages\EntityFramework.Extended.6.1.0.168\lib\net40\EntityFramework.Extended.dll</HintPath>
+      <HintPath>..\..\HardwareMonitor\RemoteWorkStation\packages\EntityFramework.Extended.6.1.0.168\lib\net40\EntityFramework.Extended.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -131,10 +131,6 @@
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\..\Mpt.Net\packages\MySql.Data.Entity.6.9.9\lib\net40\MySql.Data.Entity.EF6.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\MPT.Net\packages\NLog.4.3.11\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -162,25 +158,28 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Holiday.cs">
+    <Compile Include="Model\MPTModel\Factory.cs" />
+    <Compile Include="Model\MPTModel\GetPlcEventsCount_Result.cs" />
+    <Compile Include="Model\MPTModel\Holiday.cs" />
+    <Compile Include="Model\MPTModel\ProjectHMI.cs" />
+    <Compile Include="Model\WorkScheduleHoliday.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\MPTModel\Holiday.cs" />
+    <Compile Include="Model\WorkScheduleMove.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PrimitiveType\DataRowExtension.cs" />
     <Compile Include="PrimitiveType\DateTimeExtension.cs" />
     <Compile Include="DataBase\TreeNode.cs" />
     <Compile Include="PrimitiveType\EnumExtension.cs" />
     <Compile Include="Model\AlarmEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\AlarmTag.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\AlarmValue.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\EventsAlarm.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
@@ -192,89 +191,71 @@
     <Compile Include="Model\Positions\DioPosition.cs" />
     <Compile Include="Model\Factory.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\GetPlcEventsCount_Result.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MPTModel.Context.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel.Designer.cs">
       <DependentUpon>MPTModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel\MPTModel.cs" />
     <Compile Include="Model\PcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PcEventIgnoreWord.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PLC.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PLCDescription.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PlcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PlcEventCode.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PlcMessage.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel\PlcMessage.cs" />
     <Compile Include="Model\PlcOldEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\PLC_TO.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\Positions\IPlcPosition.cs" />
     <Compile Include="Model\Positions\Position.cs" />
     <Compile Include="Model\Positions\RangePair.cs" />
     <Compile Include="Model\ProjectHMI.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\RsViewProjectTag.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\Severity.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\User.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Workstation.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Model\MPTModel\Workstation.cs" />
     <Compile Include="PrimitiveType\NullableNumericExtension.cs" />
@@ -283,7 +264,7 @@
     <Compile Include="PositionList\PlcMessagesMerge.cs" />
     <Compile Include="PositionList\IPositionList.cs" />
     <Compile Include="PrimitiveType\OrderAttribute.cs" />
-    <Compile Include="RSLogix\PositionExtension.cs" />
+    <Compile Include="DataBase\RSLogix\PositionExtension.cs" />
     <Compile Include="RSView\ActivityLog\ActivityLogRecord.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogDataBase.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogRecord.cs" />
@@ -298,13 +279,18 @@
     <Compile Include="RSView\DataLog\DataLogTag.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogRecordDBF.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDerivedTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\ConvertToCsvString.cs" />
     <Compile Include="RSView\ImportExport\ParamValueDictionaryExtension.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="PrimitiveType\XElementExtension.cs" />
+    <Compile Include="RSView\Model\RSViewDataSourceType.cs" />
+    <Compile Include="RSView\Model\RSViewDigitalAlarmType.cs" />
+    <Compile Include="RSView\Model\RSViewTagType.cs" />
+    <Compile Include="RSView\Model\RsViewTresholdDirection.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccount.cs" />
     <Compile Include="RSView\RsViewAiPositionExtension.cs" />
-    <Compile Include="RSView\Model\AnalogTag.cs" />
-    <Compile Include="RSView\Model\DigitalTag.cs" />
+    <Compile Include="RSView\Model\RsViewAnalogTag.cs" />
+    <Compile Include="RSView\Model\RSViewDigitalTag.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDataLog.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvDigitalAlarm.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvGenerator.cs" />
@@ -314,37 +300,33 @@
     <Compile Include="DataBase\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvAnalogAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvExtensions.cs" />
+    <Compile Include="RSView\ImportExport\Csv\ConvertToCsvTag.cs" />
     <Compile Include="RSView\ImportExport\Csv\Tag\CsvTag.cs" />
-    <Compile Include="RSView\Model\StringTag.cs" />
-    <Compile Include="RSView\Model\Tag.cs" />
+    <Compile Include="RSView\Model\RsViewStringTag.cs" />
+    <Compile Include="RSView\Model\RSViewTag.cs" />
     <Compile Include="RSView\ImportExport\PositionConvertXmlExtension.cs" />
     <Compile Include="PrimitiveType\StringExtension.cs" />
     <Compile Include="RSView\TagDB\AllTagItem.cs" />
     <Compile Include="RSView\TagDB\OBDCTagReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="app.config" />
     <EntityDeploy Include="Model\MPTModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MPTModel.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EntityDeploy>
     <None Include="Model\MPTModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MPTModel.Context.cs</LastGenOutput>
       <DependentUpon>MPTModel.edmx</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\MPTModel.edmx.diagram">
       <DependentUpon>MPTModel.edmx</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\MPTModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MPTModel.cs</LastGenOutput>
       <DependentUpon>MPTModel.edmx</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

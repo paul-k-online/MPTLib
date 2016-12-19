@@ -14,7 +14,7 @@ namespace MPT.RSView.TagDB
         public string Name { get; set; }
         public string Description { get; set; }
         public RSViewTagType? Type { get; set; }
-        public RSViewDataSourceType? DataSrcType { get; set; }
+        public RSViewTagDataSourceType? DataSrcType { get; set; }
         public char? Security { get; set; }
         public int? ExternalRefs { get; set; }
         public short? ReadOnly { get; set; }

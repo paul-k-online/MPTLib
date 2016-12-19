@@ -14,7 +14,6 @@ namespace MPT.RSView.ImportExport
         private XElement Shema { get; }
         public string NodeName { get; }
 
-
         public PositionListConverter(IPositionList positionList, XElement shema, string nodeName)
         {
             PositionList = positionList;
@@ -24,7 +23,6 @@ namespace MPT.RSView.ImportExport
 
 
         #region ConvertToRsViewTags
-
         public IEnumerable<RSViewTag> ConvertPositionsToRsViewTags(IEnumerable<Position> positions)
         {
             if (positions == null) return null;
@@ -60,7 +58,5 @@ namespace MPT.RSView.ImportExport
         }
 
         #endregion
-
-
     }
 }
