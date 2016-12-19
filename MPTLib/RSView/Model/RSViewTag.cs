@@ -4,42 +4,6 @@ using System.IO;
 
 namespace MPT.RSView
 {
-    public enum RSViewTagType : ushort
-    {
-        /// <summary>
-        /// Folder
-        /// </summary>
-        F = 0,
-        
-        /// <summary>
-        /// Analog
-        /// </summary>
-        A = 1,        
-        
-        /// <summary>
-        /// Digital
-        /// </summary>
-        D = 2,
-
-        /// <summary>
-        /// String
-        /// </summary>
-        S = 3,
-    }
-
-    public enum RSViewDataSourceType : ushort
-    {
-        /// <summary>
-        /// Device
-        /// </summary>
-        D = 1,
-        /// <summary>
-        /// Memory
-        /// </summary>
-        M = 2,
-    }
-
-
     public class RSViewTag
     {
         public int RsViewId { get; set; }
@@ -71,18 +35,18 @@ namespace MPT.RSView
 
         public string Address = null;
 
-        public RSViewDataSourceType DataSourceType
+        public RSViewTagDataSourceType DataSourceType
         {
-            get { return IsMemoryDataSourceType ? RSViewDataSourceType.M : RSViewDataSourceType.D; }
+            get { return IsMemoryDataSourceType ? RSViewTagDataSourceType.M : RSViewTagDataSourceType.D; }
             set
             {
                 switch (value)
                 {
-                    case RSViewDataSourceType.M:
+                    case RSViewTagDataSourceType.M:
                         NodeName = null;
                         Address = null;
                         break;
-                    case RSViewDataSourceType.D:
+                    case RSViewTagDataSourceType.D:
                         if (NodeName == null)
                             NodeName = "";
                         if (Address == null)
@@ -95,11 +59,9 @@ namespace MPT.RSView
         public DateTime ModTime
         { get; set; }
 
-        public int ParentId
-        { get; set; }
+        public int ParentId { get; set; }
 
-        public byte ParentType
-        { get; set; }
+        public byte ParentType { get; set; }
 
         public HashSet<string> Datalogs = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -107,7 +69,6 @@ namespace MPT.RSView
         {
             get { return string.IsNullOrEmpty(Folder) ? null : new RSViewTag(Folder); }
         }
-
 
         public RSViewTag(string name, string folder="")
         {

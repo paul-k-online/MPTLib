@@ -4,18 +4,6 @@ using System.Linq;
 
 namespace MPT.RSView
 {
-    public enum RsViewTresholdDirection
-    {
-        /// <summary>
-        /// Decreasing
-        /// </summary>
-        D,
-        /// <summary>
-        /// Increasing
-        /// </summary>
-        I
-    }
-    
     public class RsViewAnalogTag : RSViewTag
     {
         public class RsViewAnalogAlarm
@@ -27,22 +15,23 @@ namespace MPT.RSView
             public RsViewTresholdDirection Direction;
         }
 
-        public double Min;
-        public double Max;
-        public double InitialValue;
-        public string Units = "";
+        public double Min { get; set; }
+        public double Max { get; set; }
+        public double InitialValue { get; set; }
+        public string Units { get; set; }
 
-        public Dictionary<int, RsViewAnalogAlarm> Alarm = new Dictionary<int, RsViewAnalogAlarm>(8)
-        {
-            {1, null},
-            {2, null},
-            {3, null},
-            {4, null},
-            {5, null},
-            {6, null},
-            {7, null},
-            {8, null},
-        };
+        public readonly Dictionary<int, RsViewAnalogAlarm> Alarm =
+            new Dictionary<int, RsViewAnalogAlarm>()
+            {
+                {1, null},
+                {2, null},
+                {3, null},
+                {4, null},
+                {5, null},
+                {6, null},
+                {7, null},
+                {8, null},
+            };
 
         public bool IsAlarm
         {

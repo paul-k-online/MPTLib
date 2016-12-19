@@ -1,8 +1,6 @@
-﻿
-namespace MPT.RSView
+﻿namespace MPT.RSView
 {
-    public class RsViewStringTag
-        : RSViewTag
+    public class RsViewStringTag : RSViewTag
     {
         public string InitialValue;
         public ushort Length = 200;
