@@ -7,14 +7,11 @@ namespace MPT.RSView
     public class RSViewTag
     {
         public int RsViewId { get; set; }
-
         public string Name { get; set; }
-
         public string TagName
         {
             get { return Path.GetFileName(Name); }
         }
-
         public string Folder
         {
             get
@@ -23,18 +20,13 @@ namespace MPT.RSView
                 return directoryName == null ? null : directoryName.ToUpper();
             }
         }
-
         public string Description { get; set; }
-
         public bool IsMemoryDataSourceType
         {
             get { return string.IsNullOrWhiteSpace(NodeName); }
         }
-
-        public string NodeName = null;
-
-        public string Address = null;
-
+        public string NodeName { get; set; }
+        public string Address { get; set; }
         public RSViewTagDataSourceType DataSourceType
         {
             get { return IsMemoryDataSourceType ? RSViewTagDataSourceType.M : RSViewTagDataSourceType.D; }
@@ -55,20 +47,15 @@ namespace MPT.RSView
                 }
             }
         }
-
-        public DateTime ModTime
-        { get; set; }
-
+        public DateTime ModTime { get; set; }
         public int ParentId { get; set; }
-
         public byte ParentType { get; set; }
-
-        public HashSet<string> Datalogs = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-
         public RSViewTag ParentFolder
         {
             get { return string.IsNullOrEmpty(Folder) ? null : new RSViewTag(Folder); }
         }
+
+        public HashSet<string> Datalogs = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
         public RSViewTag(string name, string folder="")
         {
