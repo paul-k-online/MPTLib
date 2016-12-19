@@ -278,32 +278,33 @@
     <Compile Include="RSView\DataLog\DataLogEntities.cs" />
     <Compile Include="RSView\DataLog\DataLogTag.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogRecordDBF.cs" />
-    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDerivedTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\ConvertToCsvString.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvDerivedTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\RSViewBoolEnum.cs" />
+    <Compile Include="RSView\ImportExport\Csv\RSViewDigitEnum.cs" />
     <Compile Include="RSView\ImportExport\ParamValueDictionaryExtension.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="PrimitiveType\XElementExtension.cs" />
-    <Compile Include="RSView\Model\RSViewTagDataSourceType.cs" />
-    <Compile Include="RSView\Model\RSViewDigitalAlarmType.cs" />
-    <Compile Include="RSView\Model\RSViewTagType.cs" />
-    <Compile Include="RSView\Model\RsViewTresholdDirection.cs" />
+    <Compile Include="RSView\RSViewTagDataSourceType.cs" />
+    <Compile Include="RSView\RSViewDigitalAlarmType.cs" />
+    <Compile Include="RSView\RSViewTagType.cs" />
+    <Compile Include="RSView\RSViewTresholdDirection.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccount.cs" />
-    <Compile Include="RSView\RsViewAiPositionExtension.cs" />
-    <Compile Include="RSView\Model\RsViewAnalogTag.cs" />
-    <Compile Include="RSView\Model\RSViewDigitalTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDataLog.cs" />
-    <Compile Include="RSView\ImportExport\Csv\Tag\CsvDigitalAlarm.cs" />
+    <Compile Include="RSView\RSViewAiPositionExtension.cs" />
+    <Compile Include="RSView\RSViewAnalogTag.cs" />
+    <Compile Include="RSView\RSViewDigitalTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvDataLog.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvDigitalAlarm.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvGenerator.cs" />
     <Compile Include="RSView\DataLog\DataLogFloat.cs" />
     <Compile Include="RSView\DataLog\DataLogDBF.cs" />
     <Compile Include="DataBase\DBFDataBase.cs" />
     <Compile Include="DataBase\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSView\ImportExport\Csv\Tag\CsvAnalogAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Csv\ConvertToCsvTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\Tag\CsvTag.cs" />
-    <Compile Include="RSView\Model\RsViewStringTag.cs" />
-    <Compile Include="RSView\Model\RSViewTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvAnalogAlarm.cs" />
+    <Compile Include="RSView\ImportExport\Csv\RSViewToCsvTag.cs" />
+    <Compile Include="RSView\ImportExport\Csv\CsvTag.cs" />
+    <Compile Include="RSView\RSViewStringTag.cs" />
+    <Compile Include="RSView\RSViewTag.cs" />
     <Compile Include="RSView\ImportExport\PositionConvertXmlExtension.cs" />
     <Compile Include="PrimitiveType\StringExtension.cs" />
     <Compile Include="RSView\TagDB\AllTagItem.cs" />
@@ -344,9 +345,6 @@
     </Content>
     <Content Include="RSView\ImportExport\POSITIONLIST.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RSView\ImportExport\POSITIONLIST_TEST.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

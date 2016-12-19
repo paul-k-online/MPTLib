@@ -1,6 +1,6 @@
 ﻿namespace MPT.RSView
 {
-    public enum RsViewTresholdDirection
+    public enum RSViewTresholdDirection
     {
         /// <summary>
         /// Decreasing

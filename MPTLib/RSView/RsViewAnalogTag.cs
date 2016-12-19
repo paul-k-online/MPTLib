@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MPT.RSView
 {
-    public class RsViewAnalogTag : RSViewTag
+    public class RSViewAnalogTag : RSViewTag
     {
         public class RsViewAnalogAlarm
         {
@@ -12,7 +12,7 @@ namespace MPT.RSView
             [MaxLength(21)]
             public string Label;
             public ushort Severity = 1;
-            public RsViewTresholdDirection Direction;
+            public RSViewTresholdDirection Direction;
         }
 
         public double Min { get; set; }
@@ -79,7 +79,7 @@ namespace MPT.RSView
             set { Alarm[8] = value; }
         }
         
-        public RsViewAnalogTag(string name ="", string folder="") : base(name, folder)
+        public RSViewAnalogTag(string name ="", string folder="") : base(name, folder)
         {}
     }
 }
