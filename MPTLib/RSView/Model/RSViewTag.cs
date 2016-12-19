@@ -6,6 +6,21 @@ namespace MPT.RSView
 {
     public class RSViewTag
     {
+        public class ByNameEqualityComparer : IEqualityComparer<RSViewTag>
+        {
+            public bool Equals(RSViewTag x, RSViewTag y)
+            {
+                return string.Equals(x.Name, y.Name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            public int GetHashCode(RSViewTag obj)
+            {
+                return obj.Name.GetHashCode();
+            }
+        }
+
+        public static ByNameEqualityComparer ByNameComparer = new ByNameEqualityComparer();
+
         public int RsViewId { get; set; }
         public string Name { get; set; }
         public string TagName
