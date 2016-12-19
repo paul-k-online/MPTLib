@@ -32,7 +32,6 @@ namespace MPT.RSView.ImportExport.Csv
             return b;
         }
 
-
         public static CsvTag ToCsvTag(this RsViewAnalogTag tag)
         {
             var csvTag = CsvTag.CreateAnalog(tag.Name, tag.Description, tag.Min, tag.Max, tag.Units, tag.InitialValue);
@@ -42,7 +41,6 @@ namespace MPT.RSView.ImportExport.Csv
             }
             return csvTag;
         }
-
 
         public static CsvTag ToCsvTag(this RSViewDigitalTag tag)
         {
@@ -54,7 +52,6 @@ namespace MPT.RSView.ImportExport.Csv
             return csvTag;
         }
 
-
         public static CsvTag ToCsvTag(this RsViewStringTag tag)
         {
             var csvTag = CsvTag.CreateString(tag.Name, tag.Description, tag.InitialValue);
@@ -64,7 +61,6 @@ namespace MPT.RSView.ImportExport.Csv
             }
             return csvTag;
         }
-
 
         public static CsvTag ToCsvTag(this RSViewTag tag)
         {
@@ -84,14 +80,12 @@ namespace MPT.RSView.ImportExport.Csv
             return CsvTag.CreateFolder(tag.Name);
         }
 
-
         public static CsvAnalogAlarmTreshold ToCsvAnalogAlarmTreshold(this RsViewAnalogTag.RsViewAnalogAlarm analogAlarm)
         {
             return analogAlarm == null ? 
                 new CsvAnalogAlarmTreshold() : 
                 new CsvAnalogAlarmTreshold(analogAlarm.Threshold, analogAlarm.Label, analogAlarm.Direction, analogAlarm.Severity);
         }
-
 
         public static CsvAnalogAlarm ToCsvAnalogAlarm(this RsViewAnalogTag tag)
         {
@@ -111,7 +105,6 @@ namespace MPT.RSView.ImportExport.Csv
             return csvAnalogAlarm;
         }
 
-
         public static CsvDigitalAlarm ToCsvDigitalAlarm(this RSViewDigitalTag tag)
         {
             if (!tag.IsAlarm)
@@ -126,6 +119,5 @@ namespace MPT.RSView.ImportExport.Csv
 
             return csvDigitalAlarm;
         }
-
     }
 }
