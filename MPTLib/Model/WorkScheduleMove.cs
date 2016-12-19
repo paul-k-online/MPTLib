@@ -12,11 +12,9 @@ namespace MPT.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Holiday
+    public partial class WorkScheduleMove
     {
-        public System.DateTime Date { get; set; }
-        public string Name { get; set; }
-        public Nullable<bool> isFixed { get; set; }
-        public Nullable<bool> isWork { get; set; }
+        public System.DateTime DateFrom { get; set; }
+        public System.DateTime DateTo { get; set; }
     }
 }

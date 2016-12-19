@@ -3,99 +3,67 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-// ReSharper disable once CheckNamespace
 namespace MPT.Model
 {
-    // ReSharper disable once InconsistentNaming
-    public partial class Factory
+    public partial class MPTEntities
     {
-        public string FullName
+        public MPTEntities(string connectionString) : base(connectionString)
         {
-            get
-            {
-                var format = "{0} - {1}";
-                if (Number == null)
-                    format = "{1}";
-                return string.Format(format, Number, Description);
-            }
         }
-    }
 
-
-
-    public partial class GetPlcEventsCount_Result
-    {
-        public override string ToString()
+        public IQueryable<Workstation> GetWorkstations()
         {
-            return string.Format("{0}: {1} of {2}", PlcId, AlarmCount, TotalCount);
+            return Workstations
+                .Include(ws => ws.Project)
+                .Include(ws => ws.Project.Factory)
+                .OrderBy(ws => ws.Project.Factory.Number)
+                .ThenBy(ws => ws.Project.OrderIndex);
         }
-    }
 
-    public partial class ProjectHMI
-    {
-        public string FullName
+        public Workstation GetWorkstation(int workstationId)
         {
-            get
-            {
-                var format = "{1} ({0})";
-                if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
-                    format = "{1}{0}";
-                return string.Format(format, Name, Description);
-            }
+            return GetWorkstations().Single(ws => ws.Id == workstationId);
         }
-    }
 
-// ReSharper disable once InconsistentNaming
-    public static class MPTEntitiesExt
-    {
-        public static IQueryable<PlcEvent> GetEventsByPlc(this MPTEntities db, PLC plc)
+        public IQueryable<PlcEvent> GetEventsByPlc(int plcId)
         {
-            return db.PlcEvents
-                            .Where(x => x.PlcId == plc.Id)
+            return PlcEvents
+                            .Where(x => x.PlcId == plcId)
                             //.OrderByDescending(x => x.DateTime).ThenByDescending(x => x.Msec)
                             .Include(e => e.PlcMessage)
                             .Include(e => e.PlcEventCode)
-                            .Include(e => e.PlcEventCode.Severity)
+                            .Include(e => e.PlcEventCode.Severity);
                 ;
         }
 
-        public static IQueryable<PlcOldEvent> GetEventsOldByPlc(this MPTEntities db, PLC plc)
+        public IQueryable<PlcOldEvent> GetEventsOldByPlc(PLC plc)
         {
-            return db.PlcEventsOld
+            return PlcEventsOld
                             .Where(x => x.PlcId == plc.Id)
                 ;
         }
         
-// ReSharper disable once InconsistentNaming
-        public static IQueryable<PLC> GetPLCs(this MPTEntities db)
+        public IQueryable<PLC> GetPLCs()
         {
-            var a = db.PLCs
-                .Where(p => p.ProtocolType > 0)
-                .Include(x => x.Factory)
-                ;
-            return a;
+            return PLCs.Where(p => p.ProtocolType > 0)
+                .Include(x => x.Factory);
         }
 
-
-        public static PLC GetPlc(this MPTEntities db, int plcId)
+        public PLC GetPlc(int plcId)
         {
-            return GetPLCs(db).Single(p => p.Id == plcId);
+            return GetPLCs().Single(p => p.Id == plcId);
         }
 
-
-
-
-        public static IQueryable<PcEvent> GetPcEvents(this MPTEntities db, int? wsID = null, bool hideIgnored = true)
+        public IQueryable<PcEvent> GetPcEvents(int? wsID = null, bool hideIgnored = true)
         {
-            var events = db.PcEvents.OrderByDescending(e => e.DateTime).AsQueryable();
+            var events = PcEvents.OrderByDescending(e => e.DateTime).AsQueryable();
             var events1 = events;
             if (wsID != null)
                 events1 = events1.Where(w => w.WorkstationId == wsID.Value);
             if(!hideIgnored)
                 return events1;
 
-
-            var words = db.PcEventIgnoreWords.ToList().Select(x => x.Word.ToUpper());
+            var words = PcEventIgnoreWords.ToList().Select(x => x.Word.ToUpper());
 
             /*
             foreach (var word in words)
@@ -123,11 +91,9 @@ namespace MPT.Model
                     where !words.Any(x => pcEvent.Message.ToUpper().Contains(x))
                     select pcEvent;
             return c.AsQueryable();
-           
         }
 
-
-        public static HashSet<DateTime> GetHolidays(this MPTEntities db, int? year = null)
+        public HashSet<DateTime> GetHolidays(int? year = null)
         {
             if (year == null) 
                 year = DateTime.Now.Year;
@@ -135,24 +101,25 @@ namespace MPT.Model
             var fromDT = new DateTime(year.Value, 1, 1);
             var toDT = fromDT.AddYears(1);
 
-            var holidays = db.Holidays
-                .Where(x => x.isWork != true)
-                .Where(x => (x.Date >= fromDT && x.Date < toDT) || x.isFixed == true)
+            var holidays = WorkScheduleHolidays
+                .Where(x => (x.Date >= fromDT && x.Date < toDT) || x.isYearly == true)
                 .ToList()
                 .Select(x => new DateTime(year.Value, x.Date.Month, x.Date.Day))
                 ;
             return new HashSet<DateTime>(holidays.Distinct());
         }
-        public static HashSet<DateTime> GetHolidays(this MPTEntities db, IEnumerable<int> years)
+
+        public HashSet<DateTime> GetHolidays(IEnumerable<int> years)
         {
             HashSet<DateTime> r = new HashSet<DateTime>();
             foreach (var year in years)
             {
-                r.UnionWith(db.GetHolidays(year));
+                r.UnionWith(GetHolidays(year));
             }
             return r;
         }
-        public static HashSet<DateTime> GetOverrideWorkdays(this MPTEntities db, int? year = null)
+
+        public HashSet<WorkScheduleMove> GetWorkSheduleMove(int? year = null)
         {
             if (year == null)
                 year = DateTime.Now.Year;
@@ -160,21 +127,23 @@ namespace MPT.Model
             var fromDT = new DateTime(year.Value, 1, 1);
             var toDT = fromDT.AddYears(1);
 
-            var workdays = db.Holidays
-                .Where(x => x.isWork == true)
-                .Where(x => (x.Date >= fromDT && x.Date < toDT) || x.isFixed == true)
+            var workdays = WorkScheduleMoves
                 .ToList()
-                .Select(x => new DateTime(year.Value, x.Date.Month, x.Date.Day))
+                //.Where(x => (x.DateFrom >= fromDT && x.DateFrom < toDT) || (x.DateTo >= fromDT && x.DateTo < toDT))
+                .Where(x=> x.DateFrom.Year == year || x.DateTo.Year == year)
+                .ToList()
+                //.Select(x => new WorkScheduleMove(year.Value, x.Date.Month, x.Date.Day))
                 ;
 
-            return new HashSet<DateTime>(workdays.Distinct());
+            return new HashSet<WorkScheduleMove>(workdays.Distinct());
         }
-        public static HashSet<DateTime> GetOverrideWorkdays(this MPTEntities db, IEnumerable<int> years)
+
+        public HashSet<WorkScheduleMove> GetOverrideWorkdays(IEnumerable<int> years)
         {
-            HashSet<DateTime> r = new HashSet<DateTime>();
+            HashSet<WorkScheduleMove> r = new HashSet<WorkScheduleMove>();
             foreach (var year in years)
             {
-                r.UnionWith(db.GetOverrideWorkdays(year));
+                r.UnionWith(GetWorkSheduleMove(year));
             }
             return r;
         }

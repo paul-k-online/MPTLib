@@ -26,7 +26,7 @@ namespace MPT.Model
         public Nullable<int> ProjectId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string IP { get; set; }
+        public string Address { get; set; }
         public byte Enable { get; set; }
         public string NetworkName { get; set; }
         public string MAC { get; set; }

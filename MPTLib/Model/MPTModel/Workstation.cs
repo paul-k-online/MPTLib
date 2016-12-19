@@ -1,33 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 
-using System.ComponentModel.DataAnnotations;
-
-// ReSharper disable once CheckNamespace
 namespace MPT.Model
 {
-    public static class MPTEntitiesWorkstation
+    [MetadataType(typeof(WorkstationMetadata))]
+    public partial class Workstation
     {
-        public static IQueryable<Workstation> GetWorkstations(this MPTEntities db)
+        public override string ToString()
         {
-            return db.Workstations.AsQueryable()
-                .Where(w => w.Enable == 1)
-                .Include(ws => ws.Project)
-                .Include(ws => ws.Project.Factory)
-                ;
+            return FullName;
         }
 
-        public static Workstation GetWorkstation(this MPTEntities db, int workstationId = 0)
+        public string FullName
         {
-            return GetWorkstations(db).Single(ws => ws.Id == workstationId);
+            get { return string.Format("{0} ({1})", NetworkName, Address); }
         }
     }
-
-
-    [MetadataType(typeof(WorkstationMetadata))]
-    public partial class Workstation {}
 
     public class WorkstationMetadata
     {
@@ -41,11 +32,12 @@ namespace MPT.Model
 
         [StringLength(128)]
         [Display(Name = "Пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required]
         [StringLength(15)]
-        [Display(Name = "IP")]
-        // ReSharper disable once InconsistentNaming
-        public string IP { get; set; }
+        [Display(Name = "Адрес")]
+        public string Address { get; set; }
     }
 }

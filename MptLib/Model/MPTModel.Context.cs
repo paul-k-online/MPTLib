@@ -46,7 +46,8 @@ namespace MPT.Model
         public virtual DbSet<AlarmValue> AlarmValues { get; set; }
         public virtual DbSet<EventsAlarm> EventsAlarms { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Holiday> Holidays { get; set; }
+        public virtual DbSet<WorkScheduleHoliday> WorkScheduleHolidays { get; set; }
+        public virtual DbSet<WorkScheduleMove> WorkScheduleMoves { get; set; }
     
         public virtual ObjectResult<GetPlcEventsCount_Result> GetPlcEventsCount(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo, Nullable<short> severity)
         {
