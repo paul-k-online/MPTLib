@@ -283,7 +283,7 @@
     <Compile Include="RSView\ImportExport\ParamValueDictionaryExtension.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="PrimitiveType\XElementExtension.cs" />
-    <Compile Include="RSView\Model\RSViewDataSourceType.cs" />
+    <Compile Include="RSView\Model\RSViewTagDataSourceType.cs" />
     <Compile Include="RSView\Model\RSViewDigitalAlarmType.cs" />
     <Compile Include="RSView\Model\RSViewTagType.cs" />
     <Compile Include="RSView\Model\RsViewTresholdDirection.cs" />
