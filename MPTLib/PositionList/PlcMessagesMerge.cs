@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using MPT.Model;
-using NLog;
 
 namespace MPT.Positions
 {
@@ -37,8 +36,6 @@ namespace MPT.Positions
             
             if (newMessages == null)
                 throw new ArgumentNullException("newMessages");
-
-
 
             PlcId = plcid;
             ExistMessages = existMessages;
@@ -103,8 +100,6 @@ namespace MPT.Positions
 
         public bool SaveToDb(MPTEntities contex)
         {
-            var logger = LogManager.GetCurrentClassLogger();
-
             try
             {
                 var removeMessages = GetRemoveMessages();
@@ -117,7 +112,7 @@ namespace MPT.Positions
             }
             catch (Exception ex)
             {
-                logger.Error("RemoveRange Messages: {0}", ex.ToString());
+                throw ex;
             }
             
             try
@@ -132,7 +127,7 @@ namespace MPT.Positions
             }
             catch (Exception ex)
             {
-                logger.Error("AddOrUpdate Messages: {0}", ex.ToString());
+                throw ex;
             }
             return true;
         }
