@@ -58,8 +58,7 @@
     <TAG type="D" name="AI\{SHORTNAME}\HH\en" description=""                                dataSource="M" initialValue="{BLOCKING.High.En}"/>
     <TAG type="A" name="AI\{SHORTNAME}\HH\v"  description="" min="0" max="100" units=""     dataSource="M" initialValue="{BLOCKING.High}"/>
 
-    <!--
--->
+    <!-- -->
 
     <ECONOM_POSITION>
     </ECONOM_POSITION>

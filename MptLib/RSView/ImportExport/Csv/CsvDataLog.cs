@@ -15,7 +15,7 @@ namespace MPT.RSView.ImportExport.Csv
                 TagName,
                 ModelName
             };
-            return string.Join(",", fieldList.Select(x => x.ToRsViewFormat()));
+            return string.Join(",", fieldList.Select(x => x.ToCsvString()));
         }
     }
 }

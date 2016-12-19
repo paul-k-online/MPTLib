@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPT.RSView.ImportExport.Csv
 {
-    public static class ConvertToCsvTag
+    public static class RSViewToCsvTag
     {
-        public static string ToRsViewFormat(this object value)
+        public static string ToCsvString(this object value)
         {           
             if (value == null)
                 return "";
@@ -28,11 +27,11 @@ namespace MPT.RSView.ImportExport.Csv
                 return value.ToString();
             
             var a = value.ToString();
-            var b = a.ToRsViewFormat();
+            var b = a.ToCsvString();
             return b;
         }
 
-        public static CsvTag ToCsvTag(this RsViewAnalogTag tag)
+        public static CsvTag ToCsvTag(this RSViewAnalogTag tag)
         {
             var csvTag = CsvTag.CreateAnalog(tag.Name, tag.Description, tag.Min, tag.Max, tag.Units, tag.InitialValue);
             if (!tag.IsMemoryDataSourceType)
@@ -52,7 +51,7 @@ namespace MPT.RSView.ImportExport.Csv
             return csvTag;
         }
 
-        public static CsvTag ToCsvTag(this RsViewStringTag tag)
+        public static CsvTag ToCsvTag(this RSViewStringTag tag)
         {
             var csvTag = CsvTag.CreateString(tag.Name, tag.Description, tag.InitialValue);
             if (!tag.IsMemoryDataSourceType)
@@ -64,7 +63,7 @@ namespace MPT.RSView.ImportExport.Csv
 
         public static CsvTag ToCsvTag(this RSViewTag tag)
         {
-            var analogTag = tag as RsViewAnalogTag;
+            var analogTag = tag as RSViewAnalogTag;
             if (analogTag != null)
                 return analogTag.ToCsvTag();
 
@@ -72,22 +71,21 @@ namespace MPT.RSView.ImportExport.Csv
             if (digitalTag != null)
                 return digitalTag.ToCsvTag();
 
-            var stringTag = tag as RsViewStringTag;
-            // ReSharper disable once ConvertIfStatementToReturnStatement
+            var stringTag = tag as RSViewStringTag;
             if (stringTag != null)
                 return stringTag.ToCsvTag();
 
             return CsvTag.CreateFolder(tag.Name);
         }
 
-        public static CsvAnalogAlarmTreshold ToCsvAnalogAlarmTreshold(this RsViewAnalogTag.RsViewAnalogAlarm analogAlarm)
+        public static CsvAnalogAlarmTreshold ToCsvAnalogAlarmTreshold(this RSViewAnalogTag.RsViewAnalogAlarm analogAlarm)
         {
             return analogAlarm == null ? 
                 new CsvAnalogAlarmTreshold() : 
                 new CsvAnalogAlarmTreshold(analogAlarm.Threshold, analogAlarm.Label, analogAlarm.Direction, analogAlarm.Severity);
         }
 
-        public static CsvAnalogAlarm ToCsvAnalogAlarm(this RsViewAnalogTag tag)
+        public static CsvAnalogAlarm ToCsvAnalogAlarm(this RSViewAnalogTag tag)
         {
             if (!tag.IsAlarm)
                 return null;

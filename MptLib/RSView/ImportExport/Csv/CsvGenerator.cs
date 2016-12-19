@@ -4,16 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Ionic.Zip;
-using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPT.RSView.ImportExport.Csv
 {
     public class CsvGenerator
     {
-        #region Const
-        const string fileNameTemplate = "{0}-{1}.csv";
 
-
+        #region ContentConst
         private const string VersionHeader = ";###001 - THIS LINE CONTAINS VERSION INFORMATION. DO NOT REMOVE!!!";
         private const string TagFileHeader = ";Tag Type, Tag Name, Tag Description, Read Only, Data Source, Security Code, Alarmed, Data Logged, Native Type, Value Type, Min Analog, Max Analog, Initial Analog, Scale, Offset, DeadBand, Units, Off Label Digital, On Label Digital, Initial Digital, Length String, Initial String, Node Name, Address, Scan Class,  System Source Name, System Source Index, RIO Address, Element Size Block, Number Elements Block, Initial Block";
 
@@ -28,27 +25,10 @@ namespace MPT.RSView.ImportExport.Csv
         
         private const string DatalogFileHeader = ";Tag Name, Model Name";
         private const string DerivedTagsHeader = ";Tag Name, Expression, Description, DerivedTag File Name";
-
         #endregion
-
-        private static string CleanFileName(string fileName)
-        {
-            return Path.GetInvalidFileNameChars().Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
-        }
-
-        public string ZipFileName
-        {
-            get
-            {
-                return string.Format("{0}_{1}.zip", CleanFileName(_projectName), DateTime.Now.ToString("yyyyMMdd_hhmmss"));
-            }
-        }
-
-
 
         private readonly IEnumerable<RSViewTag> _rsViewTags;
         private readonly string _projectName;
-
 
         public CsvGenerator(IEnumerable<RSViewTag> rsViewTags, string projectName)
         {
@@ -57,12 +37,22 @@ namespace MPT.RSView.ImportExport.Csv
         }
 
 
-        #region Private GetCsvTags
-
-        private IEnumerable<CsvTag> GetFolderTagStringList()
+        #region Get CsvTags
+        private IEnumerable<CsvTag> GetFolders()
         {
-            return GetFolderTagStringList(_rsViewTags)
-                    .Select(CsvTag.CreateFolder);
+            var folders = new HashSet<RSViewTag>(RSViewTag.ByNameComparer);
+            foreach (var tag in _rsViewTags)
+            {
+                var folderTag = tag;
+                while ((folderTag = folderTag.ParentFolder) != null)
+                {
+                    folders.Add(folderTag);
+                }
+            }
+            return folders
+                .Where(x => x != null)
+                .OrderBy(x => x.Name)
+                .Select(x => x.ToCsvTag());
         }
 
         private IEnumerable<CsvTag> GetTags()
@@ -73,7 +63,7 @@ namespace MPT.RSView.ImportExport.Csv
         private IEnumerable<CsvAnalogAlarm> GetAnalogAlarms()
         {
             var analogTagsWithAlarm = _rsViewTags
-                .Where(x => x is RsViewAnalogTag).Cast<RsViewAnalogTag>()
+                .Where(x => x is RSViewAnalogTag).Cast<RSViewAnalogTag>()
                 .Where(x => x.IsAlarm);
             var csvAnalogAlarms = analogTagsWithAlarm.Select(x => x.ToCsvAnalogAlarm());
             return csvAnalogAlarms.Where(x => x != null);
@@ -92,6 +82,7 @@ namespace MPT.RSView.ImportExport.Csv
         private IEnumerable<CsvDataLog> GetDatalogs()
         {
             var datalogs = _rsViewTags
+                .Where(x => x != null)
                 .Where(x => x.Datalogs != null)
                 .SelectMany(tag =>
                     tag.Datalogs, (tag, datalog) =>
@@ -102,29 +93,12 @@ namespace MPT.RSView.ImportExport.Csv
 
         private IEnumerable<CsvDerivedTag> GetDerivedTags()
         {
-            return null;
+            throw new NotImplementedException("GetDerivedTags");
         }
-
         #endregion
 
-
-        #region Private GetStringlist
-
-        public IEnumerable<string> GetFolderTagStringList(IEnumerable<RSViewTag> rsViewTags)
-        {
-            var folders = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (var rsViewTag in rsViewTags)
-            {
-                var tag = rsViewTag;
-                while ((tag = tag.ParentFolder) != null)
-                {
-                    folders.Add(tag.Name);
-                }
-            }
-            return folders.OrderBy(x => x);
-        }
-
-        public IEnumerable<string> GetTagStringList()
+        #region Get Stringlist
+        public IEnumerable<string> GetTagCsvContent()
         {
             var list = new List<string>
             {
@@ -135,7 +109,7 @@ namespace MPT.RSView.ImportExport.Csv
 
             list.Add("");
             list.Add(TagFileFolderSection);
-            list.AddRange(GetFolderTagStringList().Select(x => x.ToString()));
+            list.AddRange(GetFolders().Select(x => x.ToString()));
 
             list.Add("");
             list.Add(TagFileTagSection);
@@ -144,7 +118,7 @@ namespace MPT.RSView.ImportExport.Csv
             return list;
         }
 
-        public IEnumerable<string> GetAlarmStringList()
+        public IEnumerable<string> GetAlarmCsvContent()
         {
             // ReSharper disable once UseObjectOrCollectionInitializer
             var alarmList = new List<string>
@@ -153,7 +127,6 @@ namespace MPT.RSView.ImportExport.Csv
                 "",
                 AlarmFileHeader,
             };
-            
 
             alarmList.Add("");
             alarmList.Add(AlarmFileAnalogAlarmsSection);
@@ -175,7 +148,7 @@ namespace MPT.RSView.ImportExport.Csv
             return alarmList;
         }
 
-        public IEnumerable<string> GetDatalogStringList()
+        public IEnumerable<string> GetDatalogCsvContent()
         {
             var list = new List<string>
             {
@@ -188,7 +161,7 @@ namespace MPT.RSView.ImportExport.Csv
             return list;
         }
 
-        public IEnumerable<string> GetDerivedTagsStringList()
+        public IEnumerable<string> GetDerivedCsvContent()
         {
             var derivedTagList = new List<string>
             {
@@ -200,15 +173,12 @@ namespace MPT.RSView.ImportExport.Csv
             derivedTagList.AddRange(GetDerivedTags().Select(x => x.ToString()));
             return derivedTagList;
         }
-
         #endregion
 
-        
-        #region FileName
-
+        #region Get FileName
         public string GetFileName(string fileType)
         {
-            return string.Format(fileNameTemplate, _projectName, fileType);
+            return string.Format("{0}-{1}.csv", _projectName, fileType);
         }
         
         public string TagsFileName
@@ -233,47 +203,49 @@ namespace MPT.RSView.ImportExport.Csv
 
         #endregion
 
-
         private static string ListToString(IEnumerable<string> list)
         {
             return string.Join(Environment.NewLine, list);
         }
 
+        private static Stream ListToStream(IEnumerable<string> list)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            foreach (var str in list)
+            {
+                writer.Write(str);
+                writer.Write(str);
+            }
+            
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
         public Stream GetZipStream(Encoding enc = null)
         {
-            if (GetTags().Count() <= 0)
-                return null;
-
             var memoryStream = new MemoryStream();
             using (var zipFile = (enc == null) ? new ZipFile() : new ZipFile(enc))
             {
-                zipFile.AddEntry(TagsFileName, ListToString(GetTagStringList()));
-
-                if (GetAnalogAlarms().Count() > 0 || GetDigitalAlarms().Count() > 0)
-                    zipFile.AddEntry(AlarmsFileName, ListToString(GetAlarmStringList()));
-
-                if (GetDatalogs().Count() > 0)
-                    zipFile.AddEntry(DatalogFileName, ListToString(GetDatalogStringList()));
+                zipFile.AddEntry(TagsFileName,   ListToString(GetTagCsvContent()));
+                zipFile.AddEntry(AlarmsFileName, ListToString(GetAlarmCsvContent()));
+                zipFile.AddEntry(DatalogFileName, ListToString(GetDatalogCsvContent()));
                 zipFile.Save(memoryStream);
                 memoryStream.Position = 0;
             }
             return memoryStream;
-
         }
 
-        public bool SaveZip(string filePath, Encoding enc = null)
+        public static bool SaveFile(string filePath, Stream content, Encoding enc = null)
         {
             try
             {
-                var zipStream = GetZipStream();
-                if (zipStream == null)
-                    return false;
-
-                using (var zipFile = File.Create(filePath))
+                using (var file = File.Create(filePath))
                 {
-                    zipStream.Position = 0;
-                    zipStream.CopyTo(zipFile);
-                    zipFile.Close();
+                    content.Position = 0;
+                    content.CopyTo(file);
+                    file.Close();
                 }
                 return true;
             }
@@ -283,9 +255,18 @@ namespace MPT.RSView.ImportExport.Csv
             }
         }
 
-        public bool SaveZipToFolder(string folderPath, Encoding enc = null)
+        private static string CleanFileName(string fileName)
         {
-            return SaveZip(Path.Combine(folderPath, ZipFileName), enc);
+            return Path.GetInvalidFileNameChars()
+                .Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
+        }
+
+        public string ZipFileName
+        {
+            get
+            {
+                return string.Format("{0}_{1}.zip", CleanFileName(_projectName), DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+            }
         }
     }
 }

@@ -50,7 +50,7 @@ namespace MPT.RSView.ImportExport
             return null;
         }
 
-        public static RsViewAnalogTag ToRsViewAnalogTag(this XElement xElement, IDictionary<string, object> paramDict, string nodeName)
+        public static RSViewAnalogTag ToRsViewAnalogTag(this XElement xElement, IDictionary<string, object> paramDict, string nodeName)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace MPT.RSView.ImportExport
                 var folder = xElement.GetAttributeValue("Folder").FormatDict(paramDict);
 
                 // ReSharper disable once UseObjectOrCollectionInitializer
-                var tag = new RsViewAnalogTag(name, folder);
+                var tag = new RSViewAnalogTag(name, folder);
 
                 tag.Description = xElement.GetAttributeValue("Description").FormatDict(paramDict);
                 tag.Units = xElement.GetAttributeValue("Units").FormatDict(paramDict);
@@ -90,7 +90,7 @@ namespace MPT.RSView.ImportExport
             }
         }
 
-        public static RsViewAnalogTag.RsViewAnalogAlarm ToRsViewAnalogAlarm(this XElement xElement, IDictionary<string, object> paramDict, string nodeName, out int number)
+        public static RSViewAnalogTag.RsViewAnalogAlarm ToRsViewAnalogAlarm(this XElement xElement, IDictionary<string, object> paramDict, string nodeName, out int number)
         {
             try
             {
@@ -103,10 +103,10 @@ namespace MPT.RSView.ImportExport
                     return null;
                 }
 
-                var analogAlarm = new RsViewAnalogTag.RsViewAnalogAlarm
+                var analogAlarm = new RSViewAnalogTag.RsViewAnalogAlarm
                 {
                     Label = xElement.GetAttributeValue("Label").FormatDict(paramDict),
-                    Direction = xElement.GetAttributeValue("Direction").FormatDict(paramDict).ToEnum<RsViewTresholdDirection>(),
+                    Direction = xElement.GetAttributeValue("Direction").FormatDict(paramDict).ToEnum<RSViewTresholdDirection>(),
                     Threshold = xElement.GetAttributeValue("Threshold").FormatDict(paramDict).ToDouble(),
                     Severity = Convert.ToUInt16(xElement.GetAttributeValue("Severity").FormatDict(paramDict)),
                 };
@@ -181,14 +181,14 @@ namespace MPT.RSView.ImportExport
             return analogAlarm;
         }
 
-        public static RsViewStringTag ToRsViewStringTag(this XElement xElement, IDictionary<string, object> paramDict, string nodeName)
+        public static RSViewStringTag ToRsViewStringTag(this XElement xElement, IDictionary<string, object> paramDict, string nodeName)
         {
             try
             {
                 if (!xElement.EqualsByName("TAG") || xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.S)
                     return null;
 
-                var tag = new RsViewStringTag(
+                var tag = new RSViewStringTag(
                     xElement.GetAttributeValue("Name").FormatDict(paramDict),
                     xElement.GetAttributeValue("Folder").FormatDict(paramDict))
                 {

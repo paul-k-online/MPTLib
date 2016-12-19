@@ -22,7 +22,7 @@ namespace MPT.RSView.ImportExport.Csv
                 Description,
                 DerivedTagFileName,
             };
-            return string.Join(",", fieldList.Select(x => x.ToRsViewFormat()));
+            return string.Join(",", fieldList.Select(x => x.ToCsvString()));
         }
     }
 }
