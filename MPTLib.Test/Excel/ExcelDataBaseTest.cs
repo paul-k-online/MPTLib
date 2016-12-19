@@ -12,7 +12,7 @@ namespace MPTLib.Test.Excel
         [TestMethod]
         public void TestMethod1()
         {
-            var e = new ExcelDataBase(TestData._101_PP23.FilePath);
+            var e = new ExcelDataBase(TestData._101_PP23.ExcelFilePath);
             Assert.AreEqual(e.SheetList.Contains("AI"), true);
 
 

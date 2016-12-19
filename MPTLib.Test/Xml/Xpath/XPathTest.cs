@@ -16,7 +16,7 @@ namespace MPTLib.Test.Xml.Xpath
         {
             try
             {
-                var root = XElement.Load(TestData.PositionListXmlFile);
+                var root = TestData.XmlShema_TEST;
                 var aiPos = root.GetElement("AiPosition");
 
                 var valueTag = aiPos

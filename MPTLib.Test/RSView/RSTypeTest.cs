@@ -19,13 +19,13 @@ namespace MPTLib.Test.RSView
         [TestMethod]
         public void TestRSTresholdDirection()
         {
-            var a = RsViewTresholdDirection.I.ToString().ToLower();
-            var b = a.ToEnum<RsViewTresholdDirection>();
+            var a = RSViewTresholdDirection.I.ToString().ToLower();
+            var b = a.ToEnum<RSViewTresholdDirection>();
             Assert.AreEqual(a, b.ToString(), true);
 
-            Assert.AreEqual("C".ToEnum<RsViewTresholdDirection>(), default(RsViewTresholdDirection));
-            Assert.AreEqual("XXX".ToEnum<RsViewTresholdDirection>(), default(RsViewTresholdDirection));
-            Assert.AreEqual("".ToEnum<RsViewTresholdDirection>(), default(RsViewTresholdDirection));
+            Assert.AreEqual("C".ToEnum<RSViewTresholdDirection>(), default(RSViewTresholdDirection));
+            Assert.AreEqual("XXX".ToEnum<RSViewTresholdDirection>(), default(RSViewTresholdDirection));
+            Assert.AreEqual("".ToEnum<RSViewTresholdDirection>(), default(RSViewTresholdDirection));
 
 
         }

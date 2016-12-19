@@ -18,7 +18,7 @@ namespace MPTLib.Test.Positions
         {
             try
             {
-                var excelPositionList = new ExcelPositionList(TestData._105_Inform2.FilePath, TestData._105_Inform2.PlcId);
+                var excelPositionList = new ExcelPositionList(TestData._105_Inform2.ExcelFilePath, TestData._105_Inform2.PlcId);
                 
 
                 var AIdataTableList = excelPositionList.ExcelDataBase.GetSheetDataTable("AI").AsEnumerable().ToList();

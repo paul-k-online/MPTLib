@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.RSView;
 using MPT.RSView.ImportExport.Csv;
-using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPTLib.Test.RSView.ImportExport.Csv
 {
@@ -14,7 +13,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         [TestMethod]
         public void TestRsViewAlarmTreshold()
         {
-            var alarmTreshold = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0 (LL)", RsViewTresholdDirection.D);
+            var alarmTreshold = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0 (LL)", RSViewTresholdDirection.D);
             var expected = @"""C"",""1.5"",""FRCSA1011_1<0.0(LL)"",""S"","""","""",""D"",""1""";
             expected = RegexSpace.Replace(expected, "");
             var actual = alarmTreshold.ToString();
@@ -26,7 +25,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         public void TestRsViewAlarmTresholdDefault()
         {
             var alarmTreshold = new CsvAnalogAlarmTreshold();
-            var threshType = alarmTreshold.Type.ToString().ToRsViewFormat();
+            var threshType = alarmTreshold.Type.ToString().ToCsvString();
             Assert.AreEqual("\"\"", threshType);
             var expected = @" """","""","""",""S"","""","""","""",""""     ";
             expected = RegexSpace.Replace(expected, "");
@@ -79,12 +78,12 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
 """","""","""",""S"","""","""","""",""""";
 
             var alarm = new CsvAnalogAlarm(@"AI\F1011_1\s");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0 (LL)", RsViewTresholdDirection.D, 1);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(2.5, "FRCSA1011_1<1.0 (L)", RsViewTresholdDirection.D, 1);
-            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold(3.5, "FRCSA1011_1<1.1", RsViewTresholdDirection.D, 1);
-            alarm.Tresholds[4] = new CsvAnalogAlarmTreshold(4.5, "FRCSA1011_1>2.1", RsViewTresholdDirection.I, 1);
-            alarm.Tresholds[5] = new CsvAnalogAlarmTreshold(5.5, "H", RsViewTresholdDirection.I, 1);
-            alarm.Tresholds[6] = new CsvAnalogAlarmTreshold(6.5, "HH", RsViewTresholdDirection.I, 1);
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0 (LL)", RSViewTresholdDirection.D, 1);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(2.5, "FRCSA1011_1<1.0 (L)", RSViewTresholdDirection.D, 1);
+            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold(3.5, "FRCSA1011_1<1.1", RSViewTresholdDirection.D, 1);
+            alarm.Tresholds[4] = new CsvAnalogAlarmTreshold(4.5, "FRCSA1011_1>2.1", RSViewTresholdDirection.I, 1);
+            alarm.Tresholds[5] = new CsvAnalogAlarmTreshold(5.5, "H", RSViewTresholdDirection.I, 1);
+            alarm.Tresholds[6] = new CsvAnalogAlarmTreshold(6.5, "HH", RSViewTresholdDirection.I, 1);
 
 
             var expected = a;
@@ -111,9 +110,9 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
 """","""","""",""S"","""","""","""",""""";
            
             var alarm = new CsvAnalogAlarm(@"Logic\P1\KEY");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.5, "ABC", RsViewTresholdDirection.D, 1);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(1.7, "?-1: ???? - ???????", RsViewTresholdDirection.I, 1);
-            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold(2.5, "?-1: ???? - ??????", RsViewTresholdDirection.I, 1);
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.5, "ABC", RSViewTresholdDirection.D, 1);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(1.7, "?-1: ???? - ???????", RSViewTresholdDirection.I, 1);
+            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold(2.5, "?-1: ???? - ??????", RSViewTresholdDirection.I, 1);
             
             var expected = b;
             expected = RegexSpace.Replace(expected, "");
@@ -138,8 +137,8 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
 """","""","""",""S"","""","""","""",""""";
             
             var alarm = new CsvAnalogAlarm(@"Logic\P1\MODE");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.1, "ABC:ABC", RsViewTresholdDirection.D);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(1.9, "?-1: ????? - ? ??????", RsViewTresholdDirection.I);
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold(1.1, "ABC:ABC", RSViewTresholdDirection.D);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold(1.9, "?-1: ????? - ? ??????", RSViewTresholdDirection.I);
 
             var expected = c;
             expected = RegexSpace.Replace(expected, "");
@@ -174,12 +173,12 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
             };
 
 
-            var a0 = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0(LL)", RsViewTresholdDirection.D);
-            var a1 = new CsvAnalogAlarmTreshold(2.5, "FRCSA1011_1<1.0(L)", RsViewTresholdDirection.D);
-            var a2 = new CsvAnalogAlarmTreshold(3.5, "FRCSA1011_1<1.1", RsViewTresholdDirection.D);
-            var a3 = new CsvAnalogAlarmTreshold(4.5, "FRCSA1011_1>2.1", RsViewTresholdDirection.I);
-            var a4 = new CsvAnalogAlarmTreshold(5.5, "H", RsViewTresholdDirection.I);
-            var a5 = new CsvAnalogAlarmTreshold(6.5, "HH", RsViewTresholdDirection.I);
+            var a0 = new CsvAnalogAlarmTreshold(1.5, "FRCSA1011_1<0.0(LL)", RSViewTresholdDirection.D);
+            var a1 = new CsvAnalogAlarmTreshold(2.5, "FRCSA1011_1<1.0(L)", RSViewTresholdDirection.D);
+            var a2 = new CsvAnalogAlarmTreshold(3.5, "FRCSA1011_1<1.1", RSViewTresholdDirection.D);
+            var a3 = new CsvAnalogAlarmTreshold(4.5, "FRCSA1011_1>2.1", RSViewTresholdDirection.I);
+            var a4 = new CsvAnalogAlarmTreshold(5.5, "H", RSViewTresholdDirection.I);
+            var a5 = new CsvAnalogAlarmTreshold(6.5, "HH", RSViewTresholdDirection.I);
 
 
 

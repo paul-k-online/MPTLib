@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.RSView;
 using MPT.RSView.ImportExport.Csv;
-using MPT.RSView.ImportExport.Csv.Tag;
 
 namespace MPTLib.Test.RSView.ImportExport.Csv
 {
@@ -17,7 +16,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         [TestMethod]
         public void TestEnumToString()
         {
-            Assert.AreEqual(RSViewTagType.A.ToRsViewFormat(), "\"A\"");
+            Assert.AreEqual(RSViewTagType.A.ToCsvString(), "\"A\"");
         }
 
         [TestMethod]

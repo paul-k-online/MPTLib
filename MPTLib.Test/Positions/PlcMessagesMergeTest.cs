@@ -19,7 +19,7 @@ namespace MPTLib.Test.Positions
         {
             try
             {
-                var list = new ExcelPositionList(TestData._105_Inform2.FilePath, TestData._105_Inform2.PlcId);
+                var list = new ExcelPositionList(TestData._105_Inform2.ExcelFilePath, TestData._105_Inform2.PlcId);
                 var r = list.LoadMessagesSheet();
                 
                 var sw = Stopwatch.StartNew();

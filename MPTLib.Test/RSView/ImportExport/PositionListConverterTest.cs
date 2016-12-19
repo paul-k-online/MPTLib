@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.Positions;
 using MPT.RSView.ImportExport;
 using MPT.RSView.ImportExport.Csv;
-
+using System.IO;
 
 
 namespace MPTLib.Test.RSView.ImportExport
@@ -16,13 +16,22 @@ namespace MPTLib.Test.RSView.ImportExport
         [TestMethod]
         public void TestConvert()
         {
-            TestData._101_PP23.ExcelPositionList.LoadAllData();
-            var Converter = new PositionListConverter(TestData._101_PP23.ExcelPositionList, TestData.RootElement, TestData._101_PP23.NodeName);
+            var excelPosList = TestData._101_PP23.GetNewExcelPositionList();
+            excelPosList.LoadAllData();
+
+            var Converter = new PositionListConverter(excelPosList, TestData.XmlShema_TEST, TestData._101_PP23.NodeName);
 
             var aiTags = Converter.ConvertAiPositionsToRsViewTags();
+            Assert.IsTrue(aiTags.Any());
+
             var dioTags = Converter.ConvertDioPositionsToRsViewTags();
+            Assert.IsTrue(dioTags.Any());
+
             var aoTags = Converter.ConvertAoPositionsToRsViewTags();
+            Assert.IsTrue(aoTags.Any());
+
             var allTags = Converter.ConvertAllPositionsToRsViewTags();
+            Assert.IsTrue(allTags.Any());
         }
 
         [TestMethod]
@@ -30,17 +39,18 @@ namespace MPTLib.Test.RSView.ImportExport
         {
             try
             {
-                var load = TestData._101_PP23.ExcelPositionList.LoadAiSheet();
+                var excelPosList = TestData._101_PP23.GetNewExcelPositionList();
+                var load = excelPosList.LoadAiSheet();
                 Assert.AreEqual(load, true);
 
                 var converter = new PositionListConverter(
-                                        TestData._101_PP23.ExcelPositionList, 
-                                        TestData.RootElement, 
+                                        excelPosList, 
+                                        TestData.XmlShema_TEST, 
                                         TestData._101_PP23.NodeName);
 
                 var tags = converter.ConvertAllPositionsToRsViewTags().ToList();
                 var csvGen = new CsvGenerator(tags, TestData._101_PP23.NodeName);
-                var csvTagStringList = csvGen.GetTagStringList();
+                var csvTagStringList = csvGen.GetTagCsvContent();
                 Assert.AreNotEqual(0, csvTagStringList.ToList().Count);
             }
             catch (Exception e)
@@ -49,14 +59,13 @@ namespace MPTLib.Test.RSView.ImportExport
             }
         }
 
-
         [TestMethod]
         public void TestDefaultPositionToZip()
         {
             try
             {
-                var shema = XElement.Load(@"RSView\ImportExport\POSITIONLIST_TEST.xml");
-                var rsTags = PositionConvertXmlExtension.ConvertPositionToRsviewTags(TestData.AiPos, shema, "TestNode");
+                var rsTags = PositionConvertXmlExtension.ConvertPositionToRsviewTags(
+                    TestData.TestAiPos, TestData.XmlShema_TEST, "TestNode");
             }
             catch (Exception e)
             {
@@ -64,21 +73,24 @@ namespace MPTLib.Test.RSView.ImportExport
             }
         }
 
-
         [TestMethod]
         public void TestInformToZip()
         {
             try
             {
-                var excelPositionList = new ExcelPositionList(@"_TestData\inform2.xlsx");
-                excelPositionList.LoadAiSheet();
+                var excelPositionList = TestData._105_Inform2.GetNewExcelPositionList();
+                var load = excelPositionList.LoadAiSheet();
+                Assert.AreEqual(load, true);
 
-                var shema = XElement.Load(@"RSView\ImportExport\POSITIONLIST.xml");
-                var converter = new PositionListConverter(excelPositionList, shema, "105_INFORM");
+                var converter = new PositionListConverter(excelPositionList, 
+                                        TestData.XmlShema_TEST,
+                                        TestData._105_Inform2.NodeName);
 
                 var rsviewTags = converter.ConvertAllPositionsToRsViewTags();
                 var csvGenerator = new CsvGenerator(rsviewTags, converter.NodeName);
-                //csvGenerator.SaveZipToFolder("d:\\");
+                var csvTagStringList = csvGenerator.GetTagCsvContent();
+
+                Assert.IsTrue(csvTagStringList.Any());
             }
             catch(Exception e)
             {
@@ -90,7 +102,7 @@ namespace MPTLib.Test.RSView.ImportExport
         [TestMethod]
         public void TestMethod1()
         {
-            var posList = new ExcelPositionList(@"_TestData\K3_2.xlsx");
+            var posList = TestData._105_K32.GetNewExcelPositionList();
             try
             {
                 posList.LoadAiSheet();
@@ -100,13 +112,20 @@ namespace MPTLib.Test.RSView.ImportExport
                 throw e;
             }
 
-            XElement k32Shema = XElement.Load(@"RSView\ImportExport\K32_Shema.xml");
-            PositionListConverter k32Converter = new PositionListConverter(posList, k32Shema, @"K-3/2");
-            CsvGenerator csvGen = new CsvGenerator(k32Converter.ConvertAiPositionsToRsViewTags(), k32Converter.NodeName);
+            
+            var converter = new PositionListConverter(posList, TestData.XmlShema_K32, TestData._105_K32.NodeName);
+            var csvGenerator = new CsvGenerator(converter.ConvertAiPositionsToRsViewTags(), TestData._105_K32.NodeName);
 
-            csvGen.SaveZipToFolder(@"d:\");
+            var content = csvGenerator.GetZipStream();
+
+            var filePath = Path.Combine(Path.GetTempPath(), csvGenerator.ZipFileName);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+            var bSave = CsvGenerator.SaveFile(filePath, content);
+            Assert.IsTrue(bSave);
+
+            if (bSave)
+                File.Delete(filePath);
         }
-
-
     }
 }

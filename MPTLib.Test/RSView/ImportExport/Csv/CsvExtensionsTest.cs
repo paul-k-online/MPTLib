@@ -9,34 +9,34 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         [TestMethod]
         public void TestToRSBool()
         {
-            Assert.AreEqual(false.ToString().ToRsViewFormat(), "\"False\"", true);            
+            Assert.AreEqual(false.ToString().ToCsvString(), "\"False\"", true);            
         }
 
         [TestMethod]
         public void TestToRSInt()
         {
             //Assert.AreEqual( ((int?)null).ToRS(), "");
-            Assert.AreEqual( ((int?)1).ToRsViewFormat(), "1");
+            Assert.AreEqual( ((int?)1).ToCsvString(), "1");
         }
 
         [TestMethod]
         public void TestToRSDouble()
         {
-            Assert.AreEqual( ((double?)null).ToRsViewFormat(), "");
-            Assert.AreEqual( (0.0).ToRsViewFormat(), "0");
-            Assert.AreEqual( (1.1).ToRsViewFormat(), "1.1");
+            Assert.AreEqual( ((double?)null).ToCsvString(), "");
+            Assert.AreEqual( (0.0).ToCsvString(), "0");
+            Assert.AreEqual( (1.1).ToCsvString(), "1.1");
         }
 
         [TestMethod]
         public void TestToRSString()
         {
 
-            Assert.AreEqual( ((string)null).ToRsViewFormat(), "");
+            Assert.AreEqual( ((string)null).ToCsvString(), "");
             
-            Assert.AreEqual( string.Empty.ToRsViewFormat(), "\"\"");
-            Assert.AreEqual( "".ToRsViewFormat(), "\"\"");
+            Assert.AreEqual( string.Empty.ToCsvString(), "\"\"");
+            Assert.AreEqual( "".ToCsvString(), "\"\"");
             
-            Assert.AreEqual( "1".ToRsViewFormat(), "\"1\"");
+            Assert.AreEqual( "1".ToCsvString(), "\"1\"");
         }
 
 

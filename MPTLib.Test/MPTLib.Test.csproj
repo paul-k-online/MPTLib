@@ -76,7 +76,7 @@
     <Compile Include="RSView\AlarmLog\UnitTest1.cs" />
     <Compile Include="RSView\DataLog\UnitTest1.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccountTests.cs" />
-    <Compile Include="RSView\TestData.cs" />
+    <Compile Include="_TestData\TestData.cs" />
     <Compile Include="RSView\AiPositionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSView\ImportExport\Csv\CsvExtensionsTest.cs" />
@@ -168,43 +168,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="_TestData\DlgLog\20161017AL.DBF" />
-    <None Include="_TestData\DlgLog\ACTLOG\20161017AI.DBF">
+    <None Include="_TestData\DlgLog\ACTLOG\20161017AI.DBF" />
+    <None Include="_TestData\DlgLog\ACTLOG\20161018AI.DBF" />
+    <None Include="_TestData\DlgLog\ALMLOG\20161017AL.DBF" />
+    <None Include="_TestData\DlgLog\ALMLOG\20161018AL.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AF.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AS.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AT.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AF.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AS.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AT.DBF" />
+    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DLG" />
+    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DNS" />
+    <None Include="_TestData\inform2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ACTLOG\20161018AI.DBF">
+    <None Include="_TestData\K3_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ALMLOG\20161017AL.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\ALMLOG\20161018AL.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AF.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AS.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AT.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AF.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AS.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AT.DBF">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DLG">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DNS">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\K3_2.xlsx" />
     <None Include="_TestData\RsView\100_Test.rar" />
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +194,11 @@
       <Name>MptLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="RSView\ImportExport\POSITIONLIST_TEST.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
