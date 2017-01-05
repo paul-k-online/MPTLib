@@ -10,6 +10,12 @@ namespace MPT.RSView.ImportExport
 {
     public static class PositionConvertXmlExtension
     {
+        public const string AiPositionElement = "AiPosition";
+        public const string DioPositionElement = "DioPosition";
+        public const string AoPositionElement = "AoPosition";
+        public const string TagElement = "TAG";
+
+
         public static double ToDouble(this string value, double defaultValue = default(double))
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -28,10 +34,10 @@ namespace MPT.RSView.ImportExport
         }
 
 
-        #region ToRsView
+        #region ToRsViewTag
         public static IEnumerable<RSViewTag> ToRsViewTags(this XElement positionShema, IDictionary<string, object> paramDict, string nodeName)
         {
-            var tagElements = positionShema.Elements("TAG");
+            var tagElements = positionShema.Elements(TagElement);
             return tagElements.Select(x => ToRsViewTag(x, paramDict, nodeName));
         }
 
@@ -54,7 +60,7 @@ namespace MPT.RSView.ImportExport
         {
             try
             {
-                if (!xElement.EqualsByName("TAG") || 
+                if (!xElement.EqualsByName(TagElement) ||
                     xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.A)
                     return null;
 
@@ -84,9 +90,10 @@ namespace MPT.RSView.ImportExport
                 tag.SetDatalog(xElement);
                 return tag;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("ToAnalogTag", e);
+                //throw new Exception(string.Format("ToRsViewAnalogTag #:{0} Name:{1}", paramDict["Number"].ToString(), paramDict["Name"]. ), ex);
+                return null;
             }
         }
 
@@ -96,7 +103,7 @@ namespace MPT.RSView.ImportExport
             {
                 if (!xElement.EqualsByName("ALARM") || 
                     xElement.Parent == null || 
-                    !xElement.Parent.EqualsByName("TAG") ||
+                    !xElement.Parent.EqualsByName(TagElement) ||
                     xElement.Parent.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.A)
                 {
                     number = -1;
@@ -127,18 +134,19 @@ namespace MPT.RSView.ImportExport
 
             try
             {
-                if (!xElement.EqualsByName("TAG") || xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.D)
+                if (!xElement.EqualsByName(TagElement) 
+                    || xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.D)
                     return null;
                 
                 // ReSharper disable once UseObjectOrCollectionInitializer
                 var tag = new RSViewDigitalTag(
                                 xElement.GetAttributeValue("Name").FormatDict(paramDict), 
                                 xElement.GetAttributeValue("Folder").FormatDict(paramDict));
-                tag.Description = xElement.GetAttributeValue("description").FormatDict(paramDict);
+                tag.Description = xElement.GetAttributeValue("Description").FormatDict(paramDict);
 
                 try
                 {
-                    var val = xElement.GetAttributeValue("initialValue").FormatDict(paramDict);
+                    var val = xElement.GetAttributeValue("InitialValue").FormatDict(paramDict);
                     tag.InitialValue = Convert.ToBoolean(Convert.ToInt32(val));
                 }
                 catch
@@ -168,7 +176,7 @@ namespace MPT.RSView.ImportExport
 
             if (!xElement.EqualsByName("ALARM") || 
                 xElement.Parent == null || 
-                !xElement.Parent.EqualsByName("TAG") ||
+                !xElement.Parent.EqualsByName(TagElement) ||
                 xElement.Parent.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.D)
                 return null;
             
@@ -185,7 +193,7 @@ namespace MPT.RSView.ImportExport
         {
             try
             {
-                if (!xElement.EqualsByName("TAG") || xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.S)
+                if (!xElement.EqualsByName(TagElement) || xElement.GetAttributeValue("Type").ToEnum<RSViewTagType>() != RSViewTagType.S)
                     return null;
 
                 var tag = new RSViewStringTag(
@@ -208,7 +216,7 @@ namespace MPT.RSView.ImportExport
 
         public static void SetDataSource(this RSViewTag tag, XElement xElement,IDictionary<string, object> paramDict, string nodeName)
         {
-            var dataSource = xElement.GetAttributeValue("dataSource").FormatDict(paramDict).ToEnum<RSViewTagDataSourceType>();
+            var dataSource = xElement.GetAttributeValue("DataSource").FormatDict(paramDict).ToEnum<RSViewTagDataSourceType>();
             if (dataSource != RSViewTagDataSourceType.D) 
                 return;
             tag.NodeName = nodeName;
@@ -227,7 +235,7 @@ namespace MPT.RSView.ImportExport
         private static string GetDatalogName(this XElement xElement)
         {
             if (!xElement.EqualsByName("DataLog") 
-                || xElement.Parent == null || !xElement.Parent.EqualsByName("TAG") 
+                || xElement.Parent == null || !xElement.Parent.EqualsByName(TagElement) 
                 || xElement.Parent.GetAttributeValue("Type").ToEnum<RSViewTagType>() == RSViewTagType.F)
                 return null;
 
@@ -237,6 +245,7 @@ namespace MPT.RSView.ImportExport
         #endregion
 
         #region PositionConvert
+
 
         public static IEnumerable<RSViewTag> ConvertPositionToRsviewTags(Position position, XElement positionListShema, string nodeName)
         {
@@ -249,17 +258,17 @@ namespace MPT.RSView.ImportExport
             if (position is AiPosition)
             {
                 paramDict = ((AiPosition)position).GetParamValueDictionary();
-                positionShema = positionListShema.GetElement("AiPosition");
+                positionShema = positionListShema.GetElement(AiPositionElement);
             }
             else if (position is DioPosition)
             {
                 paramDict = ((DioPosition)position).GetParamValueDictionary();
-                positionShema = positionListShema.GetElement("DioPosition");
+                positionShema = positionListShema.GetElement(DioPositionElement);
             }
             else if (position is AoPosition)
             {
                 paramDict = ((AoPosition)position).GetParamValueDictionary();
-                positionShema = positionListShema.GetElement("AoPosition");
+                positionShema = positionListShema.GetElement(AoPositionElement);
             }
             else
             {
@@ -269,7 +278,8 @@ namespace MPT.RSView.ImportExport
             return ToRsViewTags(positionShema, paramDict, nodeName);
         }
 
-        public static IEnumerable<RSViewTag> ConvertPositionsToRsviewTags(IEnumerable<Position> positions, XElement positionShema, string nodeName)
+        public static IEnumerable<RSViewTag> ConvertPositionsToRsviewTags(
+            IEnumerable<Position> positions, XElement positionShema, string nodeName)
         {
             if (positions == null) return null;
             if (positionShema == null) return null;

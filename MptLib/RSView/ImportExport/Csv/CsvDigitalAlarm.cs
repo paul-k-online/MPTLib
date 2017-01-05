@@ -3,73 +3,42 @@ using System.Linq;
 
 namespace MPT.RSView.ImportExport.Csv
 {
-    public class CsvAlarmMessage
-    {
-        public enum MessageSource
-        {
-            /// <summary>
-            /// System Message Source
-            /// </summary>
-            S,
-            /// <summary>
-            /// User Message Source
-            /// </summary>
-            U,
-            /// <summary>
-            /// Custom Message Source
-            /// </summary>
-            C,
-        }
-
-        public MessageSource Source = MessageSource.S;
-        public string FileMessage = "";
-        public string PrinterMessage = "";
-
-        public override string ToString()
-        {
-            var fields = new List<object>()
-                         {
-                             Source,
-                             FileMessage,
-                             PrinterMessage,
-                         };
-            return string.Join(",", fields.Select(x => x.ToCsvString()));
-        }
-    }
-
-
     public class CsvDigitalAlarm
     {
-        private RSViewTagType TagType = RSViewTagType.D;
-        private string TagName;
+        RSViewTagType TagType = RSViewTagType.D;
+        string TagName;
 
-        // TAB Alarm States
-        public RSViewDigitalAlarmType Type = RSViewDigitalAlarmType.ON;
-        public string Label;
-        public ushort? SeverityValue = null;
-        public string Severity
-        {
-            get { return SeverityValue.ToString(); }
-        }
+        // Alarm States
+        RSViewDigitalAlarmType Type = RSViewDigitalAlarmType.ON;
+        string Label;
+        ushort? SeverityValue = null;
+        string Severity { get { return SeverityValue.ToString(); } }
 
-        // TAB Alarm Message
-        public CsvAlarmMessage InAlarmMessage = new CsvAlarmMessage();
-        public CsvAlarmMessage OutOfAlarmMessage = new CsvAlarmMessage();
-        public CsvAlarmMessage AckAlarmMessage = new CsvAlarmMessage();
+        // Alarm Message
+        CsvAlarmMessage InAlarmMessage = new CsvAlarmMessage();
+        CsvAlarmMessage OutOfAlarmMessage = new CsvAlarmMessage();
+        CsvAlarmMessage AckAlarmMessage = new CsvAlarmMessage();
 
-        // TAB Advanced
-        public string AlarmIdentify ="";
-        public string Outofalmlabel ="";
-        // // redion Alarm Acknovlegde
-        public string AckTagName = "";
-        public string AckAutoReset = "N";
-        // // redion Alarm Handshake
-        public string HandshakeTagName ="";
-        public string HandshakeAutoReset ="N";
+        // Advanced
+        string AlarmIdentify ="";
+        string Outofalmlabel ="";
+        // // Alarm Acknovlegde
+        string AckTagName = "";
+        string AckAutoReset = "N";
+        // // Alarm Handshake
+        string HandshakeTagName ="";
+        string HandshakeAutoReset ="N";
 
-        public CsvDigitalAlarm(string tagname)
+
+        public CsvDigitalAlarm(string tagname, 
+            string label = null, 
+            ushort? severityValue = null, 
+            RSViewDigitalAlarmType type = RSViewDigitalAlarmType.ON)
         {
             TagName = tagname;
+            Label = label;
+            SeverityValue = severityValue;
+            Type = type;
         }
 
         public override string ToString()

@@ -14,21 +14,20 @@ namespace MPT.RSView.ImportExport.Csv
                 return string.Format("\"{0}\"", value);
 
             if (value is double)
-                return Convert.ToString(value,CultureInfo.InvariantCulture.NumberFormat);
+                return Convert.ToString(value, CultureInfo.InvariantCulture.NumberFormat);
 
             if (value is int)
                 return value.ToString();
-
 
             if (value is CsvAlarmMessage)
                 return value.ToString();
 
             if (value is CsvAnalogAlarmTreshold)
                 return value.ToString();
-            
-            var a = value.ToString();
-            var b = a.ToCsvString();
-            return b;
+
+            var s = value.ToString();
+            var csvStr = s.ToCsvString();
+            return csvStr;
         }
 
         public static CsvTag ToCsvTag(this RSViewAnalogTag tag)
@@ -107,13 +106,7 @@ namespace MPT.RSView.ImportExport.Csv
         {
             if (!tag.IsAlarm)
                 return null;
-
-            var csvDigitalAlarm = new CsvDigitalAlarm(tag.Name)
-            {
-                Label = tag.Alarm.Label,
-                SeverityValue = tag.Alarm.Severity,
-                Type = tag.Alarm.Type
-            };
+            var csvDigitalAlarm = new CsvDigitalAlarm(tag.Name, tag.Alarm.Label, tag.Alarm.Severity, tag.Alarm.Type);
 
             return csvDigitalAlarm;
         }

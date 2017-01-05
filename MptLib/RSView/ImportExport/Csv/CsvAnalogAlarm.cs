@@ -57,7 +57,6 @@ namespace MPT.RSView.ImportExport.Csv
     "","","","S","","","","",
     "","","","S","","","",""
     */
-
     public class CsvAnalogAlarmTreshold
     {
         public enum ThresholdType
