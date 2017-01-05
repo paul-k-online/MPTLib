@@ -11,7 +11,7 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
     [TestClass]
     public class CsvTagTest
     {
-        readonly Regex _regexSpace = new Regex("[\x20]*");
+        static readonly Regex _regexSpace = new Regex("[\x20]*");
         
         [TestMethod]
         public void TestEnumToString()
@@ -37,7 +37,6 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
             var expected = @"""A""      , ""AI\FRCA2013_2\bmax"", ""Блокировка по MAX""                                   , ""F""      , ""M""        , ""*""          , ""F""    , ""F""        , ""D""        , ""L""       , 0         , 1600      , 0             , 1    , 0     , 0       , ""м3/ч"",                  ,                 ,                ,              ,               ,           ,           ,           ,                   ,                    ,            ,                   ,                      ,";
             expected = _regexSpace.Replace(expected, "");
             var tag = CsvTag.CreateAnalog(@"AI\FRCA2013_2\bmax", "Блокировка по MAX", 0, 1600, "м3/ч");
-            
 
             var actual = tag.ToString();
             actual = _regexSpace.Replace(actual, "");

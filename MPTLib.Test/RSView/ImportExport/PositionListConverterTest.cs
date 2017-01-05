@@ -19,17 +19,17 @@ namespace MPTLib.Test.RSView.ImportExport
             var excelPosList = TestData._101_PP23.GetNewExcelPositionList();
             excelPosList.LoadAllData();
 
-            var Converter = new PositionListConverter(excelPosList, TestData.XmlShema_TEST, TestData._101_PP23.NodeName);
+            var Converter = new PositionListConverter(excelPosList, TestData.XmlShema, TestData._101_PP23.NodeName);
 
             var aiTags = Converter.ConvertAiPositionsToRsViewTags();
             Assert.IsTrue(aiTags.Any());
 
             var dioTags = Converter.ConvertDioPositionsToRsViewTags();
             Assert.IsTrue(dioTags.Any());
-
+            /*
             var aoTags = Converter.ConvertAoPositionsToRsViewTags();
             Assert.IsTrue(aoTags.Any());
-
+            */
             var allTags = Converter.ConvertAllPositionsToRsViewTags();
             Assert.IsTrue(allTags.Any());
         }
@@ -76,26 +76,19 @@ namespace MPTLib.Test.RSView.ImportExport
         [TestMethod]
         public void TestInformToZip()
         {
-            try
-            {
-                var excelPositionList = TestData._105_Inform2.GetNewExcelPositionList();
-                var load = excelPositionList.LoadAiSheet();
-                Assert.AreEqual(load, true);
+            var excelPositionList = TestData._105_Inform2.GetNewExcelPositionList();
+            var load = excelPositionList.LoadAiSheet();
+            Assert.AreEqual(load, true);
 
-                var converter = new PositionListConverter(excelPositionList, 
-                                        TestData.XmlShema_TEST,
-                                        TestData._105_Inform2.NodeName);
+            var converter = new PositionListConverter(excelPositionList,
+                                    TestData.XmlShema_TEST,
+                                    TestData._105_Inform2.NodeName);
 
-                var rsviewTags = converter.ConvertAllPositionsToRsViewTags();
-                var csvGenerator = new CsvGenerator(rsviewTags, converter.NodeName);
-                var csvTagStringList = csvGenerator.GetTagCsvContent();
+            var rsviewTags = converter.ConvertAllPositionsToRsViewTags();
+            var csvGenerator = new CsvGenerator(rsviewTags, converter.NodeName);
+            var csvTagStringList = csvGenerator.GetTagCsvContent();
 
-                Assert.IsTrue(csvTagStringList.Any());
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
+            Assert.IsTrue(csvTagStringList.Any());
         }
 
 

@@ -71,6 +71,7 @@
     <Compile Include="Model\UnitTest1.cs" />
     <Compile Include="Positions\ExcelPositionListTest.cs" />
     <Compile Include="Positions\PlcMessagesMergeTest.cs" />
+    <Compile Include="PrimitiveType\DictionaryExtensionTests.cs" />
     <Compile Include="PrimitiveType\TestNullNumeric.cs" />
     <Compile Include="PrimitiveType\UnitTest1.cs" />
     <Compile Include="RSView\AlarmLog\UnitTest1.cs" />
