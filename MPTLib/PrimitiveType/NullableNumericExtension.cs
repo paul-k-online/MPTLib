@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using MySql.Data.Entity;
 
 namespace MPT.PrimitiveType
 {
@@ -26,7 +24,6 @@ namespace MPT.PrimitiveType
             var success = short.TryParse(input, out result);
             return success ? (short?)result : null;
         }
-
         
         public static T? ToNullNumeric<T>(this object obj) where T : struct 
         {

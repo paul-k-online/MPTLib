@@ -11,21 +11,13 @@ namespace MPT.PrimitiveType
         {
             if (obj == null || Convert.IsDBNull(obj))
                 return null;
-
             return Convert.ToString(obj);
         }
-
 
         public static string Format(this string formatString, params object[] args)
         {
             return string.Format(formatString, args);
         }
-
-        public static string F(this string formatString, params object[] args)
-        {
-            return Format(formatString, args);
-        }
-
 
 
         private static readonly Regex RegexFormatArgs = new Regex(@"({(?<KEY> [a-zA-Z0-9_\.]+)})",
