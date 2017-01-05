@@ -14,9 +14,10 @@ namespace MPT.Model
     
     public partial class User
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
         public string Email { get; set; }
+        public string EmailExt { get; set; }
         public Nullable<int> SeverityLowLevel { get; set; }
     }
 }
