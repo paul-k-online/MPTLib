@@ -81,7 +81,7 @@ namespace MPT.DataBase
                 }
                 return Connection.State == ConnectionState.Open;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }           
@@ -115,7 +115,7 @@ namespace MPT.DataBase
             {
                 return cmd.ExecuteReader();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
