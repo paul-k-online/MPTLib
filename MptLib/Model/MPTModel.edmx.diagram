@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6024ef713c9d46b2b761b860a5df3b55" Name="Diagram1" ZoomLevel="89">
+      <Diagram DiagramId="6024ef713c9d46b2b761b860a5df3b55" Name="Diagram1" ZoomLevel="117">
         <EntityTypeShape EntityType="MPTModel.PlcEventCode" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PlcEvent" Width="1.5" PointX="5.875" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PcEvent" Width="1.5" PointX="6.375" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PlcOldEvent" Width="1.5" PointX="1.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcEvent" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PcEvent" Width="1.5" PointX="5.625" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcEventOld" Width="1.5" PointX="1.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.Factory" Width="1.5" PointX="1.5" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PlcMessage" Width="1.5" PointX="3.5" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PcEventIgnoreWord" Width="1.5" PointX="6.375" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PlcMessage" Width="1.5" PointX="3.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PcEventIgnoreWord" Width="1.5" PointX="5.625" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.PLC" Width="1.5" PointX="3.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PLCDescription" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MPTModel.PLC_TO" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PLCDescription" Width="1.5" PointX="5.625" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MPTModel.PLC_TO" Width="1.5" PointX="5.625" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.ProjectHMI" Width="1.5" PointX="1.5" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MPTModel.Workstation" Width="1.5" PointX="3.625" PointY="9.625" IsExpanded="true" />
         <AssociationConnector Association="MPTModel.FK_Events_PLC" ManuallyRouted="false" >
@@ -35,18 +35,17 @@
         <AssociationConnector Association="MPTModel.FK_Codes_Severity" />
         <AssociationConnector Association="MPTModel.FK_PLC_Factory" />
         <AssociationConnector Association="MPTModel.FK_Workstation_Project" />
-        <EntityTypeShape EntityType="MPTModel.AlarmEvent" Width="1.5" PointX="11.125" PointY="4.625" />
-        <EntityTypeShape EntityType="MPTModel.AlarmTag" Width="1.5" PointX="8.75" PointY="3.125" />
-        <EntityTypeShape EntityType="MPTModel.AlarmValue" Width="1.5" PointX="11.125" PointY="2.625" />
+        <EntityTypeShape EntityType="MPTModel.AlarmEvent" Width="1.5" PointX="10.125" PointY="6.5" />
+        <EntityTypeShape EntityType="MPTModel.AlarmTag" Width="1.5" PointX="8.125" PointY="4.5" />
+        <EntityTypeShape EntityType="MPTModel.AlarmValue" Width="1.5" PointX="10.125" PointY="4.5" />
         <AssociationConnector Association="MPTModel.FK_AlarmEvents_AlarmTags" />
         <AssociationConnector Association="MPTModel.FK_AlarmTags_PLC" />
         <AssociationConnector Association="MPTModel.FK_AlarmValues_AlarmTags" />
-        <AssociationConnector Association="MPTModel.PlcMessagePlcEventOld" />
-        <EntityTypeShape EntityType="MPTModel.EventsAlarm" Width="1.5" PointX="11.875" PointY="0.5" />
+        <EntityTypeShape EntityType="MPTModel.EventsAlarm" Width="1.5" PointX="8.125" PointY="2.625" />
         <AssociationConnector Association="MPTModel.FK_EventsAlarm_Events" />
-        <EntityTypeShape EntityType="MPTModel.User" Width="1.5" PointX="8.625" PointY="7.75" />
-        <EntityTypeShape EntityType="MPTModel.WorkScheduleHoliday" Width="1.5" PointX="10.875" PointY="11.625" />
-        <EntityTypeShape EntityType="MPTModel.WorkScheduleMove" Width="1.5" PointX="10.875" PointY="10.25" />
+        <EntityTypeShape EntityType="MPTModel.User" Width="1.5" PointX="11.125" PointY="10" />
+        <EntityTypeShape EntityType="MPTModel.WorkScheduleHoliday" Width="1.5" PointX="9.5" PointY="11.375" />
+        <EntityTypeShape EntityType="MPTModel.WorkScheduleMove" Width="1.5" PointX="9.5" PointY="10" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

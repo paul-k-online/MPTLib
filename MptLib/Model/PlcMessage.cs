@@ -18,7 +18,6 @@ namespace MPT.Model
         public PlcMessage()
         {
             this.PlcEvents = new HashSet<PlcEvent>();
-            this.PlcOldEvents = new HashSet<PlcOldEvent>();
         }
     
         public int PlcId { get; set; }
@@ -30,7 +29,5 @@ namespace MPT.Model
         public virtual PLC PLC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> PlcEvents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlcOldEvent> PlcOldEvents { get; set; }
     }
 }

@@ -88,6 +88,8 @@
           <Property Name="n" Type="int" Nullable="false" />
           <Property Name="v" Type="float" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="255" />
+          <Property Name="nn" Type="int" />
+          <Property Name="s" Type="int" />
         </EntityType>
         <EntityType Name="Factory">
           <Key>
@@ -594,7 +596,7 @@
           <Property Name="Level" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Workstation" Relationship="MPTModel.FK_Events_Pc_Workstation" FromRole="PcEvents" ToRole="Workstation" />
         </EntityType>
-        <EntityType Name="PlcOldEvent">
+        <EntityType Name="PlcEventOld">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -603,11 +605,12 @@
           <Property Name="LogPos" Type="Int32" Nullable="false" />
           <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Msec" Type="Int32" Nullable="false" />
-          <Property Name="MessageNumber" Type="Int32" Nullable="false" />
+          <Property Name="n" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Double" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PLC" Relationship="Self.FK_EventsOld_PLC" FromRole="EventsOld" ToRole="PLC" />
-          <NavigationProperty Name="PlcMessage" Relationship="MPTModel.PlcMessagePlcEventOld" FromRole="PlcEventOld" ToRole="PlcMessage" />
+          <Property Name="nn" Type="Int32" />
+          <Property Name="s" Type="Int32" />
         </EntityType>
         <EntityType Name="Factory">
           <Key>
@@ -631,7 +634,6 @@
           <Property Name="Group" Type="Int16" />
           <NavigationProperty Name="PLC" Relationship="Self.FK_Messages_PLC" FromRole="Messages" ToRole="PLC" />
           <NavigationProperty Name="PlcEvents" Relationship="MPTModel.PlcMessagePlcEvent" FromRole="PlcMessage" ToRole="PlcEvent" />
-          <NavigationProperty Name="PlcOldEvents" Relationship="MPTModel.PlcMessagePlcEventOld" FromRole="PlcMessage" ToRole="PlcEventOld" />
           <Property Name="Severity" Type="Int32" />
         </EntityType>
         <EntityType Name="PcEventIgnoreWord">
@@ -753,7 +755,7 @@
         </Association>
         <Association Name="FK_EventsOld_PLC">
           <End Role="PLC" Type="Self.PLC" Multiplicity="1" />
-          <End Role="EventsOld" Type="MPTModel.PlcOldEvent" Multiplicity="*" />
+          <End Role="EventsOld" Type="MPTModel.PlcEventOld" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PLC">
               <PropertyRef Name="Id" />
@@ -815,7 +817,7 @@
           <EntitySet Name="PlcEventCodes" EntityType="MPTModel.PlcEventCode" />
           <EntitySet Name="PlcEvents" EntityType="MPTModel.PlcEvent" />
           <EntitySet Name="PcEvents" EntityType="MPTModel.PcEvent" />
-          <EntitySet Name="PlcEventsOld" EntityType="MPTModel.PlcOldEvent" />
+          <EntitySet Name="PlcEventsOld" EntityType="MPTModel.PlcEventOld" />
           <EntitySet Name="Factories" EntityType="Self.Factory" />
           <EntitySet Name="PlcMessages" EntityType="MPTModel.PlcMessage" />
           <EntitySet Name="PcEventIgnoreWords" EntityType="Self.PcEventIgnoreWord" />
@@ -897,10 +899,6 @@
           <AssociationSet Name="FK_AlarmValues_AlarmTags" Association="MPTModel.FK_AlarmValues_AlarmTags">
             <End Role="AlarmTag" EntitySet="AlarmTags" />
             <End Role="AlarmValue" EntitySet="AlarmValues" />
-          </AssociationSet>
-          <AssociationSet Name="PlcMessagePlcEventOld" Association="MPTModel.PlcMessagePlcEventOld">
-            <End Role="PlcMessage" EntitySet="PlcMessages" />
-            <End Role="PlcEventOld" EntitySet="PlcEventsOld" />
           </AssociationSet>
           <EntitySet Name="EventsAlarms" EntityType="MPTModel.EventsAlarm" />
           <AssociationSet Name="FK_EventsAlarm_Events" Association="MPTModel.FK_EventsAlarm_Events">
@@ -1110,20 +1108,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PlcMessagePlcEventOld">
-          <End Type="MPTModel.PlcMessage" Role="PlcMessage" Multiplicity="1" />
-          <End Type="MPTModel.PlcOldEvent" Role="PlcEventOld" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlcMessage">
-              <PropertyRef Name="PlcId" />
-              <PropertyRef Name="Number" />
-            </Principal>
-            <Dependent Role="PlcEventOld">
-              <PropertyRef Name="PlcId" />
-              <PropertyRef Name="MessageNumber" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EventsAlarm">
           <Key>
             <PropertyRef Name="EventId" />
@@ -1210,14 +1194,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PlcEventsOld">
-            <EntityTypeMapping TypeName="MPTModel.PlcOldEvent">
+            <EntityTypeMapping TypeName="MPTModel.PlcEventOld">
               <MappingFragment StoreEntitySet="EventsOld">
+                <ScalarProperty Name="s" ColumnName="s" />
+                <ScalarProperty Name="nn" ColumnName="nn" />
                 <ScalarProperty Name="Id" ColumnName="EventId" />
                 <ScalarProperty Name="PlcId" ColumnName="PlcId" />
                 <ScalarProperty Name="LogPos" ColumnName="LogPos" />
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="Msec" ColumnName="Msec" />
-                <ScalarProperty Name="MessageNumber" ColumnName="n" />
+                <ScalarProperty Name="n" ColumnName="n" />
                 <ScalarProperty Name="Value" ColumnName="v" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
               </MappingFragment>

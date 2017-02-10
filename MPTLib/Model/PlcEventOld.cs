@@ -12,18 +12,19 @@ namespace MPT.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class PlcOldEvent
+    public partial class PlcEventOld
     {
         public int Id { get; set; }
         public int PlcId { get; set; }
         public int LogPos { get; set; }
         public System.DateTime DateTime { get; set; }
         public int Msec { get; set; }
-        public int MessageNumber { get; set; }
+        public int n { get; set; }
         public double Value { get; set; }
         public string Message { get; set; }
+        public Nullable<int> nn { get; set; }
+        public Nullable<int> s { get; set; }
     
         public virtual PLC PLC { get; set; }
-        public virtual PlcMessage PlcMessage { get; set; }
     }
 }

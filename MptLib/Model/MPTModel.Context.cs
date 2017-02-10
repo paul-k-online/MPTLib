@@ -30,7 +30,7 @@ namespace MPT.Model
         public virtual DbSet<PlcEventCode> PlcEventCodes { get; set; }
         public virtual DbSet<PlcEvent> PlcEvents { get; set; }
         public virtual DbSet<PcEvent> PcEvents { get; set; }
-        public virtual DbSet<PlcOldEvent> PlcEventsOld { get; set; }
+        public virtual DbSet<PlcEventOld> PlcEventsOld { get; set; }
         public virtual DbSet<Factory> Factories { get; set; }
         public virtual DbSet<PlcMessage> PlcMessages { get; set; }
         public virtual DbSet<PcEventIgnoreWord> PcEventIgnoreWords { get; set; }

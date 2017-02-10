@@ -18,7 +18,7 @@ namespace MPT.Model
         public PLC()
         {
             this.Events = new HashSet<PlcEvent>();
-            this.EventsOlds = new HashSet<PlcOldEvent>();
+            this.EventsOlds = new HashSet<PlcEventOld>();
             this.Messages = new HashSet<PlcMessage>();
             this.PLC_TO = new HashSet<PLC_TO>();
             this.AlarmTags = new HashSet<AlarmTag>();
@@ -46,7 +46,7 @@ namespace MPT.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcEvent> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlcOldEvent> EventsOlds { get; set; }
+        public virtual ICollection<PlcEventOld> EventsOlds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlcMessage> Messages { get; set; }
         public virtual PLCDescription PLC_Description { get; set; }
