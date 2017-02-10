@@ -13,7 +13,7 @@ namespace MPT.RSView.ImportExport.Csv
         public string Description;
         public string DerivedTagFileName;
         
-        public override string ToString()
+        public string ToCsvString()
         {
             var fieldList = new List<object>()
             {

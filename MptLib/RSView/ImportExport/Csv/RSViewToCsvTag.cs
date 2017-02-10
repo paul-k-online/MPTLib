@@ -17,46 +17,42 @@ namespace MPT.RSView.ImportExport.Csv
                 return Convert.ToString(value, CultureInfo.InvariantCulture.NumberFormat);
 
             if (value is int)
-                return value.ToString();
+                return ((int)value).ToString();
+
+            if (value is CsvAnalogAlarmMessage)
+                return ((CsvAnalogAlarmMessage)value).ToCsvString();
+
 
             if (value is CsvAlarmMessage)
-                return value.ToString();
+                return ((CsvAlarmMessage)value).ToCsvString();
 
             if (value is CsvAnalogAlarmTreshold)
-                return value.ToString();
+                return ((CsvAnalogAlarmTreshold)value).ToCsvString();
 
-            var s = value.ToString();
-            var csvStr = s.ToCsvString();
-            return csvStr;
+            return value.ToString().ToCsvString();
         }
 
         public static CsvTag ToCsvTag(this RSViewAnalogTag tag)
         {
             var csvTag = CsvTag.CreateAnalog(tag.Name, tag.Description, tag.Min, tag.Max, tag.Units, tag.InitialValue);
-            if (!tag.IsMemoryDataSourceType)
-            {
+            if (tag.IsDeviceDataSourceType)
                 csvTag.SetDataSource(tag.NodeName, tag.Address);
-            }
             return csvTag;
         }
 
         public static CsvTag ToCsvTag(this RSViewDigitalTag tag)
         {
             var csvTag = CsvTag.CreateDigit(tag.Name, tag.Description, tag.InitialValue);
-            if (!tag.IsMemoryDataSourceType)
-            {
+            if (tag.IsDeviceDataSourceType)
                 csvTag.SetDataSource(tag.NodeName, tag.Address);
-            }
             return csvTag;
         }
 
         public static CsvTag ToCsvTag(this RSViewStringTag tag)
         {
             var csvTag = CsvTag.CreateString(tag.Name, tag.Description, tag.InitialValue);
-            if (!tag.IsMemoryDataSourceType)
-            {
+            if (tag.IsDeviceDataSourceType)
                 csvTag.SetDataSource(tag.NodeName, tag.Address);
-            }
             return csvTag;
         }
 
@@ -77,7 +73,7 @@ namespace MPT.RSView.ImportExport.Csv
             return CsvTag.CreateFolder(tag.Name);
         }
 
-        public static CsvAnalogAlarmTreshold ToCsvAnalogAlarmTreshold(this RSViewAnalogTag.RsViewAnalogAlarm analogAlarm)
+        public static CsvAnalogAlarmTreshold ToCsvAnalogAlarmTreshold(this RSViewAnalogAlarm analogAlarm)
         {
             return analogAlarm == null ? 
                 new CsvAnalogAlarmTreshold() : 
@@ -86,29 +82,17 @@ namespace MPT.RSView.ImportExport.Csv
 
         public static CsvAnalogAlarm ToCsvAnalogAlarm(this RSViewAnalogTag tag)
         {
-            if (!tag.IsAlarm)
+            if (!tag.HasAlarm)
                 return null;
-
-            var csvAnalogAlarm = new CsvAnalogAlarm(tag.Name, tag.Alarm);
-            /*
-            for (var i = 1; i <= 8; i++)
-            {
-                if (tag.Alarm[i] == null) 
-                    continue;
-                csvAnalogAlarm.Tresholds[i] = tag.Alarm[i].ToCsvAnalogAlarmTreshold();
-            }
-            */
-
+            var csvAnalogAlarm = new CsvAnalogAlarm(tag.Name, tag.Alarms);
             return csvAnalogAlarm;
         }
 
-        public static CsvDigitalAlarm ToCsvDigitalAlarm(this RSViewDigitalTag tag)
+        public static CsvDigitalAlarm GetCsvDigitalAlarm(this RSViewDigitalTag tag)
         {
-            if (!tag.IsAlarm)
+            if (!tag.HasAlarm)
                 return null;
-            var csvDigitalAlarm = new CsvDigitalAlarm(tag.Name, tag.Alarm.Label, tag.Alarm.Severity, tag.Alarm.Type);
-
-            return csvDigitalAlarm;
+            return new CsvDigitalAlarm(tag.Name, tag.Alarm.Label, tag.Alarm.Severity, tag.Alarm.Type);
         }
     }
 }

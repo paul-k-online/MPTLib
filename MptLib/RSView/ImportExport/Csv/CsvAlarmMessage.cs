@@ -28,7 +28,7 @@ namespace MPT.RSView.ImportExport.Csv
         public string FileMessage = "";
         public string PrinterMessage = "";
 
-        public override string ToString()
+        public string ToCsvString()
         {
             var fields = new List<object>()
                          {

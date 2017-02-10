@@ -9,7 +9,7 @@ namespace MPT.RSView.ImportExport.Csv
         string TagName;
 
         // Alarm States
-        RSViewDigitalAlarmType Type = RSViewDigitalAlarmType.ON;
+        RSViewDigitalAlarm.RSViewDigitalAlarmType Type = RSViewDigitalAlarm.RSViewDigitalAlarmType.ON;
         string Label;
         ushort? SeverityValue = null;
         string Severity { get { return SeverityValue.ToString(); } }
@@ -29,11 +29,8 @@ namespace MPT.RSView.ImportExport.Csv
         string HandshakeTagName ="";
         string HandshakeAutoReset ="N";
 
-
-        public CsvDigitalAlarm(string tagname, 
-            string label = null, 
-            ushort? severityValue = null, 
-            RSViewDigitalAlarmType type = RSViewDigitalAlarmType.ON)
+        public CsvDigitalAlarm(string tagname, string label = null, ushort? severityValue = null,
+            RSViewDigitalAlarm.RSViewDigitalAlarmType type = RSViewDigitalAlarm.RSViewDigitalAlarmType.ON)
         {
             TagName = tagname;
             Label = label;
@@ -41,7 +38,7 @@ namespace MPT.RSView.ImportExport.Csv
             Type = type;
         }
 
-        public override string ToString()
+        public string ToCsvString()
         {
             var fields = new List<object>()
                          {

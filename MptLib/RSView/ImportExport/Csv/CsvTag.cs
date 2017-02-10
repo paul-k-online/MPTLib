@@ -188,7 +188,7 @@ namespace MPT.RSView.ImportExport.Csv
             }
         }
         
-        public override string ToString()
+        public string ToCsvString()
         {
             var fields = (TagType == RSViewTagType.F) ? FieldsGeneric : FieldsTotal;
             return string.Join(",", fields.Select(x => x.ToCsvString()));

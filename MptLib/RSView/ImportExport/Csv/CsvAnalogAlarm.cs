@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using static MPT.RSView.RSViewAnalogAlarm;
 
 namespace MPT.RSView.ImportExport.Csv
 {
     public class CsvAnalogAlarmMessage : CsvAlarmMessage
     {
-        public override string ToString()
+        public new string ToCsvString()
         {
             var fields = new List<object>()
             {
@@ -15,7 +16,7 @@ namespace MPT.RSView.ImportExport.Csv
                 PrinterMessage,
                 Source,
             };
-            return string.Join(",", fields.Select(x => RSViewToCsvTag.ToCsvString(x)));
+            return string.Join(",", fields.Select(x => x.ToCsvString()));
         }
     }
 
@@ -30,23 +31,23 @@ namespace MPT.RSView.ImportExport.Csv
     Thresh7 type, Threshold, Label,                   MessageSource, File msg, Printer msg, Direction,  Severity,   
     Thresh8 type, Threshold, Label,                   MessageSource, File msg, Printer msg, Direction,  Severity,
 
-    "C"         , "1.5"    , "FRCSA1011_1<0.0 (LL)" , "S"          , ""      , ""         , "D"      ,  "1"     , 
-    "C"         , "2.5"    , "FRCSA1011_1<1.0 (L)"  , "S"          , "",       "",          "D",        "1",                                
-    "C",          "3.5",     "FRCSA1011_1<1.1",       "S",           "",       "",          "D",        "1",                                           
-    "C",          "4.5",     "FRCSA1011_1>2.1",       "S",           "",       "",          "I",        "1",                                       
-    "C",          "5.5",     "H",                     "S",           "",       "",          "I",        "1",                                                      
-    "C",          "6.5",     "HH",                    "S",           "",       "",          "I",        "1",                                                   
-    "",           "",        "",                      "S",           "",       "",          "",         "",                       
-    "",           "",        "",                      "S",           "",       "",          "",         ""
+    "C",          "1.5",     "FRCSA1011_1<0.0 (LL)" , "S"          , "",        ""         , "D"      ,  "1"     , 
+    "C",          "2.5",     "FRCSA1011_1<1.0 (L)"  , "S"          , "",        "",          "D",        "1",                                
+    "C",          "3.5",     "FRCSA1011_1<1.1",       "S",           "",        "",          "D",        "1",                                           
+    "C",          "4.5",     "FRCSA1011_1>2.1",       "S",           "",        "",          "I",        "1",                                       
+    "C",          "5.5",     "H",                     "S",           "",        "",          "I",        "1",                                                      
+    "C",          "6.5",     "HH",                    "S",           "",        "",          "I",        "1",                                                   
+    "",           "",        "",                      "S",           "",        "",          "",         "",                       
+    "",           "",        "",                      "S",           "",        "",          "",         ""
 
-    "C"         , "1.5"    , "П-1: Ключ - Закрыт"   , "S"          , ""      , ""         , "D"      ,  "1"     , 
-    "C"         , "1.7"    , "П-1: Ключ - Автомат"  , "S"          , "",       "",          "I",        "1",                                 
-    "C"         , "2.5"    , "П-1: Ключ - Открыт"   , "S"          , "",       "",          "I",        "1",    
-    "",           "",       "",                      "S",           "",       "",          "",         "",
-    "",             "",     "",                       "S",          "",         "",         "",         "",
-    "",             "",     "",                         "S",        "",         "",         "",         "",
-    "",             "",     "",                         "S",        "",         "",         "",         "",
-    "",             "",     "",                         "S",        "",         "",         "",         ""
+    "C",          "1.5",     "П-1: Ключ - Закрыт"   , "S"          , "",        ""         , "D"      ,  "1"     , 
+    "C",          "1.7",     "П-1: Ключ - Автомат"  , "S"          , "",        "",          "I",        "1",                                 
+    "C",          "2.5",     "П-1: Ключ - Открыт"   , "S"          , "",        "",          "I",        "1",    
+    "",           "",        "",                      "S",           "",        "",          "",         "",
+    "",           "",        "",                      "S",           "",        "",         "",         "",
+    "",           "",        "",                      "S",           "",        "",         "",         "",
+    "",           "",        "",                      "S",           "",         "",         "",         "",
+    "",           "",        "",                      "S",           "",         "",         "",         ""
 
     "C"         , "1.1"    , "П-1: Режим - Простой" , "S"          , ""      , ""         , "D"      ,  "1"     , 
     "C"         , "1.9"    , "П-1: Режим - В Работе", "S"          , "",        "",         "I",        "1",
@@ -59,7 +60,7 @@ namespace MPT.RSView.ImportExport.Csv
     */
     public class CsvAnalogAlarmTreshold
     {
-        public enum ThresholdType
+        public enum CsvThresholdType
         {
             /// <summary>
             /// Checked ?
@@ -68,14 +69,14 @@ namespace MPT.RSView.ImportExport.Csv
         }
 
         public bool? Enabled;
-        public ThresholdType? Type;
-        public double? Threshold;
+        public CsvThresholdType? Type;
+        public string Threshold = "";
         public string Label = "";
         public CsvAlarmMessage AlarmMessage = new CsvAlarmMessage();
         public RSViewTresholdDirection? Direction;
         public ushort? Severity;
 
-        public CsvAnalogAlarmTreshold(double threshold, string label, RSViewTresholdDirection direction, ushort severity = 1, ThresholdType type = ThresholdType.C)
+        public CsvAnalogAlarmTreshold(string threshold, string label, RSViewTresholdDirection direction, ushort severity = 1, CsvThresholdType type = CsvThresholdType.C)
         {
             Threshold = threshold;
             Label = label;
@@ -85,21 +86,27 @@ namespace MPT.RSView.ImportExport.Csv
         }
 
         public CsvAnalogAlarmTreshold()
-        {
-        }
+        { }
 
-        public override string ToString()
+        public string ToCsvString()
         {
             var fieldList = new List<object>
             {
                 Type.ToString(),
-                Convert.ToString(Threshold, CultureInfo.InvariantCulture),
+                Threshold,
                 Label,
                 AlarmMessage,
                 Direction.ToString(),
                 Severity.ToString(),
             };
-            return string.Join(", ", fieldList.Select(x => x.ToCsvString()));
+
+            var slist = fieldList.Select(x => x.ToCsvString());
+            return string.Join(", ", slist);
+        }
+
+        public override string ToString()
+        {
+            return Label;
         }
     }
 
@@ -113,8 +120,6 @@ namespace MPT.RSView.ImportExport.Csv
     * */
     public class CsvAnalogAlarm
     {
-       
-
         public RSViewTagType TagType = RSViewTagType.A;
         public string TagName;
 
@@ -144,7 +149,7 @@ namespace MPT.RSView.ImportExport.Csv
                 {8, new CsvAnalogAlarmTreshold()},
             };
 
-        public CsvAnalogAlarm(string name, Dictionary<int, RSViewAnalogTag.RsViewAnalogAlarm> alarmList = null)
+        public CsvAnalogAlarm(string name, Dictionary<int, RSViewAnalogAlarm> alarmList = null)
         {
             TagName = name;
 
@@ -156,8 +161,7 @@ namespace MPT.RSView.ImportExport.Csv
             }
         }
 
-
-        public override string ToString()
+        public string ToCsvString()
         {
             var fieldList = new List<object>()
                        {
