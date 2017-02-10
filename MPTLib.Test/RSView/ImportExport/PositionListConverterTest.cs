@@ -1,12 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MPT.Positions;
+
 using MPT.RSView.ImportExport;
 using MPT.RSView.ImportExport.Csv;
-using System.IO;
-
 
 namespace MPTLib.Test.RSView.ImportExport
 {
@@ -19,17 +17,17 @@ namespace MPTLib.Test.RSView.ImportExport
             var excelPosList = TestData._101_PP23.GetNewExcelPositionList();
             excelPosList.LoadAllData();
 
-            var Converter = new PositionListConverter(excelPosList, TestData.XmlShema, TestData._101_PP23.NodeName);
+            var Converter = new RSViewPositionListConverter(excelPosList, TestData.XmlSchema, TestData._101_PP23.NodeName);
 
             var aiTags = Converter.ConvertAiPositionsToRsViewTags();
             Assert.IsTrue(aiTags.Any());
 
             var dioTags = Converter.ConvertDioPositionsToRsViewTags();
             Assert.IsTrue(dioTags.Any());
-            /*
-            var aoTags = Converter.ConvertAoPositionsToRsViewTags();
-            Assert.IsTrue(aoTags.Any());
-            */
+
+            //var aoTags = Converter.ConvertAoPositionsToRsViewTags();
+            //Assert.IsTrue(aoTags.Any());
+
             var allTags = Converter.ConvertAllPositionsToRsViewTags();
             Assert.IsTrue(allTags.Any());
         }
@@ -43,29 +41,18 @@ namespace MPTLib.Test.RSView.ImportExport
                 var load = excelPosList.LoadAiSheet();
                 Assert.AreEqual(load, true);
 
-                var converter = new PositionListConverter(
+                var converter = new RSViewPositionListConverter(
                                         excelPosList, 
-                                        TestData.XmlShema_TEST, 
+                                        TestData.XmlSchema, 
                                         TestData._101_PP23.NodeName);
 
                 var tags = converter.ConvertAllPositionsToRsViewTags().ToList();
                 var csvGen = new CsvGenerator(tags, TestData._101_PP23.NodeName);
-                var csvTagStringList = csvGen.GetTagCsvContent();
-                Assert.AreNotEqual(0, csvTagStringList.ToList().Count);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+                var csvTagContent = csvGen.GetTagCsvContent();
+                Assert.IsTrue(csvTagContent.Any());
 
-        [TestMethod]
-        public void TestDefaultPositionToZip()
-        {
-            try
-            {
-                var rsTags = PositionConvertXmlExtension.ConvertPositionToRsviewTags(
-                    TestData.TestAiPos, TestData.XmlShema_TEST, "TestNode");
+                var csvAlarmContent = csvGen.GetAlarmCsvContent();
+                Assert.IsTrue(csvAlarmContent.Any());
             }
             catch (Exception e)
             {
@@ -80,8 +67,8 @@ namespace MPTLib.Test.RSView.ImportExport
             var load = excelPositionList.LoadAiSheet();
             Assert.AreEqual(load, true);
 
-            var converter = new PositionListConverter(excelPositionList,
-                                    TestData.XmlShema_TEST,
+            var converter = new RSViewPositionListConverter(excelPositionList,
+                                    TestData.XmlSchema,
                                     TestData._105_Inform2.NodeName);
 
             var rsviewTags = converter.ConvertAllPositionsToRsViewTags();
@@ -90,7 +77,6 @@ namespace MPTLib.Test.RSView.ImportExport
 
             Assert.IsTrue(csvTagStringList.Any());
         }
-
 
         [TestMethod]
         public void TestMethod1()
@@ -104,10 +90,9 @@ namespace MPTLib.Test.RSView.ImportExport
             {
                 throw e;
             }
-
             
-            var converter = new PositionListConverter(posList, TestData.XmlShema_K32, TestData._105_K32.NodeName);
-            var csvGenerator = new CsvGenerator(converter.ConvertAiPositionsToRsViewTags(), TestData._105_K32.NodeName);
+            var converter = new RSViewPositionListConverter(posList, TestData.XmlSchema_K32, TestData._105_K32.NodeName);
+            var csvGenerator = new CsvGenerator(converter.ConvertAllPositionsToRsViewTags(), TestData._105_K32.NodeName);
 
             var content = csvGenerator.GetZipStream();
 

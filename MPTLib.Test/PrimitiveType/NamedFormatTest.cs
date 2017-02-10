@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MPT.PrimitiveType;
+
+using MPT.RSView.ImportExport;
+using MPT.RSView.ImportExport.XML;
 
 namespace MPTLib.Test.Strings
 {
@@ -19,13 +22,18 @@ namespace MPTLib.Test.Strings
                            {"UnitS", "Т/ч"},
                            {"BlOckinG.LoW", 1.1.ToString(CultureInfo.InvariantCulture)},
                        };
+            try
+            {
+                var a = "AI[{NumBer}].{Field}.sgn = {break.sgn.Value}".FormatDict(dict);
+                Assert.AreEqual(a, "AI[1].break.sgn = false", true);
 
-            var a = "AI[{NumBer}].{Field}.sgn = {break.sgn.Value}".FormatDict(dict);
-            Assert.AreEqual(a, "AI[1].break.sgn = false", true);
-
-            var b = "<{Blocking.LOW} {UNITs} (LL)".FormatDict(dict);
-            Assert.AreEqual(b, "<1.1 Т/ч (Ll)", true);
-            
+                var b = "<{Blocking.LOW} {UNITs} (LL)".FormatDict(dict);
+                Assert.AreEqual(b, "<1.1 Т/ч (Ll)", true);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
     }
 }

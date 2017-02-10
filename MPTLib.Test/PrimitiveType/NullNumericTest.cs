@@ -5,10 +5,10 @@ using MPT.PrimitiveType;
 namespace MPTLib.Test.PrimitiveType
 {
     [TestClass]
-    public class TestNullNumeric
+    public class NullNumericTest
     {
         [TestMethod]
-        public void NullNumericTest()
+        public void NullNumeric1Test()
         {
             Assert.AreEqual(Convert.ToDouble("0.0"), 0);
             Assert.AreEqual(Convert.ToDouble(null), 0);

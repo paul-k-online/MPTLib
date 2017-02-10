@@ -8,7 +8,7 @@ namespace MPT.Positions
 {
     public static class ExcelPositionConvert
     {
-        public enum AiPosition_ExcelFieldNumber
+        public enum AiPosition_ExcelColumnNumber
         {
             Number = 3,
             Name = 4,
@@ -39,8 +39,8 @@ namespace MPT.Positions
 
             try
             {
-                var number = row.Field<object>((int)AiPosition_ExcelFieldNumber.Number).ToNullNumeric<int>();
-                var name = row.Field<object>((int)AiPosition_ExcelFieldNumber.Name).ToNullString();
+                var number = row.Field<object>((int)AiPosition_ExcelColumnNumber.Number).ToNullNumeric<int>();
+                var name = row.Field<object>((int)AiPosition_ExcelColumnNumber.Name).ToNullString();
                 if (number == null || string.IsNullOrWhiteSpace(name))
                     return null;
 
@@ -48,25 +48,25 @@ namespace MPT.Positions
                 aiPosition.PlcId = plcid;
                 aiPosition.Number = number.Value;
                 aiPosition.Name = name;
-                aiPosition.Description = row.Field<object>((int) AiPosition_ExcelFieldNumber.Description).ToNullString();
-                aiPosition.Units = row.Field<object>((int) AiPosition_ExcelFieldNumber.Dimension).ToNullString();
-                aiPosition.Note = row.Field<object>((int) AiPosition_ExcelFieldNumber.Note).ToNullString();
-                aiPosition.GroupId = row.Field<object>((int) AiPosition_ExcelFieldNumber.GroupId).ToNullNumeric<int>();
+                aiPosition.Description = row.Field<object>((int) AiPosition_ExcelColumnNumber.Description).ToNullString();
+                aiPosition.Units = row.Field<object>((int) AiPosition_ExcelColumnNumber.Dimension).ToNullString();
+                aiPosition.Note = row.Field<object>((int) AiPosition_ExcelColumnNumber.Note).ToNullString();
+                aiPosition.GroupId = row.Field<object>((int) AiPosition_ExcelColumnNumber.GroupId).ToNullNumeric<int>();
                 aiPosition.Scale = new RangePair(
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.ScaleLow).ToNullNumeric<double>(),
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.ScaleHigh).ToNullNumeric<double>()
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.ScaleLow).ToNullNumeric<double>(),
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.ScaleHigh).ToNullNumeric<double>()
                     );
                 aiPosition.Reglament = new RangePair(
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.ReglamentLow).ToNullNumeric<double>(),
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.ReglamentHigh).ToNullNumeric<double>()
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.ReglamentLow).ToNullNumeric<double>(),
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.ReglamentHigh).ToNullNumeric<double>()
                     );
                 aiPosition.Alarming = new RangePair(
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.AlarmLow).ToNullNumeric<double>(),
-                    row.Field<object>((int) AiPosition_ExcelFieldNumber.AlarmHigh).ToNullNumeric<double>()
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.AlarmLow).ToNullNumeric<double>(),
+                    row.Field<object>((int) AiPosition_ExcelColumnNumber.AlarmHigh).ToNullNumeric<double>()
                     );
                 aiPosition.Blocking = new RangePair(
-                    (row.Field<object>((int)AiPosition_ExcelFieldNumber.BlockLow).ToNullNumeric<double>()),
-                    (row.Field<object>((int)AiPosition_ExcelFieldNumber.BlockHigh).ToNullNumeric<double>()));
+                    (row.Field<object>((int)AiPosition_ExcelColumnNumber.BlockLow).ToNullNumeric<double>()),
+                    (row.Field<object>((int)AiPosition_ExcelColumnNumber.BlockHigh).ToNullNumeric<double>()));
 
                 return aiPosition;
             }

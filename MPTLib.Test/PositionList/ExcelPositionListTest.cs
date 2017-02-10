@@ -22,7 +22,7 @@ namespace MPTLib.Test.Positions
                 
 
                 var AIdataTableList = excelPositionList.ExcelDataBase.GetSheetDataTable("AI").AsEnumerable().ToList();
-                var nameIndex = (int) ExcelPositionConvert.AiPosition_ExcelFieldNumber.Name;
+                var nameIndex = (int) ExcelPositionConvert.AiPosition_ExcelColumnNumber.Name;
                 var whereName = AIdataTableList
                     .Where(x => !string.IsNullOrWhiteSpace(x.ItemArray[nameIndex].ToNullString()));
 

@@ -1,27 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 
 namespace MPT.RSView
 {
+
+
     public class RSViewAnalogTag : RSViewTag
     {
-        public class RsViewAnalogAlarm
-        {
-            public double Threshold;
-            [MaxLength(21)]
-            public string Label;
-            public ushort Severity = 1;
-            public RSViewTresholdDirection Direction;
-        }
-
+        [DefaultValue(0)]
         public double Min { get; set; }
+
+        [DefaultValue(100)]
         public double Max { get; set; }
         public double InitialValue { get; set; }
         public string Units { get; set; }
 
-        public readonly Dictionary<int, RsViewAnalogAlarm> Alarm =
-            new Dictionary<int, RsViewAnalogAlarm>()
+        public readonly Dictionary<int, RSViewAnalogAlarm> Alarms =
+            new Dictionary<int, RSViewAnalogAlarm>()
             {
                 {1, null},
                 {2, null},
@@ -33,53 +29,56 @@ namespace MPT.RSView
                 {8, null},
             };
 
-        public bool IsAlarm
+        public bool HasAlarm
         {
-            get { return Alarm.Any(x => x.Value != null); }
+            get { return Alarms.Any(x => x.Value != null); }
         }
         
-        public RsViewAnalogAlarm Alarm1
+        public RSViewAnalogAlarm Alarm1
         {
-            get { return Alarm[1]; }
-            set { Alarm[1] = value; }
+            get { return Alarms[1]; }
+            set { Alarms[1] = value; }
         }
-        public RsViewAnalogAlarm Alarm2
+        public RSViewAnalogAlarm Alarm2
         {
-            get { return Alarm[2]; }
-            set { Alarm[2] = value; }
+            get { return Alarms[2]; }
+            set { Alarms[2] = value; }
         }
-        public RsViewAnalogAlarm Alarm3
+        public RSViewAnalogAlarm Alarm3
         {
-            get { return Alarm[3]; }
-            set { Alarm[3] = value; }
+            get { return Alarms[3]; }
+            set { Alarms[3] = value; }
         }
-        public RsViewAnalogAlarm Alarm4
+        public RSViewAnalogAlarm Alarm4
         {
-            get { return Alarm[4]; }
-            set { Alarm[4] = value; }
+            get { return Alarms[4]; }
+            set { Alarms[4] = value; }
         }
-        public RsViewAnalogAlarm Alarm5
+        public RSViewAnalogAlarm Alarm5
         {
-            get { return Alarm[5]; }
-            set { Alarm[5] = value; }
+            get { return Alarms[5]; }
+            set { Alarms[5] = value; }
         }
-        public RsViewAnalogAlarm Alarm6
+        public RSViewAnalogAlarm Alarm6
         {
-            get { return Alarm[6]; }
-            set { Alarm[6] = value; }
+            get { return Alarms[6]; }
+            set { Alarms[6] = value; }
         }
-        public RsViewAnalogAlarm Alarm7
+        public RSViewAnalogAlarm Alarm7
         {
-            get { return Alarm[7]; }
-            set { Alarm[7] = value; }
+            get { return Alarms[7]; }
+            set { Alarms[7] = value; }
         }
-        public RsViewAnalogAlarm Alarm8
+        public RSViewAnalogAlarm Alarm8
         {
-            get { return Alarm[8]; }
-            set { Alarm[8] = value; }
+            get { return Alarms[8]; }
+            set { Alarms[8] = value; }
         }
         
         public RSViewAnalogTag(string name ="", string folder="") : base(name, folder)
-        {}
+        { }
+
+        public RSViewAnalogTag(RSViewTag other) : base(other)
+        { }
     }
 }

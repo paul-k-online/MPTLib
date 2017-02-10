@@ -21,7 +21,7 @@
   <AiPosition>
     <TAG type="S" name="K3_1\{SHORTNAME}\name" description="{FULLNAME}" dataSource="M" initialValue="{Name}"/>
 
-    <TAG type="A" name="K3_1\{SHORTNAME}\v" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+    <TAG type="A" name="K3_1\{SHORTNAME}\v" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
       <DATALOG name ="DLG_Short"/>
       <DATALOG name ="DLG_Long"/>
     </TAG>

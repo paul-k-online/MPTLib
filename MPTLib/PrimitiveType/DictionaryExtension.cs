@@ -7,7 +7,15 @@ namespace MPT.PrimitiveType
 {
     public static class DictionaryExtension
     {
-        public static void AddRange<T, S>(this IDictionary<T, S> source, IDictionary<T, S> collection)
+        public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
+        {
+            if (key == null)
+                return defaultValue;
+            TValue value;
+            return dictionary.TryGetValue(key, out value) ? value : defaultValue;
+        }
+
+        public static void AddRangeWithUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> collection)
         {
             if (source == null)
                 throw new ArgumentNullException("Source is null");
@@ -18,16 +26,6 @@ namespace MPT.PrimitiveType
             foreach (var item in collection)
             {
                 source[item.Key] = item.Value;
-                /*
-                if (!source.ContainsKey(item.Key))
-                {
-                    source.Add(item.Key, item.Value);
-                }
-                else
-                {
-                    ///
-                }
-                */
             }
         }
     }

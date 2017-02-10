@@ -11,6 +11,8 @@ namespace MPT.PrimitiveType
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(value))
+                    return default(T);
                 return (T)Enum.Parse(typeof(T), value, ignoreCase);
             }
             catch

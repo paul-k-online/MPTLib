@@ -8,14 +8,14 @@ namespace MPTLib.Test
     public class OtherTest
     {
         [TestMethod]
-        public void TestConvertToDouble()
+        public void ConvertToDoubleTest()
         {
             string v = null;
             var d = Convert.ToDouble(v);
             Assert.AreEqual(d, 0);
         }
         [TestMethod]
-        public void TestPathCombine()
+        public void PathCombineTest()
         {
             Assert.AreEqual(Path.Combine("asad/asd", ""), "asad/asd");
             try

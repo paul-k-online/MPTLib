@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PositionList>
   <AiPosition>
-    <TAG type="D" name="AI\{SHORTNAME}\en"    description="Enable"              dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].EN"/>
+    <TAG type="D" name="AI\{SHORTNAME}\en"    description="Enable"              dataSource="D" address="AI[{NUMBER}].EN"/>
     <TAG type="S" name="AI\{SHORTNAME}\name"  description="{Description}"       length="200" dataSource="M" initialValue="{NAME}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\i"     description="signal"        min="0" max="20" units="мА" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].i">
+    <TAG type="A" name="AI\{SHORTNAME}\i"     description="signal"        min="0" max="20" units="мА" dataSource="D" address="AI[{NUMBER}].i">
       <DATALOG name ="DLG_KIP"/>
     </TAG>
-    <TAG type="D" name="AI\{SHORTNAME}\break" description="{FULLNAME}"          initialValue="0" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].Break.sgn">
+    <TAG type="D" name="AI\{SHORTNAME}\break" description="{FULLNAME}"          initialValue="0" dataSource="D" address="AI[{NUMBER}].Break.sgn">
       <ALARM type="On" Label="Обрыв" Severity="4"/>
     </TAG>
 
-    <TAG type="A" name="AI\{SHORTNAME}\v"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+    <TAG type="A" name="AI\{SHORTNAME}\v"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
       <DATALOG name ="DLG_KIP"/>
       <DATALOG name ="DLG_SEC"/>
     </TAG>
 
-    <TAG type="A" name="AI\{SHORTNAME}\vAvr"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].vMin">
+    <TAG type="A" name="AI\{SHORTNAME}\vAvr"     description="{FULLNAME}"          min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].vMin">
       <DATALOG name ="DLG_MIN"/>
     </TAG>
     

@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.PrimitiveType;
 using MPT.RSView;
 using MPT.RSView.ImportExport;
-
+using MPT.RSView.ImportExport.XML;
 
 namespace MPTLib.Test.RSView.ImportExport
 {
@@ -32,17 +32,16 @@ namespace MPTLib.Test.RSView.ImportExport
         }
         
         [TestMethod]
-        public void TestToAnalogTag()
+        public void Test_ToRSViewAnalogTag_V()
         {
-            var xElement = TestData.XmlShema_TEST
-                .GetElement("AiPosition")
-                .GetElements("TAG")
-                .FirstOrDefault(x => x.WhereAttribureContain("Name", "\\v"));
+            var schemaTag = TestData.XmlSchema_TEST.AiTags.FirstOrDefault(x => x.Name.EndsWith(@"\v", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsNotNull(schemaTag);
 
-            var position = TestData.TestAiPos;
-            var paramDict = position.GetParamValueDictionary();
-            var a = (RSViewAnalogTag)xElement.ToRsViewTag(paramDict, TestData._101_PP18.NodeName);
-                
+            var a = (RSViewAnalogTag) SchemaConverter.ToRSViewTag(
+                                        schemaTag, 
+                                        TestData.TestAiPos.GetParamValueDictionary(), 
+                                        TestData._101_PP18.NodeName);
+
             Assert.AreEqual(@"AI\F1011_3\v", a.Name, true);
             Assert.AreEqual("AI[2].v", a.Address, true);
             Assert.AreEqual(TestData.TestAiPos.FullName, a.Description, true);
@@ -51,93 +50,90 @@ namespace MPTLib.Test.RSView.ImportExport
 
 
         [TestMethod]
-        public void Test_ToRsViewAnalogTag()
+        public void Test_ToRSViewAnalogTag_State()
         {
-            var tagStateShema = TestData.XmlShema_TEST.GetElement("AiPosition")
-                .GetElements("TAG").FirstOrDefault(x => x.WhereAttribureContain("Name", "state"));
-            Assert.AreNotEqual(null, tagStateShema);
+            var schemaTag = TestData.XmlSchema_TEST.AiTags.FirstOrDefault(x => x.Name.EndsWith(@"\state", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsNotNull(schemaTag);
 
-            var paramDict = TestData.TestAiPos.GetParamValueDictionary();
-            var analogTag = tagStateShema.ToRsViewAnalogTag(paramDict, "101_PP18");
+            var tag = (RSViewAnalogTag)SchemaConverter.ToRSViewTag(
+                                        schemaTag,
+                                        TestData.TestAiPos.GetParamValueDictionary(),
+                                        TestData._101_PP18.NodeName);
 
-            Assert.AreEqual(@"AI\F1011_3\State", analogTag.Name , true);
-            Assert.AreEqual(TestData.TestAiPos.FullName, analogTag.Description, true);
-            Assert.AreEqual(@"AI[2].State", analogTag.Address, true);
+            Assert.AreEqual(@"AI\F1011_3\State", tag.Name , true);
+            Assert.AreEqual(TestData.TestAiPos.FullName, tag.Description, true);
+            Assert.AreEqual(@"AI[2].State", tag.Address, true);
         }
 
 
         [TestMethod]
-        public void Test_ToRsViewAnalogAlarm()
+        public void Test_ToRSViewAnalogAlarm()
         {
-            var tagShema = TestData.XmlShema_TEST.GetElement("AiPosition")
-                .GetElements("TAG").FirstOrDefault(x => x.WhereAttribureContain("Name", "state"));
-            Assert.AreNotEqual(null, tagShema);
+            try
+            {
+                var xmlTEst = TestData.XmlSchema_TEST;
 
-            var alarmShema = tagShema.GetElements("ALARM").FirstOrDefault();
-            Assert.AreNotEqual(null, alarmShema);
+                var schemaTag = xmlTEst.AiTags.FirstOrDefault(x => x.Name.EndsWith(@"\state", StringComparison.InvariantCultureIgnoreCase));
+                Assert.IsNotNull(schemaTag);
 
-            var paramDict = TestData.TestAiPos.GetParamValueDictionary();
+                var pos = TestData.TestAiPos;
+                var tag = (RSViewAnalogTag)SchemaConverter.ToRSViewTag(
+                                            schemaTag,
+                                            TestData.TestAiPos.GetParamValueDictionary(),
+                                            TestData._101_PP18.NodeName);
+                var alarm = tag.Alarm1;
+                Assert.IsNotNull(alarm);
 
-            var number = 0;
-            var analogAlarm = alarmShema.ToRsViewAnalogAlarm(paramDict, "123", out number);
+                Assert.AreEqual(alarm.Direction, RSViewAnalogAlarm.RSViewTresholdDirection.D);
+                Assert.AreEqual(alarm.Label, "F1011_3 << 0 т/ч", true);
 
-            Assert.AreEqual(analogAlarm.Direction, RSViewTresholdDirection.D);
-            Assert.AreEqual(analogAlarm.Label, "F1011_3 << 0 т/ч", true);
-        }
-
-
-        [TestMethod]
-        public void Test_ToDigitalAlarm()
-        {
-            var tagShema = TestData.XmlShema_TEST.GetElement("AiPosition")
-                .GetElements("TAG").FirstOrDefault(x => x.WhereAttribureContain("Name", "break"));
-            Assert.AreNotEqual(null, tagShema);
-
-            var alarmShema = tagShema.GetElements("ALARM").FirstOrDefault();
-            Assert.AreNotEqual(null, alarmShema);
-
-            var paramDict = TestData.TestAiPos.GetParamValueDictionary();
-
-            var digitalAlarm = alarmShema.ToRsViewDigitalAlarm(paramDict, "NodeName");
-
-            Assert.AreEqual(digitalAlarm.Label, "Обрыв", true);
-            Assert.AreEqual(digitalAlarm.Severity, 4);
-            Assert.AreEqual(digitalAlarm.Type, RSViewDigitalAlarmType.ON);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [TestMethod]
         public void TestToDigitalTagWithAlarm()
         {
-            var tagShema = TestData.XmlShema_TEST.GetElement("AiPosition")
-                .GetElements("TAG").FirstOrDefault(x => x.WhereAttribureContain("Name","Break"));
-            Assert.AreNotEqual(null, tagShema);
+            var schemaTag = TestData.XmlSchema_TEST.AiTags.FirstOrDefault(x => x.Name.EndsWith(@"\break", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsNotNull(schemaTag);
 
-            var paramDict = TestData.TestAiPos.GetParamValueDictionary();
+            var tag = (RSViewDigitalTag)SchemaConverter.ToRSViewTag(
+                            schemaTag,
+                            TestData.TestAiPos.GetParamValueDictionary(),
+                            TestData._101_PP18.NodeName);
 
-            var digitalTag = tagShema.ToRsViewDigitalTag(paramDict, TestData._101_PP18.NodeName);
 
-            Assert.AreEqual(digitalTag.TagName, "Break", true);
-            Assert.AreEqual(digitalTag.Address, "AI[2].Break.sgn", true);
+            Assert.AreEqual(tag.TagName, "Break", true);
+            Assert.AreEqual(tag.Address, "AI[2].Break.sgn", true);
+            Assert.AreEqual(tag.InitialValue, false);
 
-            Assert.AreEqual(digitalTag.InitialValue, false);
+            var alarm = tag.Alarm;
+            Assert.IsNotNull(alarm);
+
+            Assert.AreEqual(alarm.Label, "Обрыв", true);
+            Assert.AreEqual(alarm.Severity, 4);
+            Assert.AreEqual(alarm.Type, RSViewDigitalAlarm.RSViewDigitalAlarmType.ON);
         }
 
         [TestMethod]
         public void TestToStringTag()
         {
-            var tagShema = TestData.XmlShema_TEST
-                .GetElement("AiPosition")
-                .GetElements("TAG")
-                .FirstOrDefault(x => x.WhereAttribureContain("Name","Name"));
-            Assert.AreNotEqual(null, tagShema);
+            var xmlSchema = TestData.XmlSchema_TEST;
 
-            var paramDict = TestData.TestAiPos.GetParamValueDictionary();
+            var schemaTag = xmlSchema.AiTags.FirstOrDefault(x => x.Name.EndsWith(@"\name", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsNotNull(schemaTag);
 
-            var stringTag = (RSViewStringTag)tagShema.ToRsViewTag(paramDict, TestData._101_PP18.NodeName);
+            var tag = (RSViewStringTag)SchemaConverter.ToRSViewTag(
+                            schemaTag,
+                            TestData.TestAiPos.GetParamValueDictionary(),
+                            TestData._101_PP18.NodeName);
 
-            Assert.AreEqual(stringTag.TagName, "Name", true);
-            Assert.AreEqual(stringTag.InitialValue, TestData.TestAiPos.Name, true);
-            Assert.AreEqual(stringTag.Description, TestData.TestAiPos.Description, true);
+            Assert.AreEqual(tag.TagName, "Name", true);
+            Assert.AreEqual(tag.InitialValue, TestData.TestAiPos.Name, true);
+            Assert.AreEqual(tag.Description, TestData.TestAiPos.Description, true);
         }
     }
 }

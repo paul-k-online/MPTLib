@@ -6,7 +6,7 @@ using MPT.PrimitiveType;
 namespace MPTLib.Test.PrimitiveType
 {
     [TestClass]
-    public class TestDateTime
+    public class DateTimeTest
     {
         [TestMethod]
         public void TestTrim()

@@ -1,12 +1,18 @@
-﻿namespace MPT.RSView
+﻿using System.ComponentModel;
+
+namespace MPT.RSView
 {
     public class RSViewStringTag : RSViewTag
     {
         public string InitialValue;
-        public ushort Length = 200;
 
-        public RSViewStringTag(string name, string folder="") 
-            : base(name, folder)
-        {}
+        [DefaultValue(200)]
+        public ushort Length { get; set; }
+
+        public RSViewStringTag(string name, string folder="") : base(name, folder)
+        { }
+
+        public RSViewStringTag(RSViewTag other) : base(other)
+        { }
     }
 }

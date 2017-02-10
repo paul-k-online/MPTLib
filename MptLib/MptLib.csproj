@@ -105,7 +105,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\WebMpt.Net\packages\AutoMapper.4.1.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -126,11 +126,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\..\Mpt.Net\packages\MySql.Data.6.9.9\lib\net40\MySql.Data.dll</HintPath>
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net40\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\..\Mpt.Net\packages\MySql.Data.Entity.6.9.9\lib\net40\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net40\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
@@ -162,18 +162,25 @@
   <ItemGroup>
     <Compile Include="Model\MPTModel\Factory.cs" />
     <Compile Include="Model\MPTModel\GetPlcEventsCount_Result.cs" />
-    <Compile Include="Model\MPTModel\Holiday.cs" />
+    <Compile Include="Model\MPTModel\PcEvent.cs" />
+    <Compile Include="Model\MPTModel\WorkScheduleHoliday.cs" />
+    <Compile Include="Model\MPTModel\PlcEventOld.cs" />
     <Compile Include="Model\MPTModel\ProjectHMI.cs" />
+    <Compile Include="Model\PlcEventOld.cs">
+      <DependentUpon>MPTModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\WorkScheduleHoliday.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\WorkScheduleMove.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrimitiveType\BoolExtension.cs" />
     <Compile Include="PrimitiveType\DataRowExtension.cs" />
     <Compile Include="PrimitiveType\DateTimeExtension.cs" />
     <Compile Include="DataBase\TreeNode.cs" />
     <Compile Include="PrimitiveType\DictionaryExtension.cs" />
+    <Compile Include="PrimitiveType\DoubleExtension.cs" />
     <Compile Include="PrimitiveType\EnumExtension.cs" />
     <Compile Include="Model\AlarmEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
@@ -188,7 +195,7 @@
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MPTModel\PlcEvent.cs" />
-    <Compile Include="Model\MPTModel\Plc.cs" />
+    <Compile Include="Model\MPTModel\PLC.cs" />
     <Compile Include="Model\Positions\AiPosition.cs" />
     <Compile Include="Model\Positions\AoPosition.cs" />
     <Compile Include="Model\Positions\DioPosition.cs" />
@@ -213,7 +220,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Model\MPTModel\MPTModel.cs" />
+    <Compile Include="Model\MPTModel\EntityConnectionString.cs" />
     <Compile Include="Model\PcEvent.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
@@ -236,9 +243,6 @@
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MPTModel\PlcMessage.cs" />
-    <Compile Include="Model\PlcOldEvent.cs">
-      <DependentUpon>MPTModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\PLC_TO.cs">
       <DependentUpon>MPTModel.tt</DependentUpon>
     </Compile>
@@ -267,7 +271,7 @@
     <Compile Include="PositionList\PlcMessagesMerge.cs" />
     <Compile Include="PositionList\IPositionList.cs" />
     <Compile Include="PrimitiveType\OrderAttribute.cs" />
-    <Compile Include="DataBase\RSLogix\PositionExtension.cs" />
+    <Compile Include="PrimitiveType\StringToIntList.cs" />
     <Compile Include="RSView\ActivityLog\ActivityLogRecord.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogDataBase.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogRecord.cs" />
@@ -281,35 +285,34 @@
     <Compile Include="RSView\DataLog\DataLogEntities.cs" />
     <Compile Include="RSView\DataLog\DataLogTag.cs" />
     <Compile Include="RSView\AlarmLog\AlarmLogRecordDBF.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvAlarmMessage.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDerivedTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\RSViewBoolEnum.cs" />
-    <Compile Include="RSView\ImportExport\Csv\RSViewDigitEnum.cs" />
-    <Compile Include="RSView\ImportExport\ParamValueDictionaryExtension.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvAlarmMessage.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvDerivedTag.cs" />
+    <Compile Include="RSView\RSViewDigitEnum.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="PrimitiveType\XElementExtension.cs" />
-    <Compile Include="RSView\RSViewTagDataSourceType.cs" />
-    <Compile Include="RSView\RSViewDigitalAlarmType.cs" />
-    <Compile Include="RSView\RSViewTagType.cs" />
-    <Compile Include="RSView\RSViewTresholdDirection.cs" />
+    <Compile Include="RSView\ImportExport\Shema\ShemaAlarm.cs" />
+    <Compile Include="RSView\ImportExport\Shema\ShemaDataLog.cs" />
+    <Compile Include="RSView\ImportExport\Shema\ShemaConverter.cs" />
+    <Compile Include="RSView\ImportExport\Shema\ShemaTag.cs" />
+    <Compile Include="RSView\RSViewAnalogAlarm.cs" />
+    <Compile Include="RSView\RSViewDigitalAlarm.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccount.cs" />
     <Compile Include="RSView\RSViewAiPositionExtension.cs" />
     <Compile Include="RSView\RSViewAnalogTag.cs" />
     <Compile Include="RSView\RSViewDigitalTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDataLog.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvDigitalAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvGenerator.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvDataLog.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvDigitalAlarm.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvGenerator.cs" />
     <Compile Include="RSView\DataLog\DataLogFloat.cs" />
     <Compile Include="RSView\DataLog\DataLogDBF.cs" />
     <Compile Include="DataBase\DBFDataBase.cs" />
     <Compile Include="DataBase\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvAnalogAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Csv\RSViewToCsvTag.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvTag.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvAnalogAlarm.cs" />
+    <Compile Include="RSView\ImportExport\CSV\RSViewToCsvTag.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvTag.cs" />
     <Compile Include="RSView\RSViewStringTag.cs" />
     <Compile Include="RSView\RSViewTag.cs" />
-    <Compile Include="RSView\ImportExport\PositionConvertXmlExtension.cs" />
     <Compile Include="PrimitiveType\StringExtension.cs" />
     <Compile Include="RSView\TagDB\AllTagItem.cs" />
     <Compile Include="RSView\TagDB\OBDCTagReader.cs" />
@@ -334,6 +337,10 @@
       <DependentUpon>MPTModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <Content Include="RSView\ImportExport\POSITIONLIST.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -352,9 +359,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Redmine\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

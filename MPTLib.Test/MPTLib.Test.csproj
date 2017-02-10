@@ -67,15 +67,18 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Excel\ExcelDataBaseTest.cs" />
-    <Compile Include="Model\UnitTest1.cs" />
-    <Compile Include="Positions\ExcelPositionListTest.cs" />
-    <Compile Include="Positions\PlcMessagesMergeTest.cs" />
+    <Compile Include="DataBase\ExcelDataBaseTest.cs" />
+    <Compile Include="PositionList\ExcelPositionListTest.cs" />
+    <Compile Include="PositionList\PlcMessagesMergeTest.cs" />
     <Compile Include="PrimitiveType\DictionaryExtensionTests.cs" />
-    <Compile Include="PrimitiveType\TestNullNumeric.cs" />
-    <Compile Include="PrimitiveType\UnitTest1.cs" />
+    <Compile Include="PrimitiveType\DoubleExtensionTest.cs" />
+    <Compile Include="PrimitiveType\NullNumericTest.cs" />
+    <Compile Include="PrimitiveType\DateTimeTest.cs" />
+    <Compile Include="PrimitiveType\StringToIntListTests.cs" />
     <Compile Include="RSView\AlarmLog\UnitTest1.cs" />
     <Compile Include="RSView\DataLog\UnitTest1.cs" />
+    <Compile Include="RSView\ImportExport\XML\ShemaParserTests.cs" />
+    <Compile Include="RSView\ImportExport\XML\XmlPositionListShemaTests.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccountTests.cs" />
     <Compile Include="_TestData\TestData.cs" />
     <Compile Include="RSView\AiPositionTest.cs" />
@@ -86,11 +89,9 @@
     <Compile Include="RSView\ImportExport\PositionConvertTest.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverterTest.cs" />
     <Compile Include="RSView\RSTypeTest.cs" />
-    <Compile Include="Strings\NamedFormatTest.cs" />
-    <Compile Include="OtherTest.cs" />
-    <Compile Include="TreeNodeTest.cs" />
-    <Compile Include="Xml\Xpath\XPathTest.cs" />
-    <Compile Include="ZipTest\UnitTest1.cs" />
+    <Compile Include="PrimitiveType\NamedFormatTest.cs" />
+    <Compile Include="PrimitiveType\OtherTest.cs" />
+    <Compile Include="DataBase\TreeNodeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -168,19 +169,45 @@
     <None Include="_TestData\104_MAF.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\20161017AL.DBF" />
-    <None Include="_TestData\DlgLog\ACTLOG\20161017AI.DBF" />
-    <None Include="_TestData\DlgLog\ACTLOG\20161018AI.DBF" />
-    <None Include="_TestData\DlgLog\ALMLOG\20161017AL.DBF" />
-    <None Include="_TestData\DlgLog\ALMLOG\20161018AL.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AF.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AS.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AT.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AF.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AS.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AT.DBF" />
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DLG" />
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DNS" />
+    <None Include="_TestData\DlgLog\20161017AL.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\ACTLOG\20161017AI.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\ACTLOG\20161018AI.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\ALMLOG\20161017AL.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\ALMLOG\20161018AL.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AF.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AS.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161017AT.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AF.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AS.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\161018AT.DBF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DLG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DNS">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="_TestData\inform2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -198,7 +225,9 @@
   <ItemGroup>
     <Content Include="RSView\ImportExport\POSITIONLIST_TEST.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
+    <Content Include="_TestData\TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

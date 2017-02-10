@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="POSITIONLIST"
+    targetNamespace="http://tempuri.org/POSITIONLIST.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/POSITIONLIST.xsd"
+    xmlns:mstns="http://tempuri.org/POSITIONLIST.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+
+    <xs:element name="PositionList" type="PositionListType"/>
+    <xs:complexType name="TAGType" mixed="true">
+      <xs:sequence>
+        <xs:element type="ALARMType" name="ALARM" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element type="DATALOGType" name="DATALOG" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="type" use="optional"/>
+      <xs:attribute type="xs:string" name="name" use="optional"/>
+      <xs:attribute type="xs:string" name="description" use="optional"/>
+      <xs:attribute type="xs:string" name="dataSource" use="optional"/>
+      <xs:attribute type="xs:string" name="address" use="optional"/>
+      <xs:attribute type="xs:string" name="length" use="optional"/>
+      <xs:attribute type="xs:string" name="initialValue" use="optional"/>
+      <xs:attribute type="xs:string" name="min" use="optional"/>
+      <xs:attribute type="xs:string" name="max" use="optional"/>
+      <xs:attribute type="xs:string" name="units" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="DATALOGType">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="name" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ALARMType">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="type" use="optional"/>
+          <xs:attribute type="xs:string" name="Label" use="optional"/>
+          <xs:attribute type="xs:byte" name="Severity" use="optional"/>
+          <xs:attribute type="xs:byte" name="number" use="optional"/>
+          <xs:attribute type="xs:float" name="threshold" use="optional"/>
+          <xs:attribute type="xs:string" name="label" use="optional"/>
+          <xs:attribute type="xs:string" name="direction" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AiPositionType">
+      <xs:sequence>
+        <xs:element type="TAGType" name="TAG" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element type="xs:string" name="ECONOM_POSITION"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DioPositionType">
+      <xs:sequence>
+        <xs:element type="TAGType" name="TAG" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AoPositionType">
+      <xs:sequence>
+        <xs:element type="TAGType" name="TAG" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PositionListType">
+      <xs:sequence>
+        <xs:element type="AiPositionType" name="AiPosition">
+          <xs:annotation>
+            <xs:documentation>
+              "Number" => position.Number
+              "Name" => position.Name
+              "FullName" => position.FullName
+              "Description" => position.Description
+              "SHORTNAME" => position.RsViewShortName()
+              "UNITS" => position.Units
+              "Scale.Low" => position.Scale.Low
+              "Scale.High" => position.Scale.High
+              "Reglament.Low" => position.Reglament.Low | "0"
+              "Reglament.High" => position.Reglament.High | "0"
+              "Alarming.Low" => position.Alarming.Low | "0"
+              "Alarming.High" => position.Alarming.High | "0"
+              "Blocking.Low" => position.Blocking.Low | "0"
+              "Blocking.High" => position.Blocking.High | "0"
+
+              TAG
+              type: A(Analog) | D(Digital) | S(String)
+              datasource: D(Device) | M(Memory)
+              ALARM:
+              Severity: 1-8
+              Label: [maxlength = 21]
+              ALARM (digital)
+              type: On | Off | COS(Any Change) | COSON(Changes to On) | COSOFF(Changes to Off)
+              ALARM (analog)
+              number: 1-8
+              direction: D(Decreasing) | I(Increasing)
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element type="DioPositionType" name="DioPosition"/>
+        <xs:element type="AoPositionType" name="AoPosition"/>
+      </xs:sequence>
+    </xs:complexType>
+
+
+
+
+</xs:schema>

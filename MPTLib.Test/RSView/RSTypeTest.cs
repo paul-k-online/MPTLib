@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.RSView;
 using MPT.PrimitiveType;
+using static MPT.RSView.RSViewAnalogAlarm;
 
 namespace MPTLib.Test.RSView
 {

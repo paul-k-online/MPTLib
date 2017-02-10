@@ -4,20 +4,24 @@ using System.Linq;
 using System.Xml.Linq;
 using MPT.Model;
 using MPT.Positions;
-
+using MPT.RSView.ImportExport.XML;
 
 namespace MPT.RSView.ImportExport
 {
-    public class PositionListConverter
+    public class RSViewPositionListConverter
     {
-        private IPositionList PositionList { get; }
-        private XElement Shema { get; }
-        public string NodeName { get; }
+        public IPositionList PositionList { get; private set; }
+        public SchemaConverter ShemaConverter { get; private set; }
+        public string NodeName { get; private set; }
 
-        public PositionListConverter(IPositionList positionList, XElement shema, string nodeName)
+        public RSViewPositionListConverter(IPositionList positionList, XElement shema, string nodeName) : 
+            this(positionList, new SchemaConverter(shema), nodeName)
+        {}
+
+        public RSViewPositionListConverter(IPositionList positionList, SchemaConverter shemaConverter, string nodeName)
         {
             PositionList = positionList;
-            Shema = shema;
+            ShemaConverter = shemaConverter;
             NodeName = nodeName;
         }
 
@@ -26,7 +30,7 @@ namespace MPT.RSView.ImportExport
         public IEnumerable<RSViewTag> ConvertPositionsToRsViewTags(IEnumerable<Position> positions)
         {
             if (positions == null) return null;
-            return PositionConvertXmlExtension.ConvertPositionsToRsviewTags(positions, Shema, NodeName);
+            return ConvertPositionsToRsviewTags(positions, ShemaConverter, NodeName);
         }
 
         public IEnumerable<RSViewTag> ConvertAiPositionsToRsViewTags()
@@ -56,7 +60,24 @@ namespace MPT.RSView.ImportExport
             if (positions == null) return null;
             return ConvertPositionsToRsViewTags(positions);
         }
+        #endregion
+
+
+        #region PositionConvert
+        public static IEnumerable<RSViewTag> ConvertPositionsToRsviewTags(IEnumerable<Position> positions, SchemaConverter positionShema, string nodeName)
+        {
+            if (positions == null) return null;
+            if (positionShema == null) return null;
+            if (string.IsNullOrWhiteSpace(nodeName)) return null;
+
+            return positions
+#if !DEBUG
+                .AsParallel()
+#endif
+                .SelectMany(pos => positionShema.ConvertPositionToRSViewTags(pos, nodeName));
+        }
 
         #endregion
+
     }
 }

@@ -5,14 +5,11 @@ using MPT.RSView.ImportExport.Csv;
 
 namespace MPTLib.Test.RSView.ImportExport.Csv
 {
-    /// <summary>
-    /// Summary description for RsViewTagTEst1
-    /// </summary>
     [TestClass]
     public class CsvTagTest
     {
-        static readonly Regex _regexSpace = new Regex("[\x20]*");
-        
+        public static readonly Regex RegexSpace = new Regex("[\x20|\r\n|\r|\n|\t]*", RegexOptions.Compiled);
+
         [TestMethod]
         public void TestEnumToString()
         {
@@ -23,10 +20,11 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         public void TestFolderTag()
         {
             var expected = @"""F"", ""AI\FRCA2013_1"", """", ""F""";
-            expected = _regexSpace.Replace(expected, "");
+            expected = RegexSpace.Replace(expected, "");
             
             var tag = CsvTag.CreateFolder(@"AI\FRCA2013_1");
-            var actual = _regexSpace.Replace(tag.ToString(), "");
+            var actual = tag.ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);            
         }
@@ -34,42 +32,45 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         [TestMethod]
         public void TestAnalogTagMemory()
         {
-            var expected = @"""A""      , ""AI\FRCA2013_2\bmax"", ""Блокировка по MAX""                                   , ""F""      , ""M""        , ""*""          , ""F""    , ""F""        , ""D""        , ""L""       , 0         , 1600      , 0             , 1    , 0     , 0       , ""м3/ч"",                  ,                 ,                ,              ,               ,           ,           ,           ,                   ,                    ,            ,                   ,                      ,";
-            expected = _regexSpace.Replace(expected, "");
-            var tag = CsvTag.CreateAnalog(@"AI\FRCA2013_2\bmax", "Блокировка по MAX", 0, 1600, "м3/ч");
+            var expected = @"""A""      , ""AI\FRCA2013_2\bmax"", ""Блокировка по MAX""      , 
+""F""      , ""M""        , ""*""          , ""F""    , ""F""        , ""D""        , ""L""       , 0         , 1600      , 
+0             , 1    , 0     , 0       , ""м3/ч"",                  ,                 ,                ,              ,
+,           ,           ,           ,                   ,                    ,            ,                   ,                      ,";
+            expected = RegexSpace.Replace(expected, "");
 
-            var actual = tag.ToString();
-            actual = _regexSpace.Replace(actual, "");
+            var tag = CsvTag.CreateAnalog(@"AI\FRCA2013_2\bmax", "Блокировка по MAX", 0, 1600, "м3/ч");
+            var actual = tag.ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);
         }
 
         [TestMethod]
-        public void TestAnalogTagData()
+        public void Test_CsvAnalogTag()
         {
             var expected = @" ""A""      , ""AI\FRCA2013_1\v""   , ""FRCA-2013_1 Расход топливного газа поток 1 П-2""      , ""F""      , ""D""        , ""*""          , ""F""    , ""F""        , ""D""        , ""L""       , 0         , 1600      , 0             , 1    , 0     , 0       , ""м3/ч"",                  ,                 ,                ,              ,               , ""101_pp23"", ""AI[8].v"" , ""A""       ,                   ,                    ,            ,                   ,                      ,";
-            expected = _regexSpace.Replace(expected, "");
+            expected = RegexSpace.Replace(expected, "");
 
             var tag = CsvTag.CreateAnalog(@"AI\FRCA2013_1\v", "FRCA-2013_1 Расход топливного газа поток 1 П-2", 0, 1600, "м3/ч", 0)
                 .SetDataSource("101_pp23", "AI[8].v");
 
-            var actual = tag.ToString();
-            actual = _regexSpace.Replace(actual, "");
+            var actual = tag.ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);
         }
 
         [TestMethod]
-        public void TestDigitalTag()
+        public void Test_CsvDigitalTag()
         {
             var expected = @" ""D""      , ""AI\FRCA2013_1\fo""  , ""FRCA-2013_1 Расход топливного газа поток 1 dP=16 кПа"", ""F""      , ""D""        , ""*""          , ""F""    , ""F""        ,            ,           ,           ,           ,               ,      ,       ,         ,       , ""Off""            , ""On""            , ""Off""          ,              ,               , ""101_pp23"", ""AI[8].EN"", ""A""       ,                   ,                    ,            ,                   ,                      , ";
-            expected = _regexSpace.Replace(expected, "");
+            expected = RegexSpace.Replace(expected, "");
 
             var tag = CsvTag.CreateDigit(@"AI\FRCA2013_1\fo", "FRCA-2013_1 Расход топливного газа поток 1 dP=16 кПа")
                 .SetDataSource("101_pp23", "AI[8].EN");
 
-            var actual = tag.ToString();
-            actual = _regexSpace.Replace(actual, "");
+            var actual = tag.ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);
         }
@@ -78,35 +79,35 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
         public void TestStringTag()
         {
             var expected = @"  ""S"",       ""AI\FRCSA2011_3\n"",   ""?????? ??????? ????? 3 ?-2"",                           ""F"",       ""M"",         ""*"",           ""F"",     ""F""        ,            ,           ,           ,           ,               ,      ,       ,         ,       ,                  ,                 ,                , 200          , ""FRCSA-2011_3"",           ,           ,           ,,,,,, ";
-            expected = _regexSpace.Replace(expected, "");
+            expected = RegexSpace.Replace(expected, "");
 
             var tag = CsvTag.CreateString(@"AI\FRCSA2011_3\n", "?????? ??????? ????? 3 ?-2", "FRCSA-2011_3", 200);
 
-            var actual = tag.ToString();
-            actual = _regexSpace.Replace(actual, "");
+            var actual = tag.ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);
         }
 
         [TestMethod]
-        public void TestDigitalAlarm()
+        public void Test_CsvDigitalAlarm()
         {
             var expected =
                 @" ""D"",""AI\FRCA3013_2\NAN"",""ON"",""FRCA3013_2 обрыв"",""5"",""S"","""","""",""S"","""","""",""S"","""","""","""","""","""",""N"","""",""N""";
-            expected = _regexSpace.Replace(expected, "");
+            expected = RegexSpace.Replace(expected, "");
 
             var tag = new RSViewDigitalTag(@"AI\FRCA3013_2\NAN")
             {
-                Alarm = new RSViewDigitalTag.DigitalAlarm()
+                Alarm = new RSViewDigitalAlarm()
                 {
                     Label = "FRCA3013_2 обрыв",
                     Severity = 5,
-                    Type = RSViewDigitalAlarmType.ON
+                    Type = RSViewDigitalAlarm.RSViewDigitalAlarmType.ON
                 }
             };
 
-            var actual = tag.ToCsvDigitalAlarm().ToString();
-            actual = _regexSpace.Replace(actual, "");
+            var actual = tag.GetCsvDigitalAlarm().ToCsvString();
+            actual = RegexSpace.Replace(actual, "");
 
             Assert.AreEqual(expected, actual, true);
         }

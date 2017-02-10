@@ -19,12 +19,12 @@
   -->
 
   <AiPosition>
-    <TAG type="A" name="{FirstLetter}\{SHORTNAME}" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" nodeName="{NODE}" address="AI[{NUMBER}].v">
+    <TAG type="A" name="{FirstLetter}\{SHORTNAME}" description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
       <DATALOG name ="DLG_Short"/>
       <DATALOG name ="DLG_Long"/>
     </TAG>
 
-    <TAG type="A" name="{FirstLetter}\{SHORTNAME}_state" description="{FULLNAME}" dataSource="D" min="0" max="8" nodeName="{NODE}" address="AI[{NUMBER}].State">
+    <TAG type="A" name="{FirstLetter}\{SHORTNAME}_state" description="{FULLNAME}" min="0" max="8" dataSource="D" address="AI[{NUMBER}].State">
       <ALARM number="1" threshold="0.9" label="{SHORTNAME}&lt;{BLOCKING.Low} (LL)"   direction="D" Severity="1"/>
       <ALARM number="2" threshold="1.9" label="{SHORTNAME}&lt;{ALARMING.Low} (L)"    direction="D" Severity="2"/>
       <ALARM number="3" threshold="2.9" label="{SHORTNAME}&lt;{REGLAMENT.Low} (RL)"  direction="D" Severity="3"/>
