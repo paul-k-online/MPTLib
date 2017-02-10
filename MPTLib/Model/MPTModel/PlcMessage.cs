@@ -8,9 +8,6 @@ using System.Text;
 // ReSharper disable once CheckNamespace
 namespace MPT.Model
 {
-    [MetadataType(typeof(PlcMessageMetadata))]
-    public partial class PlcMessage {}
-
     public class PlcMessageMetadata
     {
         [Display(Name = "Номер")]
@@ -30,6 +27,7 @@ namespace MPT.Model
         public int? Severity { get; set; }
     }
 
+    [MetadataType(typeof(PlcMessageMetadata))]
     public partial class PlcMessage : IPlcIdPosition, IEquatable<PlcMessage>
     {
         public static bool IsNullMessage(PlcMessage m)
@@ -58,27 +56,25 @@ namespace MPT.Model
                     .GetHashCode();
             }
         }
-        
 
         public class FullComparer : IEqualityComparer<PlcMessage>
         {
-            // ReSharper disable once InconsistentNaming
             private static readonly FullComparer _comparer = new FullComparer();
             public static FullComparer Comparer { get { return _comparer; } }
-
+            
             public bool Equals(PlcMessage x, PlcMessage y)
             {
-                return PlcPositionComparer.Comparer.Equals(x, y) &&
-                    ByContentComparer.Comparer.Equals(x, y);
+                return ByPlcIdNumberPositionComparer.Comparer.Equals(x, y) 
+                    && ByContentComparer.Comparer.Equals(x, y);
             }
 
             public int GetHashCode(PlcMessage x)
             {
-                return (PlcPositionComparer.Comparer.GetHashCode(x) ^ ByContentComparer.Comparer.GetHashCode(x))
-                    .GetHashCode();
+                return 
+                    (ByPlcIdNumberPositionComparer.Comparer.GetHashCode(x) ^ ByContentComparer.Comparer.GetHashCode(x))
+                        .GetHashCode();
             }
         }
-
 
         public bool Equals(PlcMessage other)
         {
@@ -87,7 +83,7 @@ namespace MPT.Model
 
         public bool Equals(IPlcIdPosition other)
         {
-            return PlcPositionComparer.Comparer.Equals(this, other);
+            return ByPlcIdNumberPositionComparer.Comparer.Equals(this, other);
         }
 
         public override string ToString()

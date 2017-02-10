@@ -10,11 +10,10 @@ namespace MPT.Model
     }
 
 
-    public class PlcPositionComparer : IEqualityComparer<IPlcIdPosition>
+    public class ByPlcIdNumberPositionComparer : IEqualityComparer<IPlcIdPosition>
     {
-        // ReSharper disable once InconsistentNaming
-        private static readonly PlcPositionComparer _comparer = new PlcPositionComparer();
-        public static PlcPositionComparer Comparer { get { return _comparer; } }
+        private static readonly ByPlcIdNumberPositionComparer _comparer = new ByPlcIdNumberPositionComparer();
+        public static ByPlcIdNumberPositionComparer Comparer { get { return _comparer; } }
 
         public bool Equals(IPlcIdPosition x, IPlcIdPosition y)
         {

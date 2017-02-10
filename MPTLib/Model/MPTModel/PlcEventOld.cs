@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 
 namespace MPT.Model
 {
     public partial class MPTEntities
-    {
-        public IQueryable<PlcEvent> GetPlcEvents(int plcId)
+    { 
+        public IQueryable<PlcEventOld> GetPlcEventsOld(int plcId)
         {
-            return PlcEvents
+            return PlcEventsOld
                 .AsNoTracking()
                 .Where(x => x.PlcId == plcId);
         }
     }
+
 }

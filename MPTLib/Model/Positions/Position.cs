@@ -8,8 +8,6 @@ namespace MPT.Model
 
         public int Number { get; set; }
         
-        public string NodeName { get; internal set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -27,11 +25,9 @@ namespace MPT.Model
             get { return string.Format("{0} - {1}", Name, Description); }
         }
 
-
-
         public bool Equals(IPlcIdPosition other)
         {
-            return PlcPositionComparer.Comparer.Equals(this, other);
+            return ByPlcIdNumberPositionComparer.Comparer.Equals(this, other);
         }
 
         public override string ToString()

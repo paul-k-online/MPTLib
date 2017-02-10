@@ -6,6 +6,26 @@ using System.Linq;
 
 namespace MPT.Model
 {
+    public partial class MPTEntities
+    {
+        public IQueryable<Workstation> GetWorkstations()
+        {
+            return Workstations
+                .AsNoTracking()
+                .Include(ws => ws.Project)
+                .Include(ws => ws.Project.Factory)
+                .OrderBy(ws => ws.Project.Factory.Number)
+                .ThenBy(ws => ws.Project.OrderIndex);
+        }
+
+        public Workstation GetWorkstation(int workstationId)
+        {
+            return GetWorkstations().Single(ws => ws.Id == workstationId);
+        }
+
+    }
+
+
     [MetadataType(typeof(WorkstationMetadata))]
     public partial class Workstation
     {
