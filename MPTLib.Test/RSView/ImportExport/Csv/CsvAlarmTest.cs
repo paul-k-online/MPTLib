@@ -4,30 +4,27 @@ using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using MPT.RSView.ImportExport.Csv;
-
 using static MPT.RSView.RSViewAnalogAlarm;
 
 namespace MPTLib.Test.RSView.ImportExport.Csv
 {
-    [TestClass]
+    [TestClass()]
     public class CsvAlarmTest
     {
         [TestMethod]
-        public void TestRsViewAlarmTreshold()
+        public void CsvAnalogAlarmTreshold_Test()
         {
-
             var expected = @"""C"",""1.5"",""FRCSA1011_1<0.0(LL)"",""S"","""","""",""D"",""1""";
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
 
-            var alarmTreshold = new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0 (LL)", RSViewTresholdDirection.D);
+            var alarmTreshold = new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0 (LL)", TresholdDirection.D);
             var actual = alarmTreshold.ToCsvString();
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
 
-            Assert.AreEqual(expected, actual, true);
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
 
         [TestMethod]
-        public void Test_CsvAlarmTreshold()
+        public void CsvAnalogAlarmTreshold1_Test()
         {
             var alarmTreshold = new CsvAnalogAlarmTreshold();
             var threshType = alarmTreshold.Type.ToString().ToCsvString();
@@ -36,123 +33,113 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
             var expected = @" """","""","""",""S"","""","""","""",""""  ";
             var actual = alarmTreshold.ToCsvString();
 
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
-
-            Assert.AreEqual(CsvTagTest.RegexSpace.Replace(expected, ""), CsvTagTest.RegexSpace.Replace(actual, ""), true);
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""), 
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
         
         [TestMethod]
         public void Test_CsvAlarmMessage()
         {
             var actual = @" ""S"",            """",       """" ";
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
 
             var msg = new CsvAlarmMessage();
-            var expected = CsvTagTest.RegexSpace.Replace(msg.ToCsvString(), "");
-            Assert.AreEqual(expected, actual, true);
+            var expected = msg.ToCsvString();
+
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
 
         [TestMethod]
         public void Test_CsvAnalogAlarmMessage()
         {
             var actual = @" """"          , """"                 , ""S""                ";
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
 
             var analogAlarmMessage = new CsvAnalogAlarmMessage();
-
             var expected = analogAlarmMessage.ToCsvString();
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
 
-            Assert.AreEqual(expected, actual, true);
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
         
         [TestMethod]
-        public void Test_CsvAnalogAlarm1()
+        public void CsvAnalogAlarm1_Test()
         {
             var expected = @"
-""A"",""AI\F1011_1\s"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
-""C"",""1.5"",""FRCSA1011_1<0.0(LL)"",  ""S"","""","""",""D"",""1"",
-""C"",""2.5"",""FRCSA1011_1<1.0(L)"",   ""S"","""","""",""D"",""1"",
-""C"",""3.5"",""FRCSA1011_1<1.1"",      ""S"","""","""",""D"",""1"",
-""C"",""4.5"",""FRCSA1011_1>2.1"",      ""S"","""","""",""I"",""1"",
-""C"",""5.5"",""H"",                    ""S"","""","""",""I"",""1"",
-""C"",""6.5"",""HH"",                   ""S"","""","""",""I"",""1"",
-"""","""","""",                         ""S"","""","""","""","""",
-"""","""","""",                         ""S"","""","""","""",""""";
+                    ""A"",""AI\F1011_1\s"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
+                    ""C"",""1.5"",""FRCSA1011_1<0.0(LL)"",  ""S"","""","""",""D"",""1"",
+                    ""C"",""2.5"",""FRCSA1011_1<1.0(L)"",   ""S"","""","""",""D"",""1"",
+                    ""C"",""3.5"",""FRCSA1011_1<1.1"",      ""S"","""","""",""D"",""1"",
+                    ""C"",""4.5"",""FRCSA1011_1>2.1"",      ""S"","""","""",""I"",""1"",
+                    ""C"",""5.5"",""H"",                    ""S"","""","""",""I"",""1"",
+                    ""C"",""6.5"",""HH"",                   ""S"","""","""",""I"",""1"",
+                    """","""","""",                         ""S"","""","""","""", """",
+                    """","""","""",                         ""S"","""","""","""", """"";
 
             var alarm = new CsvAnalogAlarm(@"AI\F1011_1\s");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0 (LL)", RSViewTresholdDirection.D, 1);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("2.5", "FRCSA1011_1<1.0 (L)", RSViewTresholdDirection.D, 1);
-            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold("3.5", "FRCSA1011_1<1.1", RSViewTresholdDirection.D, 1);
-            alarm.Tresholds[4] = new CsvAnalogAlarmTreshold("4.5", "FRCSA1011_1>2.1", RSViewTresholdDirection.I, 1);
-            alarm.Tresholds[5] = new CsvAnalogAlarmTreshold("5.5", "H", RSViewTresholdDirection.I, 1);
-            alarm.Tresholds[6] = new CsvAnalogAlarmTreshold("6.5", "HH", RSViewTresholdDirection.I, 1);
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0 (LL)", TresholdDirection.D, 1);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("2.5", "FRCSA1011_1<1.0 (L)", TresholdDirection.D, 1);
+            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold("3.5", "FRCSA1011_1<1.1", TresholdDirection.D, 1);
+            alarm.Tresholds[4] = new CsvAnalogAlarmTreshold("4.5", "FRCSA1011_1>2.1", TresholdDirection.I, 1);
+            alarm.Tresholds[5] = new CsvAnalogAlarmTreshold("5.5", "H", TresholdDirection.I, 1);
+            alarm.Tresholds[6] = new CsvAnalogAlarmTreshold("6.5", "HH", TresholdDirection.I, 1);
 
             var actual = alarm.ToCsvString();
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
 
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
-            Assert.AreEqual(expected, actual, true);
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
 
         [TestMethod]
-        public void Test_CsvAnalogAlarm2()
-        {
-            var b = @"
-""A"",""Logic\P1\KEY"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
-""C"",""1.5"",""ABC"",""S"","""","""",""D"",""1"",
-""C"",""1.7"",""?-1:????-???????"",""S"","""","""",""I"",""1"",
-""C"",""2.5"",""?-1:????-??????"",""S"","""","""",""I"",""1"",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""",""""";
-           
-            var alarm = new CsvAnalogAlarm(@"Logic\P1\KEY");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.5", "ABC", RSViewTresholdDirection.D, 1);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("1.7", "?-1: ???? - ???????", RSViewTresholdDirection.I, 1);
-            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold("2.5", "?-1: ???? - ??????", RSViewTresholdDirection.I, 1);
-            
-            var expected = b;
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
-
-            var actual = alarm.ToCsvString();
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
-            Assert.AreEqual(expected, actual, true);
-        }
-
-        [TestMethod]
-        public void Test_CsvAnalogAlarm3()
+        public void CsvAnalogAlarm2_Test()
         {
             var expected = @"
-""A"",""Logic\P1\MODE"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
-""C"",""1.1"",""ABC:ABC"",""S"","""","""",""D"",""1"",
-""C"",""1.9"",""?-1:?????-???????"",""S"","""","""",""I"",""1"",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""",
-"""","""","""",""S"","""","""","""","""" 
-";
-            
-            var alarm = new CsvAnalogAlarm(@"Logic\P1\MODE");
-            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.1", "ABC:ABC", RSViewTresholdDirection.D);
-            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("1.9", "?-1: ????? - ? ??????", RSViewTresholdDirection.I);
-
+                    ""A"",""Logic\P1\KEY"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
+                    ""C"",""1.5"",""ABC"",""S"","""","""",""D"",""1"",
+                    ""C"",""1.7"",""1:"",""S"","""","""",""I"",""1"",
+                    ""C"",""2.5"",""2:"",""S"","""","""",""I"",""1"",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""",""""";
+           
+            var alarm = new CsvAnalogAlarm(@"Logic\P1\KEY");
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.5", "ABC", TresholdDirection.D, 1);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("1.7", "1:", TresholdDirection.I, 1);
+            alarm.Tresholds[3] = new CsvAnalogAlarmTreshold("2.5", "2:", TresholdDirection.I, 1);
             var actual = alarm.ToCsvString();
 
-            expected = CsvTagTest.RegexSpace.Replace(expected, "");
-            actual = CsvTagTest.RegexSpace.Replace(actual, "");
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
+        }
 
-            Assert.AreEqual(expected, actual, true);
+        [TestMethod]
+        public void CsvAnalogAlarm3_Test()
+        {
+            var expected = @"
+                    ""A"",""Logic\P1\MODE"","""",""N"","""",""N"",0,""A"","""","""","""","""",""S"","""","""",""S"",
+                    ""C"",""1.1"",""ABC:ABC"",""S"","""","""",""D"",""1"",
+                    ""C"",""1.9"",""щдщдщ"",""S"","""","""",""I"",""1"",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""",
+                    """","""","""",""S"","""","""","""","""" 
+                    ";
+            
+            var alarm = new CsvAnalogAlarm(@"Logic\P1\MODE");
+            alarm.Tresholds[1] = new CsvAnalogAlarmTreshold("1.1", "ABC:ABC", TresholdDirection.D);
+            alarm.Tresholds[2] = new CsvAnalogAlarmTreshold("1.9", "щдщдщ", TresholdDirection.I);
+            var actual = alarm.ToCsvString();
+
+            Assert.AreEqual(CsvTagTest.CsvRegexClearSpace.Replace(expected, ""),
+                            CsvTagTest.CsvRegexClearSpace.Replace(actual, ""), true);
         }
 
 
         [TestMethod]
-        public void Test_CsvAnalogAlarmTreshold()
+        public void CsvAnalogAlarmTreshold3_Test()
         {
             string[] exp =
             {
@@ -173,26 +160,21 @@ namespace MPTLib.Test.RSView.ImportExport.Csv
                 @"  """","""","""",""S"","""","""","""",""""                        ",
             };
 
-            var rs = new List<CsvAnalogAlarmTreshold>() {
-                new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0(LL)", RSViewTresholdDirection.D),
-                new CsvAnalogAlarmTreshold("2.5", "FRCSA1011_1<1.0(L)", RSViewTresholdDirection.D),
-                new CsvAnalogAlarmTreshold("3.5", "FRCSA1011_1<1.1", RSViewTresholdDirection.D),
-                new CsvAnalogAlarmTreshold("4.5", "FRCSA1011_1>2.1", RSViewTresholdDirection.I),
-                new CsvAnalogAlarmTreshold("5.5", "H", RSViewTresholdDirection.I),
-                new CsvAnalogAlarmTreshold("6.5", "HH", RSViewTresholdDirection.I),
+            CsvAnalogAlarmTreshold[] act = 
+            {
+                new CsvAnalogAlarmTreshold("1.5", "FRCSA1011_1<0.0(LL)", TresholdDirection.D),
+                new CsvAnalogAlarmTreshold("2.5", "FRCSA1011_1<1.0(L)", TresholdDirection.D),
+                new CsvAnalogAlarmTreshold("3.5", "FRCSA1011_1<1.1", TresholdDirection.D),
+                new CsvAnalogAlarmTreshold("4.5", "FRCSA1011_1>2.1", TresholdDirection.I),
+                new CsvAnalogAlarmTreshold("5.5", "H", TresholdDirection.I),
+                new CsvAnalogAlarmTreshold("6.5", "HH", TresholdDirection.I),
             };
-
-
-            var act = rs.Select(x=>x.ToCsvString())
-                            .Select(x => CsvTagTest.RegexSpace.Replace(x, "")).ToArray();
-            exp = exp
-                            .Select(x => CsvTagTest.RegexSpace.Replace(x, "")).ToArray();
 
             for (int i = 0; i < 6; i++)
             {
-                var a1 = exp[i];
-                var a2 = act[i];
-                Assert.AreEqual(act[i], exp[i], true);
+                var a = CsvTagTest.CsvRegexClearSpace.Replace(act[i].ToCsvString(), "");
+                var e = CsvTagTest.CsvRegexClearSpace.Replace(exp[i], "");
+                Assert.AreEqual(a, e, true);
             }
         }
     }

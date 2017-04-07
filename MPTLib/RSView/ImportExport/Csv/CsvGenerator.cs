@@ -9,7 +9,6 @@ namespace MPT.RSView.ImportExport.Csv
 {
     public class CsvGenerator
     {
-
         #region ContentConst
         private const string VersionHeader = ";###001 - THIS LINE CONTAINS VERSION INFORMATION. DO NOT REMOVE!!!";
         private const string TagFileHeader = ";Tag Type, Tag Name, Tag Description, Read Only, Data Source, Security Code, Alarmed, Data Logged, Native Type, Value Type, Min Analog, Max Analog, Initial Analog, Scale, Offset, DeadBand, Units, Off Label Digital, On Label Digital, Initial Digital, Length String, Initial String, Node Name, Address, Scan Class,  System Source Name, System Source Index, RIO Address, Element Size Block, Number Elements Block, Initial Block";
@@ -30,7 +29,6 @@ namespace MPT.RSView.ImportExport.Csv
         private readonly IEnumerable<RSViewTag> _rsViewTags;
         private readonly string _projectName;
 
-
         public CsvGenerator(IEnumerable<RSViewTag> rsViewTags, string projectName)
         {
             _rsViewTags = rsViewTags;
@@ -39,7 +37,6 @@ namespace MPT.RSView.ImportExport.Csv
 
         public CsvGenerator(RSViewPositionListConverter converter) : this(converter.ConvertAllPositionsToRsViewTags(), converter.NodeName)
         {
-
         }
 
 
@@ -59,12 +56,12 @@ namespace MPT.RSView.ImportExport.Csv
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw new Exception("Get parent folder", ex);
                 }
             }
             return folders
                 .Where(x => x != null)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.TagPath)
                 .Select(x => x.ToCsvTag());
         }
 
@@ -93,10 +90,12 @@ namespace MPT.RSView.ImportExport.Csv
 
         private IEnumerable<CsvDataLog> GetDatalogs()
         {
-            return _rsViewTags
+            var dlgTags = _rsViewTags
                 .Where(x => x != null)
-                .Where(x => x.DatalogCount > 0)
-                .SelectMany(tag => tag.Datalogs, (t, dlg) => new CsvDataLog { ModelName = dlg.ToUpper(), TagName = t.Name })
+                .Where(x => x.DatalogCount > 0);
+
+            return dlgTags
+                .SelectMany(tag => tag.Datalogs, (t, dlg) => new CsvDataLog { ModelName = dlg.ToUpper(), TagName = t.TagPath })
                 .OrderBy(x => x.ModelName);
         }
 
@@ -256,9 +255,9 @@ namespace MPT.RSView.ImportExport.Csv
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;                
+                throw new Exception("File save", ex);                
             }
         }
 
@@ -268,12 +267,6 @@ namespace MPT.RSView.ImportExport.Csv
                 .Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
         }
 
-        public string ZipFileName
-        {
-            get
-            {
-                return string.Format("{0}_{1}.zip", GetCleanFileName(_projectName), DateTime.Now.ToString("yyyyMMdd_HHmmss"));
-            }
-        }
+        public string ZipFileName => $"{GetCleanFileName(_projectName)}_{DateTime.Now:yyyyMMdd_HHmmss}.zip";
     }
 }

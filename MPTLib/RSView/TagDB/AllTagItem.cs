@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-
 namespace MPT.RSView.TagDB
 {
     public class AllTagItem
@@ -13,14 +12,13 @@ namespace MPT.RSView.TagDB
         [StringLength(255)]
         public string Name { get; set; }
         public string Description { get; set; }
-        public RSViewTagType? Type { get; set; }
-        public RSViewTagDataSourceType? DataSrcType { get; set; }
+        public RSViewTag.TypeEnum? Type { get; set; }
+        public RSViewTag.DataSourceTypeEnum? DataSrcType { get; set; }
         public char? Security { get; set; }
         public int? ExternalRefs { get; set; }
         public short? ReadOnly { get; set; }
         public int? ParentId { get; set; }
         public short? ParentType { get; set; }
-
         public short? AnaNativeType { get; set; }
         public short? AnaValueType { get; set; }
         public double? AnaMinValue { get; set; }

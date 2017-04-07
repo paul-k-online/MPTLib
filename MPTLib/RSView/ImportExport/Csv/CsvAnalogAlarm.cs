@@ -73,10 +73,10 @@ namespace MPT.RSView.ImportExport.Csv
         public string Threshold = "";
         public string Label = "";
         public CsvAlarmMessage AlarmMessage = new CsvAlarmMessage();
-        public RSViewTresholdDirection? Direction;
+        public TresholdDirection? Direction;
         public ushort? Severity;
 
-        public CsvAnalogAlarmTreshold(string threshold, string label, RSViewTresholdDirection direction, ushort severity = 1, CsvThresholdType type = CsvThresholdType.C)
+        public CsvAnalogAlarmTreshold(string threshold, string label, TresholdDirection direction, ushort severity = 1, CsvThresholdType type = CsvThresholdType.C)
         {
             Threshold = threshold;
             Label = label;
@@ -120,7 +120,7 @@ namespace MPT.RSView.ImportExport.Csv
     * */
     public class CsvAnalogAlarm
     {
-        public RSViewTagType TagType = RSViewTagType.A;
+        public RSViewTag.TypeEnum TagType = RSViewTag.TypeEnum.A;
         public string TagName;
 
         public string HandshakeTagName = "";
@@ -129,7 +129,7 @@ namespace MPT.RSView.ImportExport.Csv
         public string AckAutoreset = "N";
 
         public double Deadbandvalue = 0;
-        public RSViewTagType DeadbandType = RSViewTagType.A;
+        public RSViewTag.TypeEnum DeadbandType = RSViewTag.TypeEnum.A;
         public string Outofalarmlabel = "";
         public string AlarmIdentification = "";
 

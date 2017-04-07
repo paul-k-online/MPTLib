@@ -62,6 +62,7 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -105,10 +106,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\WebMpt.Net\packages\AutoMapper.4.1.1\lib\net40\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\..\Mpt.Net\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
       <Private>True</Private>
@@ -139,20 +136,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\MPT.Net\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -178,7 +163,6 @@
     <Compile Include="PrimitiveType\BoolExtension.cs" />
     <Compile Include="PrimitiveType\DataRowExtension.cs" />
     <Compile Include="PrimitiveType\DateTimeExtension.cs" />
-    <Compile Include="DataBase\TreeNode.cs" />
     <Compile Include="PrimitiveType\DictionaryExtension.cs" />
     <Compile Include="PrimitiveType\DoubleExtension.cs" />
     <Compile Include="PrimitiveType\EnumExtension.cs" />
@@ -272,32 +256,22 @@
     <Compile Include="PositionList\IPositionList.cs" />
     <Compile Include="PrimitiveType\OrderAttribute.cs" />
     <Compile Include="PrimitiveType\StringToIntList.cs" />
-    <Compile Include="RSView\ActivityLog\ActivityLogRecord.cs" />
-    <Compile Include="RSView\AlarmLog\AlarmLogDataBase.cs" />
-    <Compile Include="RSView\AlarmLog\AlarmLogRecord.cs" />
-    <Compile Include="RSView\DataLog\DataLogFloatDBF.cs" />
-    <Compile Include="RSView\DataLog\DataLogTagDBF.cs" />
-    <Compile Include="RSView\DataLog\MultiProject\AlarmLogRecord.cs" />
+    <Compile Include="RSView\DataLog\ActLog.cs" />
+    <Compile Include="RSView\DataLog\AlarmLog.cs" />
+    <Compile Include="RSView\DataLog\MultiProject\AlarmLog.cs" />
     <Compile Include="RSView\DataLog\MultiProject\DataLogFloat.cs" />
     <Compile Include="RSView\DataLog\MultiProject\DataLogTag.cs" />
     <Compile Include="RSView\DataLog\MultiProject\IProjectId.cs" />
     <Compile Include="RSView\DataLog\MultiProject\MultiProjectsDataLogEntities.cs" />
     <Compile Include="RSView\DataLog\DataLogEntities.cs" />
     <Compile Include="RSView\DataLog\DataLogTag.cs" />
-    <Compile Include="RSView\AlarmLog\AlarmLogRecordDBF.cs" />
     <Compile Include="RSView\ImportExport\CSV\CsvAlarmMessage.cs" />
     <Compile Include="RSView\ImportExport\CSV\CsvDerivedTag.cs" />
-    <Compile Include="RSView\RSViewDigitEnum.cs" />
     <Compile Include="RSView\ImportExport\PositionListConverter.cs" />
     <Compile Include="PrimitiveType\XElementExtension.cs" />
-    <Compile Include="RSView\ImportExport\Shema\ShemaAlarm.cs" />
-    <Compile Include="RSView\ImportExport\Shema\ShemaDataLog.cs" />
-    <Compile Include="RSView\ImportExport\Shema\ShemaConverter.cs" />
-    <Compile Include="RSView\ImportExport\Shema\ShemaTag.cs" />
-    <Compile Include="RSView\RSViewAnalogAlarm.cs" />
-    <Compile Include="RSView\RSViewDigitalAlarm.cs" />
+    <Compile Include="RSView\ImportExport\Shema\ShemaModel.cs" />
+    <Compile Include="RSView\ImportExport\Shema\SchemaConverter.cs" />
     <Compile Include="RSView\UserAccount\RSViewUserAccount.cs" />
-    <Compile Include="RSView\RSViewAiPositionExtension.cs" />
     <Compile Include="RSView\RSViewAnalogTag.cs" />
     <Compile Include="RSView\RSViewDigitalTag.cs" />
     <Compile Include="RSView\ImportExport\CSV\CsvDataLog.cs" />
@@ -309,16 +283,41 @@
     <Compile Include="DataBase\ExcelDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSView\ImportExport\CSV\CsvAnalogAlarm.cs" />
-    <Compile Include="RSView\ImportExport\CSV\RSViewToCsvTag.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvTagExtension.cs" />
     <Compile Include="RSView\ImportExport\CSV\CsvTag.cs" />
     <Compile Include="RSView\RSViewStringTag.cs" />
     <Compile Include="RSView\RSViewTag.cs" />
     <Compile Include="PrimitiveType\StringExtension.cs" />
     <Compile Include="RSView\TagDB\AllTagItem.cs" />
-    <Compile Include="RSView\TagDB\OBDCTagReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <Content Include="_SQL\Data\dbo.AlarmEvents.Table.sql" />
+    <Content Include="_SQL\Data\dbo.AlarmTags.Table.sql" />
+    <Content Include="_SQL\Data\dbo.AlarmValues.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Codes.Table.sql" />
+    <Content Include="_SQL\Data\dbo.DeviceRun.Table.sql" />
+    <Content Include="_SQL\Data\dbo.EventsAlarm.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Factory.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Messages.Table.sql" />
+    <Content Include="_SQL\Data\dbo.OpcDataLogger.Table.sql" />
+    <Content Include="_SQL\Data\dbo.P9_FSC_Tag.Table.sql" />
+    <Content Include="_SQL\Data\dbo.PcEventIgnoreWords.Table.sql" />
+    <Content Include="_SQL\Data\dbo.PLC.Table.sql" />
+    <Content Include="_SQL\Data\dbo.PLC_Description.Table.sql" />
+    <Content Include="_SQL\Data\dbo.PLC_TO.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Project.Table.sql" />
+    <Content Include="_SQL\Data\dbo.RsViewProjectTags.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Severity.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Subscribe.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Tag.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Users.Table.sql" />
+    <Content Include="_SQL\Data\dbo.WorkScheduleHolidays.Table.sql" />
+    <Content Include="_SQL\Data\dbo.WorkScheduleMove.Table.sql" />
+    <Content Include="_SQL\Data\dbo.Workstation.Table.sql" />
+    <Content Include="_SQL\shema.sql" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="Model\MPTModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MPTModel.Designer.cs</LastGenOutput>
@@ -368,9 +367,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-    <Error Condition="!Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <Import Project="..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\MPT.Net\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

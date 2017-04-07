@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MPT.PrimitiveType;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,13 +8,13 @@ namespace MPT.RSView.ImportExport.Csv
     public class CsvTag
     {
         // Generic
-        RSViewTagType TagType = RSViewTagType.F;
+        RSViewTag.TypeEnum TagType = RSViewTag.TypeEnum.F;
         string TagName = "";
         string TagDescription = "";
         RSViewBoolEnum ReadOnly = RSViewBoolEnum.F;
 
         // Data
-        RSViewTagDataSourceType DataSource = RSViewTagDataSourceType.M;
+        RSViewTag.DataSourceTypeEnum DataSource = RSViewTag.DataSourceTypeEnum.M;
         string SecurityCode = "*";
         RSViewBoolEnum Alarmed = RSViewBoolEnum.F;
         RSViewBoolEnum DataLogged = RSViewBoolEnum.F;
@@ -43,7 +44,7 @@ namespace MPT.RSView.ImportExport.Csv
         string Address;
         string ScanClass
         {
-            get { return DataSource == RSViewTagDataSourceType.D ? "A" : null; }
+            get { return DataSource == RSViewTag.DataSourceTypeEnum.D ? "A" : null; }
         }
 
         // Other
@@ -58,7 +59,7 @@ namespace MPT.RSView.ImportExport.Csv
         {
             return new CsvTag()
                    {
-                       TagType = RSViewTagType.F,
+                       TagType = RSViewTag.TypeEnum.F,
                        TagName = name,
                    };
         }
@@ -68,7 +69,7 @@ namespace MPT.RSView.ImportExport.Csv
         {
             var tag = new CsvTag
                         {
-                            TagType = RSViewTagType.A,
+                            TagType = RSViewTag.TypeEnum.A,
                             TagName = name,
                             TagDescription = description,
 
@@ -91,13 +92,13 @@ namespace MPT.RSView.ImportExport.Csv
         {
             var tag = new CsvTag()
                         {
-                            TagType = RSViewTagType.D,
+                            TagType = RSViewTag.TypeEnum.D,
                             TagName = name,
                             TagDescription = description,
                             
                             OffLabelDigital = "OFF",
                             OnLabelDigital = "ON",
-                            InitialDigital = ((RSViewDigitEnum)(Convert.ToInt16(initialValue))).ToString(),
+                            InitialDigital = initialValue.ToEnum<RSViewDigitEnum>().ToString(),
                         };
             return tag;
         }
@@ -106,19 +107,18 @@ namespace MPT.RSView.ImportExport.Csv
         {
             var tag = new CsvTag()
             {
-                TagType = RSViewTagType.S,
+                TagType = RSViewTag.TypeEnum.S,
                 TagName = name,
                 TagDescription = description,
                 LengthString = length,
                 InitialString = initial,
             };
             return tag;
-
         }
         
-        public CsvTag SetDataSource(string nodeName, string address, RSViewTagDataSourceType dataSourceType = RSViewTagDataSourceType.D)
+        public CsvTag SetDataSource(string nodeName, string address, RSViewTag.DataSourceTypeEnum dataSourceType = RSViewTag.DataSourceTypeEnum.D)
         {
-            if (dataSourceType == RSViewTagDataSourceType.D)
+            if (dataSourceType == RSViewTag.DataSourceTypeEnum.D)
             {
                 DataSource = dataSourceType;
                 NodeName = nodeName;
@@ -190,7 +190,7 @@ namespace MPT.RSView.ImportExport.Csv
         
         public string ToCsvString()
         {
-            var fields = (TagType == RSViewTagType.F) ? FieldsGeneric : FieldsTotal;
+            var fields = (TagType == RSViewTag.TypeEnum.F) ? FieldsGeneric : FieldsTotal;
             return string.Join(",", fields.Select(x => x.ToCsvString()));
         }
     }

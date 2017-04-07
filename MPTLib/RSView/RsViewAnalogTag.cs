@@ -1,10 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MPT.RSView
 {
+    public class RSViewAnalogAlarm
+    {
+        public enum TresholdDirection
+        {
+            /// <summary>
+            /// Decreasing
+            /// </summary>
+            D,
+            /// <summary>
+            /// Increasing
+            /// </summary>
+            I
+        }
 
+        /// <summary>
+        /// value or tagname with value
+        /// </summary>
+        [MaxLength(21)]
+        [DefaultValue("")]
+        public string Threshold { get; set; }
+
+        [MaxLength(21)]
+        [DefaultValue("")]
+        public string Label { get; set; }
+
+        [DefaultValue(1)]
+        public ushort Severity { get; set; }
+
+        public TresholdDirection Direction { get; set; }
+    }
 
     public class RSViewAnalogTag : RSViewTag
     {

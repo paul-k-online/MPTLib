@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.PrimitiveType;
 using MPT.Model;
 using MPT.Positions;
-using MPTLib.Test.RSView;
 
 namespace MPTLib.Test.Positions
 {
@@ -16,36 +15,18 @@ namespace MPTLib.Test.Positions
         [TestMethod]
         public void TestLoadAiPositions()
         {
-            try
-            {
                 var excelPositionList = new ExcelPositionList(TestData._105_Inform2.ExcelFilePath, TestData._105_Inform2.PlcId);
-                
-
                 var AIdataTableList = excelPositionList.ExcelDataBase.GetSheetDataTable("AI").AsEnumerable().ToList();
                 var nameIndex = (int) ExcelPositionConvert.AiPosition_ExcelColumnNumber.Name;
                 var whereName = AIdataTableList
                     .Where(x => !string.IsNullOrWhiteSpace(x.ItemArray[nameIndex].ToNullString()));
-
-
                 var excelRowCount = whereName.Count();
-
                 excelPositionList.LoadAiSheet();
                 var aiPositionCount = excelPositionList.AiPositions.Count;
-
-
                 Assert.AreEqual(excelRowCount - 1, aiPositionCount);
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
         }
 
 
-
-
-    
         [TestMethod]            
         public void TestGetPairPlcMessgesDictionary()
         {
@@ -57,7 +38,6 @@ namespace MPTLib.Test.Positions
                 new PlcMessage() {Number = 3, Text = "a"},
                 new PlcMessage() {Number = 10, Text = "a", Severity = 1},
                 new PlcMessage() {Number = 11, Text = "a",},
-
             };
 
             var excelMessages = new List<PlcMessage>
@@ -69,8 +49,6 @@ namespace MPTLib.Test.Positions
                 new PlcMessage() {Number = 11, Text = "a", Group = 2},
             };
 
-
-
             var sqlDict = sqlMessages.ToDictionary(x => x.Number, y => y);
             var excelDict = excelMessages.ToDictionary(x => x.Number, y => y);
 
@@ -78,20 +56,18 @@ namespace MPTLib.Test.Positions
             var pairDict = merge.PlcMessagePairDictionary;
 
             var pair = pairDict[1];
-            Assert.AreEqual(pair.Item1.Equals(pair.Item2), true);
+            Assert.IsTrue(pair.Item1.Equals(pair.Item2));
             Assert.AreEqual(pairDict[2], new Tuple<PlcMessage, PlcMessage>(sqlDict[2], excelDict[2]));
-            Assert.AreEqual(pairDict[3].Item2, null);
-            Assert.AreEqual(pairDict[4].Item1, null);
+            Assert.IsNull(pairDict[3].Item2);
+            Assert.IsNull(pairDict[4].Item1);
 
-            
             var diff = merge.Diff;
             //Assert.AreEqual(diff.Count, 3);
 
             var addUpdateList = merge.GetAddOrUpdateMessages();
             var removeList = merge.GetRemoveMessages();
-
-            
         }
+
 
         [TestMethod]
         public void TestDupl()

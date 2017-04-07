@@ -40,7 +40,7 @@ namespace MPTLib.Test
 
         public static readonly AiPosition TestAiPos = new AiPosition
             {
-                Name = "FRCSA1011_3",
+                Name = "FRCSA-1011/3",
                 Description = "Расход бензина поток 3 dP=10 кПа",
                 Units = "т/ч",
                 Number = 2,
@@ -53,28 +53,28 @@ namespace MPTLib.Test
 
         public static readonly TestDataProject _101_PP18 = new TestDataProject()
         {
-            ExcelFilePath = @"_TestData\101_PP23.xls",
+            ExcelFilePath = @"_TestData\Excel\101_PP23.xls",
             NodeName = "101_PP23",
             PlcId = 10118,
         };
 
         public static readonly TestDataProject _101_PP23 = new TestDataProject()
         {
-            ExcelFilePath = @"_TestData\101_PP23.xls",
+            ExcelFilePath = @"_TestData\Excel\101_PP23.xls",
             NodeName = "101_PP23",
             PlcId = 10123,
         };
 
         public static readonly TestDataProject _105_Inform2 = new TestDataProject()
         {
-            ExcelFilePath = @"_TestData\Inform2.xlsx",
+            ExcelFilePath = @"_TestData\Excel\Inform2.xlsx",
             NodeName = "105_Inform2",
             PlcId = 10516,
         };
 
         public static readonly TestDataProject _105_K32 = new TestDataProject()
         {
-            ExcelFilePath = @"_TestData\K3_2.xlsx",
+            ExcelFilePath = @"_TestData\Excel\K3_2.xlsx",
             NodeName = "105_K3_2",
             PlcId = 10516,
         };

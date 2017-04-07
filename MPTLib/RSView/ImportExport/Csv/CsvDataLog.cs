@@ -5,10 +5,10 @@ namespace MPT.RSView.ImportExport.Csv
 {
     public class CsvDataLog
     {
-        public string TagName;
-        public string ModelName;
+        public string TagName { get; set; }
+        public string ModelName { get; set; }
 
-        public override string ToString()
+        public string ToCsvString()
         {
             var fieldList = new List<object>()
             {

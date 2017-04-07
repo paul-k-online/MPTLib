@@ -5,7 +5,7 @@ namespace MPT.RSView.ImportExport.Csv
 {
     public class CsvDigitalAlarm
     {
-        RSViewTagType TagType = RSViewTagType.D;
+        RSViewTag.TypeEnum TagType = RSViewTag.TypeEnum.D;
         string TagName;
 
         // Alarm States

@@ -7,15 +7,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPT.Model;
 using MPT.Positions;
 
-using MPTLib.Test.RSView;
-
 namespace MPTLib.Test.Positions
 {
     [TestClass]
     public class PlcMessagesMergeTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void PlcMessagesMergeTest1()
         {
             try
             {
@@ -28,21 +26,16 @@ namespace MPTLib.Test.Positions
                 
                 sw.Stop();
                 Console.WriteLine(sw.ElapsedMilliseconds);
-                //a.Values.Add(null);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
 
-
-
-
         [TestMethod]
-        public void TestMethod2()
+        public void PlcMessagesMergeTest2()
         {
             var exsistList = new List<PlcMessage>()
             {
@@ -53,10 +46,7 @@ namespace MPTLib.Test.Positions
             {
                 new PlcMessage() {PlcId = 1, Number = 1, Text = "new"}
             };
-
-
             var merge = new PlcMessagesMerge(exsistList, newList);
-
         }
     }
 }

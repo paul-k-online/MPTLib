@@ -67,159 +67,159 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBase\ExcelDataBaseTest.cs" />
     <Compile Include="PositionList\ExcelPositionListTest.cs" />
     <Compile Include="PositionList\PlcMessagesMergeTest.cs" />
-    <Compile Include="PrimitiveType\DictionaryExtensionTests.cs" />
     <Compile Include="PrimitiveType\DoubleExtensionTest.cs" />
-    <Compile Include="PrimitiveType\NullNumericTest.cs" />
-    <Compile Include="PrimitiveType\DateTimeTest.cs" />
-    <Compile Include="PrimitiveType\StringToIntListTests.cs" />
-    <Compile Include="RSView\AlarmLog\UnitTest1.cs" />
-    <Compile Include="RSView\DataLog\UnitTest1.cs" />
-    <Compile Include="RSView\ImportExport\XML\ShemaParserTests.cs" />
-    <Compile Include="RSView\ImportExport\XML\XmlPositionListShemaTests.cs" />
-    <Compile Include="RSView\UserAccount\RSViewUserAccountTests.cs" />
-    <Compile Include="_TestData\TestData.cs" />
-    <Compile Include="RSView\AiPositionTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvExtensionsTest.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvAlarmTest.cs" />
-    <Compile Include="RSView\ImportExport\Csv\CsvTagTest.cs" />
-    <Compile Include="RSView\ImportExport\PositionConvertTest.cs" />
-    <Compile Include="RSView\ImportExport\PositionListConverterTest.cs" />
-    <Compile Include="RSView\RSTypeTest.cs" />
-    <Compile Include="PrimitiveType\NamedFormatTest.cs" />
     <Compile Include="PrimitiveType\OtherTest.cs" />
-    <Compile Include="DataBase\TreeNodeTest.cs" />
+    <Compile Include="PrimitiveType\StringToIntListTests.cs" />
+    <Compile Include="RSView\AlarmLog\AlarmLogDataBaseTest.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvDataLogTest.cs" />
+    <Compile Include="RSView\ImportExport\Shema\SchemaConverterTests.cs" />
+    <Compile Include="RSView\RsViewAiPositionExtensionTests.cs" />
+    <Compile Include="RSView\UserAccountTests.cs" />
+    <Compile Include="RSView\UserAccount\RSViewUserAccountTests.cs" />
+    <Compile Include="WorkScheduleTest.cs" />
+    <Compile Include="_TestData\TestData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvExtensionsTest.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvAlarmTest.cs" />
+    <Compile Include="RSView\ImportExport\CSV\CsvTagTest.cs" />
+    <Compile Include="RSView\ImportExport\PositionListConverterTest.cs" />
+    <Compile Include="PrimitiveType\EnumTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="RSView\UserAccount\Data\Users\Default.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\users.act">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\users3.act" />
-    <None Include="RSView\UserAccount\Data\users2.act" />
-    <None Include="RSView\UserAccount\Data\users1.act" />
-    <None Include="RSView\UserAccount\Data\Users\Passwords\1111.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\11111111.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\1111222233334444.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\11.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\12345678.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\2.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\1.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Passwords\RSViewPass.xlsx" />
-    <None Include="RSView\UserAccount\Data\Users\АБВГДЕЖЗ.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\Password.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\_Header.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\LogoutMacro.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="RSView\UserAccount\Data\Users\LoginMacro.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="_TestData\101_PP23\101_pp23-Alarms.CSV">
+    <None Include="_TestData\DLGLOG\ALMLOG\170120AL.DBF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\101_PP23\101_pp23-DataLog.CSV">
+    <None Include="_TestData\DLGLOG\ALMLOG\170121AL.DBF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\101_PP23\101_pp23-DerivedTags.CSV">
+    <None Include="_TestData\DLGLOG\ALMLOG\170128AL.DBF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\101_PP23\101_pp23-Tags.CSV">
+    <None Include="_TestData\DLGLOG\ALMLOG\170129AL.DBF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\101_PP23.xls">
+    <None Include="_TestData\Excel\inform2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\102_KMP2.xlsx">
+    <None Include="_TestData\RSView\Users\Default.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\104_KMP_B1.xlsx">
+    <None Include="_TestData\RSView\Users\Data\users.act">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\104_MAF.xls">
+    <None Include="_TestData\RSView\Users\Data\users3.act" />
+    <None Include="_TestData\RSView\Users\Data\users2.act" />
+    <None Include="_TestData\RSView\Users\Data\users1.act" />
+    <None Include="_TestData\RSView\Users\Passwords\1111.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\20161017AL.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\11111111.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ACTLOG\20161017AI.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\1111222233334444.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ACTLOG\20161018AI.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\11.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ALMLOG\20161017AL.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\12345678.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\ALMLOG\20161018AL.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\2.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AF.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\1.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AS.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161017AT.DBF">
+    <None Include="_TestData\RSView\Users\Passwords\RSViewPass.xlsx" />
+    <None Include="_TestData\RSView\Users\АБВГДЕЖЗ.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AF.DBF">
+    <None Include="_TestData\RSView\Users\Password.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AS.DBF">
+    <None Include="_TestData\RSView\Users\_Header.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\161018AT.DBF">
+    <None Include="_TestData\RSView\Users\LogoutMacro.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DLG">
+    <None Include="_TestData\RSView\Users\LoginMacro.bin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\DlgLog\Dlg_Min\Dlg_min.DNS">
+    <None Include="_TestData\RSView\ImportExport\101_PP23\101_pp23-Alarms.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\RSView\ImportExport\101_PP23\101_pp23-DataLog.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\RSView\ImportExport\101_PP23\101_pp23-DerivedTags.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\RSView\ImportExport\101_PP23\101_pp23-Tags.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\Excel\101_PP23.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\inform2.xlsx">
+    <None Include="_TestData\Excel\102_KMP2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\K3_2.xlsx">
+    <None Include="_TestData\Excel\104_KMP_B1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_TestData\RsView\100_Test.rar" />
+    <None Include="_TestData\DLGLOG\ACTLOG\20161017AI.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\ACTLOG\20161018AI.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\ALMLOG\20161017AL.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\ALMLOG\20161018AL.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161017AF.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161017AS.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161017AT.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161018AF.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161018AS.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\161018AT.DBF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\Dlg_min.DLG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\DLGLOG\Dlg_Min\Dlg_min.DNS">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\Excel\K3_2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_TestData\RSView\100_Test.rar" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MptLib\MptLib.csproj">
+    <ProjectReference Include="..\MptLib\MPTLib.csproj">
       <Project>{6edc1d0f-7cce-4a38-b84e-8911aa3bc4e2}</Project>
-      <Name>MptLib</Name>
+      <Name>MPTLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -227,7 +227,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="_TestData\TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

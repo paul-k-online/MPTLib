@@ -1,104 +1,134 @@
-﻿using System;
+﻿using MPT.RSView.ImportExport.XML;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MPT.RSView
 {
-    public enum RSViewTagDataSourceType : ushort
+    public enum RSViewDigitEnum
     {
         /// <summary>
-        /// Device
+        /// Off (false)
         /// </summary>
-        D = 1,
+        OFF = 0,
         /// <summary>
-        /// Memory
+        /// On (True)
         /// </summary>
-        M = 2,
+        ON = 1,
     }
 
-    public enum RSViewTagType : ushort
+    public enum RSViewBoolEnum
     {
         /// <summary>
-        /// Folder
+        /// False
         /// </summary>
         F = 0,
-
         /// <summary>
-        /// Analog
+        /// True
         /// </summary>
-        A = 1,
-
-        /// <summary>
-        /// Digital
-        /// </summary>
-        D = 2,
-
-        /// <summary>
-        /// String
-        /// </summary>
-        S = 3,
+        T = 1,
     }
 
     public class RSViewTag
     {
-        public class ByNameIgnoreCaseEqualityComparer : IEqualityComparer<RSViewTag>
+        public enum TypeEnum : ushort
+        {
+            /// <summary>
+            /// Folder
+            /// </summary>
+            F = 0,
+
+            /// <summary>
+            /// Analog
+            /// </summary>
+            A = 1,
+
+            /// <summary>
+            /// Digital
+            /// </summary>
+            D = 2,
+
+            /// <summary>
+            /// String
+            /// </summary>
+            S = 3,
+        }
+        public enum DataSourceTypeEnum : ushort
+        {
+            /// <summary>
+            /// Device
+            /// </summary>
+            D = 1,
+            /// <summary>
+            /// Memory
+            /// </summary>
+            M = 2,
+        }
+
+
+        static readonly Regex NotValidSymbolTagNameRegex = new Regex(@"[^a-zA-Z0-9_\\]+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static readonly Regex UnderscoreSymbolRegex = new Regex(@"_+", RegexOptions.Compiled);
+        public static string GetValidTagName(string tagName)
+        {
+            var legalName = NotValidSymbolTagNameRegex.Replace(tagName, "_");
+            var undescopeName = UnderscoreSymbolRegex.Replace(legalName, "_");
+            return undescopeName;
+        }
+
+
+        public class ByNameEqualityComparer : IEqualityComparer<RSViewTag>
         {
             public bool Equals(RSViewTag x, RSViewTag y)
             {
-                return string.Equals(x.Name, y.Name, StringComparison.InvariantCultureIgnoreCase);
+                return string.Equals(x.TagPath, y.TagPath, StringComparison.InvariantCultureIgnoreCase);
             }
 
             public int GetHashCode(RSViewTag obj)
             {
-                return obj.Name.GetHashCode();
+                return obj.TagPath.GetHashCode();
             }
         }
-        public static ByNameIgnoreCaseEqualityComparer ByNameComparer = new ByNameIgnoreCaseEqualityComparer();
+        public static ByNameEqualityComparer ByNameComparer = new ByNameEqualityComparer();
 
-        
+
         #region For DataBase Property
         public int RSViewId { get; set; }
         public DateTime ModTime { get; set; }
         public int ParentId { get; set; }
-        public byte ParentType { get; set; }
         #endregion
 
-        public string Name { get; set; }
+        public string Description { get; set; }
+        public string TagPath { get; private set; }
         public string TagName
         {
-            get { return Path.GetFileName(Name); }
+            get { return Path.GetFileName(TagPath); }
         }
         public string Folder
         {
             get
             {
-                var directoryName = Path.GetDirectoryName(Name);
+                var directoryName = Path.GetDirectoryName(TagPath);
                 return directoryName == null ? null : directoryName.ToUpper();
             }
         }
-        public string Description { get; set; }
-        public RSViewTagDataSourceType DataSourceType { get; set; }
-        public bool IsDeviceDataSourceType
-        {
-            get { return DataSourceType == RSViewTagDataSourceType.D; }
-        }
-        public string NodeName { get; set; }
-        public string Address { get; set; }
         public RSViewTag ParentFolder
         {
             get { return string.IsNullOrEmpty(Folder) ? null : new RSViewTag(Folder); }
         }
 
-        private HashSet<string> datalogs = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-        public void SetDatalogs(params string[] datalogs)
+        #region DataSource
+        public DataSourceTypeEnum DataSourceType { get; set; }
+        public bool IsDeviceDataSourceType
         {
-            this.datalogs.Clear();
-            foreach(var dlg in datalogs)
-            {
-                if (!string.IsNullOrWhiteSpace(dlg))
-                    this.datalogs.Add(dlg);
-            }
+            get { return DataSourceType == DataSourceTypeEnum.D; }
         }
+        public string NodeName { get; set; }
+        public string Address { get; set; }
+        #endregion
+        
+        #region Datalogs
+        private HashSet<string> datalogs = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
         public IEnumerable<string> Datalogs
         {
             get
@@ -115,28 +145,43 @@ namespace MPT.RSView
                 return datalogs.Count;
             }
         }
-
-        public RSViewTag(string name, string folder="")
+        public void SetDatalogs(params string[] datalogs)
         {
-            Name = Path.Combine((folder ?? ""), (name ?? ""));
+            this.datalogs.Clear();
+            foreach(var dlg in datalogs)
+            {
+                if (!string.IsNullOrWhiteSpace(dlg))
+                    this.datalogs.Add(dlg);
+            }
+        }
+        #endregion
+
+        public RSViewTag(string name, string folder = null)
+        {
+            var path = name;
+            if (!string.IsNullOrWhiteSpace(folder))
+                path = Path.Combine(folder, name);
+            TagPath = GetValidTagName(path);
         }
 
-        public RSViewTag(RSViewTag other) : this(other.Name)
+        public RSViewTag(RSViewTag other) : this(other.TagPath)
         {
             Description = other.Description;
             DataSourceType = other.DataSourceType;
             NodeName = other.NodeName;
             Address = other.Address;
 
+            datalogs.UnionWith(other.Datalogs);
+
             RSViewId = other.RSViewId;
             ModTime = other.ModTime;
             ParentId = other.ParentId;
-            ParentType = other.ParentType;
+
         }
 
         public override string ToString()
         {
-            return Name;
+            return TagPath;
         }
     }
 }

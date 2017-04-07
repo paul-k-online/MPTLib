@@ -1,130 +1,172 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PositionList>
   <!--
-      "Number" => position.Number
-      "Name" => position.Name
-      "FullName" => position.FullName
-      "Description" => position.Description
-      "SHORTNAME" => position.RsViewShortName()
-      "UNITS" => position.Units
-      "Scale.Low" => position.Scale.Low
-      "Scale.High" => position.Scale.High
-      "Reglament.Low" => position.Reglament.Low | "0"
-      "Reglament.High" => position.Reglament.High | "0"
-      "Alarming.Low" => position.Alarming.Low | "0"
-      "Alarming.High" => position.Alarming.High | "0"
-      "Blocking.Low" => position.Blocking.Low | "0"
-      "Blocking.High" => position.Blocking.High | "0"
-  -->
-  
-  <!--
-      TAG
+      tag
         type: A(Analog) | D(Digital) | S(String)
+        name
+        description
         datasource: D(Device) | M(Memory)
-      ALARM:
-        Severity: 1-8
-        Label: [maxlength = 21]
-      ALARM (digital)
-        type: On | Off | COS(Any Change) | COSON(Changes to On) | COSOFF(Changes to Off)
-      ALARM (analog)
-        number: 1-8
-        direction: D(Decreasing) | I(Increasing)
+        address
+        length
+        initialValue
+        min
+        max
+        units 
+        
+      alarm:
+        type [digital only]: On | Off | COS(Any Change) | COSON(Changes to On) | COSOFF(Changes to Off)
+        number [analog only]: 1-8
+        threshold [analog only]
+        direction [analog only]: D(Decreasing) | I(Increasing)
+        severity: 1-8
+        label: [maxlength = 21]
+        
+      datalog:
+        name
   -->
   
   <AiPosition>
-    <TAG type="D" name="AI\{SHORTNAME}\en"    description="Enable"              dataSource="D" address="AI[{NUMBER}].EN"/>
-    <TAG type="S" name="AI\{SHORTNAME}\name"  description="{Description}"       length="200" dataSource="M" initialValue="{NAME}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\i"     description="Signal value"        min="0" max="20" units="мА" dataSource="D" address="AI[{NUMBER}].i">
+    <!--
+  General Position
+      {Number}
+      {Name}
+      {Description}
+      {RSViewName}
+  Ai Position
+      {FirstLetter}
+      {ShortName}
+      {Units}
+      {Scale.Low}
+      {Scale.High}
+      
+      {Reglament.Low}
+      {Reglament.High}
+      {Alarming.Low}
+      {Alarming.High}
+      {Blocking.Low}
+      {Blocking.High}
+      
+      {Reglament.Low.En}
+      {Reglament.High.En}
+      {Alarming.Low.En}
+      {Alarming.High.En}
+      {Blocking.Low.En}
+      {Blocking.High.En}
+  -->
+    
+    <TAG type="D" name="AI\{ShortName}\en"    description="Enable"              dataSource="D" address="AI[{NUMBER}].EN"/>
+    <TAG type="S" name="AI\{ShortName}\name"  description="{Description}"       length="200" dataSource="M" initialValue="{NAME}"/>
+    <TAG type="A" name="AI\{ShortName}\i"     description="Signal value"        min="0" max="20" units="мА" dataSource="D" address="AI[{NUMBER}].i">
+      <DATALOG name="DLG_KIP"/>
+    </TAG>
+    <TAG type="D" name="AI\{ShortName}\break" description="{Name} {Description}"  initialValue="0" dataSource="D" address="AI[{NUMBER}].Break.sgn">
+      <ALARM type="On" label="Обрыв" severity="4"/>
+      <DATALOG name="DLG_KIP"/>
+    </TAG>
+    <TAG type="A" name="AI\{ShortName}\v"     description="{Name} {Description}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
+      <DATALOG name="DLG_FAST"/>
+      <DATALOG name="DLG_LONG"/>
+      <DATALOG name="DLG_KIP"/>
+    </TAG>
+    <TAG type="A" name="AI\{ShortName}\state" description="{Name} {Description}" min="0" max="8" dataSource="D"  address="AI[{NUMBER}].State">
+      <ALARM number="1" threshold="0.9" label="{Name} &lt;&lt; {BLOCKING.Low} {UNITS}"   direction="D" severity="1"/>
+      <ALARM number="2" threshold="1.9" label="{Name} &lt; {ALARMING.Low} {UNITS}"       direction="D" severity="2"/>
+      <ALARM number="3" threshold="2.9" label="{Name} &lt; {REGLAMENT.Low} {UNITS}"      direction="D" severity="3"/>
+      <ALARM number="4" threshold="4.9" label="{Name} &gt; {REGLAMENT.High} {UNITS}"     direction="I" severity="3"/>
+      <ALARM number="5" threshold="5.9" label="{Name} &gt; {ALARMING.High} {UNITS}"      direction="I" severity="2"/>
+      <ALARM number="6" threshold="6.9" label="{Name} &gt;&gt; {BLOCKING.High} {UNITS}"  direction="I" severity="1"/>
       <DATALOG name ="DLG_KIP"/>
     </TAG>
-    <TAG type="D" name="AI\{SHORTNAME}\break" description="{FULLNAME}"          initialValue="0" dataSource="D" address="AI[{NUMBER}].Break.sgn">
-      <ALARM type="On" Label="Обрыв" Severity="4"/>
-      <DATALOG name ="DLG_KIP"/>
-    </TAG>
-    <TAG type="A" name="AI\{SHORTNAME}\v"     description="{FULLNAME}" min="{SCALE.Low}" max="{SCALE.High}" units="{UNITS}" dataSource="D" address="AI[{NUMBER}].v">
-      <DATALOG name ="DLG_FAST"/>
-      <DATALOG name ="DLG_LONG"/>
-      <DATALOG name ="DLG_KIP"/>
-    </TAG>
-    <TAG type="A" name="AI\{SHORTNAME}\state" description="{FULLNAME}" min="0" max="8" dataSource="D"  address="AI[{NUMBER}].State">
-      <ALARM number="1" threshold="0.9" label="{SHORTNAME} &lt;&lt; {BLOCKING.Low} {UNITS}"   direction="D" Severity="1"/>
-      <ALARM number="2" threshold="1.9" label="{SHORTNAME} &lt; {ALARMING.Low} {UNITS}"       direction="D" Severity="2"/>
-      <ALARM number="3" threshold="2.9" label="{SHORTNAME} &lt; {REGLAMENT.Low} {UNITS}"      direction="D" Severity="3"/>
-      <ALARM number="4" threshold="4.9" label="{SHORTNAME} &gt; {REGLAMENT.High} {UNITS}"     direction="I" Severity="3"/>
-      <ALARM number="5" threshold="5.9" label="{SHORTNAME} &gt; {ALARMING.High} {UNITS}"      direction="I" Severity="2"/>
-      <ALARM number="6" threshold="6.9" label="{SHORTNAME} &gt;&gt; {BLOCKING.High} {UNITS}"  direction="I" Severity="1"/>
-      <DATALOG name ="DLG_KIP"/>
-    </TAG>
-    <TAG type="D" name="AI\{SHORTNAME}\select"  description="MultiTrend"  dataSource="M" initialValue="off"/>
-    <TAG type="D" name="AI\{SHORTNAME}\RL_"     description=""            dataSource="M" initialValue="{REGLAMENT.Low.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\RL"      description=""            dataSource="M" initialValue="{REGLAMENT.Low}"/>
-    <TAG type="D" name="AI\{SHORTNAME}\RH_"     description=""            dataSource="M" initialValue="{REGLAMENT.High.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\RH"      description=""            dataSource="M" initialValue="{REGLAMENT.High}"/>
-    <TAG type="D" name="AI\{SHORTNAME}\L_"      description=""            dataSource="M" initialValue="{ALARMING.Low.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\L"       description=""            dataSource="M" initialValue="{ALARMING.Low}"/>
-    <TAG type="D" name="AI\{SHORTNAME}\H_"      description=""            dataSource="M" initialValue="{ALARMING.High.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\H"       description=""            dataSource="M" initialValue="{ALARMING.High}"/>
-    <TAG type="D" name="AI\{SHORTNAME}\LL_"     description=""            dataSource="M" initialValue="{BLOCKING.Low.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\LL"      description=""            dataSource="M" initialValue="{BLOCKING.Low}"/>
-    <TAG type="D" name="AI\{SHORTNAME}\HH_"     description=""            dataSource="M" initialValue="{BLOCKING.High.En}"/>
-    <TAG type="A" name="AI\{SHORTNAME}\HH"      description=""            dataSource="M" initialValue="{BLOCKING.High}"/>
+    <TAG type="D" name="AI\{ShortName}\select"    description="MultiTrend"  dataSource="M" initialValue="off"/>
+    
+    <TAG type="D" name="AI\{ShortName}\Alarm\RL_" description=""  dataSource="M" initialValue="{REGLAMENT.Low.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\RL"  description=""  dataSource="M" initialValue="{REGLAMENT.Low}"/>
+    <TAG type="D" name="AI\{ShortName}\Alarm\RH_" description=""  dataSource="M" initialValue="{REGLAMENT.High.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\RH"  description=""  dataSource="M" initialValue="{REGLAMENT.High}"/>
+    <TAG type="D" name="AI\{ShortName}\Alarm\L_"  description=""  dataSource="M" initialValue="{ALARMING.Low.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\L"   description=""  dataSource="M" initialValue="{ALARMING.Low}"/>
+    <TAG type="D" name="AI\{ShortName}\Alarm\H_"  description=""  dataSource="M" initialValue="{ALARMING.High.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\H"   description=""  dataSource="M" initialValue="{ALARMING.High}"/>
+    <TAG type="D" name="AI\{ShortName}\Alarm\LL_" description=""  dataSource="M" initialValue="{BLOCKING.Low.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\LL"  description=""  dataSource="M" initialValue="{BLOCKING.Low}"/>
+    <TAG type="D" name="AI\{ShortName}\Alarm\HH_" description=""  dataSource="M" initialValue="{BLOCKING.High.En}"/>
+    <TAG type="A" name="AI\{ShortName}\Alarm\HH"  description=""  dataSource="M" initialValue="{BLOCKING.High}"/>
 
-    <ECONOM_POSITION>
-    </ECONOM_POSITION>
   </AiPosition>
 
-  
-  
   <DioPosition>
-    <TAG type="D" name="DIO\{Name}\v" description="{FULLNAME}"                        dataSource="D" address="DIO[{NUMBER}].v">
+    <!--
+       // General Position
+          {Number}
+          {Name}
+          {Description}
+          {RSViewName}
+      // Dio Position
+          {NormValue}
+    -->
+    
+    <TAG type="D" name="DIO\{RSVIEWNAME}\v" description="{Name} {Description}"                        dataSource="D" address="DIO[{NUMBER}].v">
       <DATALOG name ="DLG_DIO"/>
     </TAG>
-    <TAG type="D" name="DIO\{Name}\Alarm" description="{FULLNAME}"                    dataSource="D" address="DIO[{NUMBER}].Alarm.sgn">
-      <ALARM type="On" Label="(ALARM) sgn" Severity="2"/>
-      <DATALOG name ="DLG_DIO"/>      
+    <TAG type="D" name="DIO\{RSVIEWNAME}\Norm" description="{Name} {Description}"                     dataSource="M" initialValue="{NormValue}"/>
+    <TAG type="D" name="DIO\{RSVIEWNAME}\Alarm" description="{Name} {Description}"                    dataSource="D" address="DIO[{NUMBER}].Alarm.sgn">
+      <ALARM type="On" Label="(ALARM) sgn" severity="2"/>
+      <DATALOG name ="DLG_DIO"/>
     </TAG>
-    <TAG type="A" name="DIO\{Name}\State" description="{FULLNAME}" min="0" max="8"    dataSource="D" address="DIO[{NUMBER}].State">
-      <ALARM number="1" threshold="0.9" label="(BLOCK) state" direction="D" Severity="1"/>
-      <ALARM number="2" threshold="1.9" label="(ALARM) state" direction="D" Severity="2"/>
+    <TAG type="A" name="DIO\{RSVIEWNAME}\State" description="{Name} {Description}" min="0" max="8"    dataSource="D" address="DIO[{NUMBER}].State">
+      <ALARM number="1" threshold="0.9" label="(BLOCK) state" direction="D" severity="1"/>
+      <ALARM number="2" threshold="1.9" label="(ALARM) state" direction="D" severity="2"/>
     </TAG>
   </DioPosition>
   
   
-  
   <AoPosition>
-    <TAG type="D" name="AO\{NAME}\Casc" description="Cascade PID control (1-on; 0-off)" dataSource="D" address="AO[{NUMBER}].casc"/>
-    <TAG type="D" name="AO\{NAME}\ControlAction" description="Тип регулирования: 0=direct (SP-PV); 1=reverse (PV-SP)" dataSource="D" address="AO[{NUMBER}].ControlAction"/>
+    <!--
+      // General Position
+          {Number}
+          {Name}
+          {Description}
+          {RSViewName}
+      // Ao Position
+          {AiNUM}
+          {AoTYPE}
+          {Scale.Low}
+          {Scale.High}
+    -->
+
+    <TAG type="D" name="AO\{RSVIEWNAME}\Casc" description="Cascade PID control (1-on; 0-off)" dataSource="D" address="AO[{NUMBER}].casc"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\ControlAction" description="Тип регулирования: 0=direct (SP-PV); 1=reverse (PV-SP)" dataSource="D" address="AO[{NUMBER}].ControlAction"/>
     
-    <TAG type="D" name="AO\{NAME}\Mode" description="Режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].Mode"/>
-    <TAG type="D" name="AO\{NAME}\set_Mode" description="Установить режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].btnMode"/>
-    <TAG type="D" name="AO\{NAME}\set_koeff_btn" description="Apply koeff" dataSource="D" address="AO[{NUMBER}].btnSetKoeff"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\Mode" description="Режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].Mode"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\set_Mode" description="Установить режим работы: 1-ручной, 0-автомат" dataSource="D" address="AO[{NUMBER}].btnMode"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\set_koeff_btn" description="Apply koeff" dataSource="D" address="AO[{NUMBER}].btnSetKoeff"/>
 
-    <TAG type="D" name="AO\{NAME}\NormState" description="Тип клапана: НО-НЗ (0=normal close; 1=normal open)" dataSource="D" address="AO[{NUMBER}].NormState"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\NormState" description="Тип клапана: НО-НЗ (0=normal close; 1=normal open)" dataSource="D" address="AO[{NUMBER}].NormState"/>
 
-    <TAG type="D" name="AO\{NAME}\SO_minus"  description="SO- Выход минус" dataSource="D" address="AO[{NUMBER}].btnSOminus"/>
-    <TAG type="D" name="AO\{NAME}\SO_plus"   description="SO+ Выход плюс"  dataSource="D" address="AO[{NUMBER}].btnSOplus"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\SO_minus"  description="SO- Выход минус" dataSource="D" address="AO[{NUMBER}].btnSOminus"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\SO_plus"   description="SO+ Выход плюс"  dataSource="D" address="AO[{NUMBER}].btnSOplus"/>
    
-    <TAG type="D" name="AO\{NAME}\SP_minus"  description="SP- Выход минус" dataSource="D" address="AO[{NUMBER}].btnSPminus"/>
-    <TAG type="D" name="AO\{NAME}\SP_plus"   description="SP+ Выход плюс"  dataSource="D" address="AO[{NUMBER}].btnSPplus"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\SP_minus"  description="SP- Выход минус" dataSource="D" address="AO[{NUMBER}].btnSPminus"/>
+    <TAG type="D" name="AO\{RSVIEWNAME}\SP_plus"   description="SP+ Выход плюс"  dataSource="D" address="AO[{NUMBER}].btnSPplus"/>
 
-    <TAG type="A" name="AO\{NAME}\Enter" description="Ввод задания (=1) или выхода (=2) с клавиатуры" min="1" max="10" dataSource="M" initialValue="0"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\Enter" description="Ввод задания (=1) или выхода (=2) с клавиатуры" min="1" max="10" dataSource="M" initialValue="0"/>
     
-    <TAG type="A" name="AO\{NAME}\k_Kp" description="Коэф. Kp" min="0" max="200" dataSource="D" address="AO[{NUMBER}].Koeff.Kp"/>
-    <TAG type="A" name="AO\{NAME}\k_Td" description="Коэф. Td" min="0" max="100" dataSource="D" address="AO[{NUMBER}].Koeff.Td"/>
-    <TAG type="A" name="AO\{NAME}\k_Ti" description="Коэф. Ti" min="0" max="100" dataSource="D" address="AO[{NUMBER}].Koeff.Ti"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\k_Kp" description="Коэф. Kp" min="0" max="200" dataSource="D" address="AO[{NUMBER}].Koeff.Kp"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\k_Td" description="Коэф. Td" min="0" max="100" dataSource="D" address="AO[{NUMBER}].Koeff.Td"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\k_Ti" description="Коэф. Ti" min="0" max="100" dataSource="D" address="AO[{NUMBER}].Koeff.Ti"/>
 
-    <TAG type="A" name="AO\{NAME}\set_k_Kp" description="Установить Коэф. Kp" min="0" max="200" dataSource="D" address="AO[{NUMBER}].setKoeff.Kp"/>
-    <TAG type="A" name="AO\{NAME}\set_k_Td" description="Установить Коэф. Td" min="0" max="100" dataSource="D" address="AO[{NUMBER}].setKoeff.Td"/>
-    <TAG type="A" name="AO\{NAME}\set_k_Ti" description="Установить Коэф. Ti" min="0" max="100" dataSource="D" address="AO[{NUMBER}].setKoeff.Ti"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\set_k_Kp" description="Установить Коэф. Kp" min="0" max="200" dataSource="D" address="AO[{NUMBER}].setKoeff.Kp"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\set_k_Td" description="Установить Коэф. Td" min="0" max="100" dataSource="D" address="AO[{NUMBER}].setKoeff.Td"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\set_k_Ti" description="Установить Коэф. Ti" min="0" max="100" dataSource="D" address="AO[{NUMBER}].setKoeff.Ti"/>
 
-    <TAG type="A" name="AO\{NAME}\ScaleMin" description="Шкала минимум"  min="0" max="1000" dataSource="D" address="AO[{NUMBER}].ScaleMin"/>
-    <TAG type="A" name="AO\{NAME}\ScaleMax" description="Шкала максимум" min="0" max="1000" dataSource="D" address="AO[{NUMBER}].ScaleMax"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\ScaleMin" description="Шкала минимум"  min="0" max="1000" dataSource="D" address="AO[{NUMBER}].ScaleMin"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\ScaleMax" description="Шкала максимум" min="0" max="1000" dataSource="D" address="AO[{NUMBER}].ScaleMax"/>
     
-    <TAG type="A" name="AO\{NAME}\PV" description="{FULLNAME} {Description}" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}"  dataSource="D" address="AO[{NUMBER}].PV"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\PV" description="{Name} {Description}" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}"  dataSource="D" address="AO[{NUMBER}].PV"/>
     
-    <TAG type="A" name="AO\{NAME}\SP" description="{FULLNAME} {Description}" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}"  dataSource="D" address="AO[{NUMBER}].SP"/>
-    <TAG type="A" name="AO\{NAME}\SO" description="Выход регуятора (положение клапана)" min="0" max="100"                          dataSource="D" address="AO[{NUMBER}].SO"/>
-    <TAG type="A" name="AO\{NAME}\set_SP" description="Установить задание регуятора" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}" dataSource="D" address="AO[{NUMBER}].setSP"/>
-    <TAG type="A" name="AO\{NAME}\set_SO" description="Установить выход регуятора (положение клапана)" min="0" max="100"           dataSource="D" address="AO[{NUMBER}].setSO"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\SP" description="{Name} {Description}" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}"  dataSource="D" address="AO[{NUMBER}].SP"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\SO" description="Выход регуятора (положение клапана)" min="0" max="100"                          dataSource="D" address="AO[{NUMBER}].SO"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\set_SP" description="Установить задание регуятора" min="{Scale.Low}" max="{Scale.High}" units="{UNITS}" dataSource="D" address="AO[{NUMBER}].setSP"/>
+    <TAG type="A" name="AO\{RSVIEWNAME}\set_SO" description="Установить выход регуятора (положение клапана)" min="0" max="100"           dataSource="D" address="AO[{NUMBER}].setSO"/>
   </AoPosition>
 </PositionList>

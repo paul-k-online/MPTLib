@@ -66,20 +66,20 @@
         <xs:element type="AiPositionType" name="AiPosition">
           <xs:annotation>
             <xs:documentation>
-              "Number" => position.Number
-              "Name" => position.Name
-              "FullName" => position.FullName
-              "Description" => position.Description
-              "SHORTNAME" => position.RsViewShortName()
-              "UNITS" => position.Units
-              "Scale.Low" => position.Scale.Low
-              "Scale.High" => position.Scale.High
-              "Reglament.Low" => position.Reglament.Low | "0"
-              "Reglament.High" => position.Reglament.High | "0"
-              "Alarming.Low" => position.Alarming.Low | "0"
-              "Alarming.High" => position.Alarming.High | "0"
-              "Blocking.Low" => position.Blocking.Low | "0"
-              "Blocking.High" => position.Blocking.High | "0"
+              Number => position.Number
+              Name => position.Name
+              FullName => position.FullName
+              Description => position.Description
+              RSVIEWNAME => position.RsViewName()
+              UNITS => position.Units
+              Scale.Low => position.Scale.Low
+              Scale.High => position.Scale.High
+              Reglament.Low => position.Reglament.Low | "0"
+              Reglament.High => position.Reglament.High | "0"
+              Alarming.Low => position.Alarming.Low | "0"
+              Alarming.High => position.Alarming.High | "0"
+              Blocking.Low => position.Blocking.Low | "0"
+              Blocking.High => position.Blocking.High | "0"
 
               TAG
               type: A(Analog) | D(Digital) | S(String)

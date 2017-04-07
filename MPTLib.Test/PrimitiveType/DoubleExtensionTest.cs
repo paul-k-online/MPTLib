@@ -9,8 +9,6 @@ namespace MPTLib.Test.PrimitiveType
         [TestMethod]
         public void SoftRoundTest()
         {
-            //var privateType = new PrivateType(typeof(MPTEntitiesExt));
-
             Assert.AreEqual(DoubleExtension.SoftRound(0), 0);
             Assert.AreEqual(DoubleExtension.SoftRound(1), 1);
 
