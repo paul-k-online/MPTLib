@@ -31,10 +31,5 @@ namespace MPT.PrimitiveType
             var stringComparison = ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture;
             return xElement.Elements().Where(x => string.Equals(x.Name.ToString(), name, stringComparison));
         }
-
-        public static XElement GetTag(this XElement xElement, string tagName, bool ignoreCase = true)
-        {
-            return xElement.GetTags(tagName, ignoreCase).FirstOrDefault();
-        }
     }
 }
