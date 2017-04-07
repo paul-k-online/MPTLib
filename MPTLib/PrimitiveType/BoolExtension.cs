@@ -15,11 +15,15 @@ namespace MPT.PrimitiveType
                 case "t":
                 case "true":
                 case "on":
+                case "y":
+                case "yes":
                     return true;
                 case "0":
                 case "f":
                 case "false":
                 case "off":
+                case "n":
+                case "no":
                     return false;
                 default:
                     //throw new InvalidCastException("You can't cast a weird value to a bool!");
