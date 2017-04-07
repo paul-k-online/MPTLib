@@ -5,13 +5,13 @@ using System.Text;
 
 namespace MPT.RSView.DataLog.MultiProject
 {
-    public class AlarmLogRecord : AlarmLog.AlarmLogRecord, IProjectId
+    public class AlarmLog : DataLog.AlarmLog, IProjectId
     {
         public int ProjectId { get; set; }
 
-        public static AlarmLogRecord FromBase(AlarmLog.AlarmLogRecord baseClass, int projectId)
+        public static AlarmLog FromBase(DataLog.AlarmLog baseClass, int projectId)
         {
-            return new AlarmLogRecord()
+            return new AlarmLog()
             {
                 AlarmType = baseClass.AlarmType,
                 DateTime = baseClass.DateTime,
