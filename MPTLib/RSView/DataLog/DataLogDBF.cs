@@ -4,10 +4,11 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 using MPT.DataBase;
+using MPT.PrimitiveType;
 
 namespace MPT.RSView.DataLog
 {
-    public class DataLogDBF
+    public class DBFDataLog : DBFDataBase
     {
         public enum RSViewDataLogTableType
         {
@@ -33,17 +34,13 @@ namespace MPT.RSView.DataLog
         };
 
 
-
         public class DataLogFilePairDBF
         {
-            public string TagTable { get; set; }
-            public string FloatTable { get; set; }
-            public string StringTable { get; set; }
+            public string TagFile { get; set; }
+            public string FloatFile { get; set; }
+            public string StringFile { get; set; }
         }
 
-
-
-        public DBFDataBase DataBase { get; private set; }
 
         private readonly string _projectName;
         public string ProjectName
@@ -52,48 +49,26 @@ namespace MPT.RSView.DataLog
             {
                 if (!string.IsNullOrEmpty(_projectName))
                     return _projectName;
-                if (DataBase.DbPath.Parent != null)
-                    return DataBase.DbPath.Parent.Name;
-                return "";
+                return DbName;
             }
         }
 
-        private readonly string _datalogName;
-        public string DataLogName
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(_datalogName))
-                    return _datalogName;
-                if (!string.IsNullOrEmpty(DataBase.DbName))
-                    return DataBase.DbName;
-                return "";
-            }
-        }
-
-
-        public DataLogDBF(string directoryPath, string projectName = null, string datalogName = null) :
-            this(new DirectoryInfo(directoryPath), projectName, datalogName)
+        public DBFDataLog(string directoryPath, string projectName = null) :
+            this(new DirectoryInfo(directoryPath), projectName)
         {}
 
-        public DataLogDBF(DirectoryInfo directory, string projectName = null, string datalogName = null) :
-            this(new DBFDataBase(directory), projectName, datalogName)
-        {}
-
-        public DataLogDBF(DBFDataBase dataBase, string projectName = null, string datalogName = null)
+        public DBFDataLog(DirectoryInfo directory, string projectName = null) : 
+            base(directory)
         {
-            DataBase = dataBase;
             _projectName = projectName;
-            _datalogName = datalogName;
         }
 
 
 
-        protected const string LongDataLogFileNamePattern = @"^(?<Key>(?<Date>\d{4} \d{2} \d{2}) (?<Count>\d{4})) \((?<Type>(Float|Tagname|String))\)$";
-        protected static readonly Regex LongFileNameRegex = new Regex(LongDataLogFileNamePattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        protected const string ShortDataLogFileNamePattern = @"^(?<Key>(?<Date>\d{2}\d{2}\d{2})(?<Count>[A-Z]{1}))(?<Type>([FTS]))$";
-        protected static readonly Regex ShortFileNameRegex = new Regex(ShortDataLogFileNamePattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        protected static readonly Regex LongFileNameRegex = 
+            new Regex(@"^(?<Key>(?<Date>\d{4} \d{2} \d{2}) (?<Count>\d{4})) \((?<Type>(Float|Tagname|String))\)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        protected static readonly Regex ShortFileNameRegex = 
+            new Regex(@"^(?<Key>(?<Date>\d{2}\d{2}\d{2})(?<Count>[A-Z]{1}))(?<Type>([FTS]))$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 
         public static Tuple<string, RSViewDataLogTableType> GetKeyTypeFileName(string fileName)
@@ -103,8 +78,8 @@ namespace MPT.RSView.DataLog
                 var longMach = LongFileNameRegex.Matches(fileName);
                 var fileKey = longMach[0].Groups["Key"].Value;
                 var fileType = longMach[0].Groups["Type"].Value;
-
-                var dlgType = (RSViewDataLogTableType) Enum.Parse(typeof(RSViewDataLogTableType), fileType, true);
+                
+                var dlgType = fileType.ToEnum<RSViewDataLogTableType>();
                 return new Tuple<string, RSViewDataLogTableType>(fileKey, dlgType);
             }
 
@@ -138,7 +113,7 @@ namespace MPT.RSView.DataLog
         {
             var dict = new Dictionary<string, DataLogFilePairDBF>();
 
-            foreach (var table in DataBase.AllTableList)
+            foreach (var table in GetTableList())
             {
                 var typeTuple = GetKeyTypeFileName(table);
 
@@ -156,17 +131,16 @@ namespace MPT.RSView.DataLog
                 switch (kv.Value)
                 {
                     case RSViewDataLogTableType.Tagname:
-                        dlgPair.TagTable = table;
+                        dlgPair.TagFile = table;
                         break;
                     case RSViewDataLogTableType.Float:
-                        dlgPair.FloatTable = table;
+                        dlgPair.FloatFile = table;
                         break;
                     case RSViewDataLogTableType.String:
-                        dlgPair.StringTable = table;
+                        dlgPair.StringFile = table;
                         break;
                 }
-            }
-            
+            }            
             return dict;
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace MPT.RSView.DataLog
 {
@@ -17,14 +19,23 @@ namespace MPT.RSView.DataLog
         public ICollection<DataLogFloat> DatalogFloats { get; set; }
 
 
-        public static DataLogTag FromDataLogTagDBF(DataLogTagDBF dbfItem)
+        public static DataLogTag FromDBF(IDataRecord record)
         {
+            // n 5
+            var tagName = Convert.ToString(record["tagname"]).Trim();
+            // c 255
+            var ttagIndex = Convert.ToInt16(record["ttagindex"]);
+            // n 1
+            var tagType = Convert.ToInt16(record["tagtype"]);
+            // n 2
+            var tagDataTyp = Convert.ToInt16(record["tagdatatyp"]);
+
             return new DataLogTag()
             {
-                TagDataType = dbfItem.TagDataTyp,
-                TagIndex = dbfItem.TTagIndex,
-                TagName = dbfItem.TagName,
-                TagType = dbfItem.TagType,
+                TagName = tagName,
+                TagIndex = ttagIndex,
+                TagType = tagType,
+                TagDataType = tagDataTyp,
             };
         }
     }

@@ -16,8 +16,7 @@ namespace MPT.RSView.DataLog
         {
             throw new UnintentionalCodeFirstException();
         }
-
-
+        
 
         public virtual DbSet<DataLogFloat> DatalogFloats { get; set; }
         public virtual DbSet<DataLogTag>   DatalogTags { get; set; }

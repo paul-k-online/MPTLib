@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
+using System.Data;
 
 namespace MPT.RSView.DataLog
 {
@@ -18,18 +18,33 @@ namespace MPT.RSView.DataLog
         public virtual DataLogTag DatalogTag { get; set; }
         
 
-
-        public static DataLogFloat FromDBF(DataLogFloatDBF dbfItem)
+        public static DataLogFloat FromDBF(IDataRecord record)
         {
+            // Date 8
+            var Date = Convert.ToDateTime(record["date"]);
+            // c 8
+            var Time = Convert.ToString(record["time"]);
+            // n 3
+            var Millitm = Convert.ToInt16(record["millitm"]);
+            // n 5
+            var TagIndex = Convert.ToInt16(record["tagindex"]);
+            // f 17,3
+            var Value = Convert.ToSingle(record["value"]);
+            // c 1
+            var Status = Convert.ToChar(record["status"]);
+            // c 1
+            var Marker = Convert.ToChar(record["marker"]);
+            // c 4
+            var Internal = Convert.ToString(record["internal"]);
+
             return new DataLogFloat()
             {
-                DateTime = dbfItem.Date.Add(TimeSpan.Parse(dbfItem.Time)).AddMilliseconds(dbfItem.Millitm),
-                Msec = dbfItem.Millitm,
-                TagIndex = dbfItem.TagIndex,
-                Value = dbfItem.Value,
-                Marker = dbfItem.Marker.FirstOrDefault(),
-                Status = dbfItem.Status.FirstOrDefault(),
-                
+                DateTime = Date.Add(TimeSpan.Parse(Time)),
+                Msec = Millitm,
+                TagIndex = TagIndex,
+                Value = Value,
+                Status = Status,
+                Marker = Marker,
             };
         }
 
@@ -50,6 +65,4 @@ namespace MPT.RSView.DataLog
             }
         }
     }
-
-
 }

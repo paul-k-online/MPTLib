@@ -18,10 +18,10 @@ namespace MPT.RSView.DataLog.MultiProject
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<AlarmLogRecord> AlarmLogs { get; set; }
+        public virtual DbSet<AlarmLog> AlarmLogs { get; set; }
         public virtual DbSet<DataLogFloat> DatalogFloats { get; set; }
         public virtual DbSet<DataLogTag>   DatalogTags { get; set; }
     }
