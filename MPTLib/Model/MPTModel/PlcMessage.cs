@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-// ReSharper disable once CheckNamespace
 namespace MPT.Model
 {
     public class PlcMessageMetadata
@@ -30,12 +29,6 @@ namespace MPT.Model
     [MetadataType(typeof(PlcMessageMetadata))]
     public partial class PlcMessage : IPlcIdPosition, IEquatable<PlcMessage>
     {
-        public static bool IsNullMessage(PlcMessage m)
-        {
-            return m == null || (string.IsNullOrWhiteSpace(m.Text));
-        }
-
-
         public class ByContentComparer : IEqualityComparer<PlcMessage>
         {
             private static readonly ByContentComparer _comparer = new ByContentComparer();
@@ -84,6 +77,11 @@ namespace MPT.Model
         public bool Equals(IPlcIdPosition other)
         {
             return ByPlcIdNumberPositionComparer.Comparer.Equals(this, other);
+        }
+
+        public static bool IsNullMessage(PlcMessage m)
+        {
+            return m == null || (string.IsNullOrWhiteSpace(m.Text));
         }
 
         public override string ToString()
