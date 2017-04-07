@@ -213,7 +213,6 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="255" />
-          <Property Name="EmailExt" Type="nvarchar" MaxLength="255" />
           <Property Name="SeverityLowLevel" Type="int" />
         </EntityType>
         <EntityType Name="WorkScheduleHolidays">
@@ -1134,7 +1133,6 @@
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="EmailExt" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="SeverityLowLevel" Type="Int32" />
         </EntityType>
         <EntityType Name="WorkScheduleHoliday">
@@ -1400,7 +1398,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MPTModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="EmailExt" ColumnName="EmailExt" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="SeverityLowLevel" ColumnName="SeverityLowLevel" />

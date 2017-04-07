@@ -43,7 +43,7 @@
         <AssociationConnector Association="MPTModel.FK_AlarmValues_AlarmTags" />
         <EntityTypeShape EntityType="MPTModel.EventsAlarm" Width="1.5" PointX="8.125" PointY="2.625" />
         <AssociationConnector Association="MPTModel.FK_EventsAlarm_Events" />
-        <EntityTypeShape EntityType="MPTModel.User" Width="1.5" PointX="11.125" PointY="10" />
+        <EntityTypeShape EntityType="MPTModel.User" Width="1.5" PointX="12.125" PointY="8.5" />
         <EntityTypeShape EntityType="MPTModel.WorkScheduleHoliday" Width="1.5" PointX="9.5" PointY="11.375" />
         <EntityTypeShape EntityType="MPTModel.WorkScheduleMove" Width="1.5" PointX="9.5" PointY="10" />
       </Diagram>
