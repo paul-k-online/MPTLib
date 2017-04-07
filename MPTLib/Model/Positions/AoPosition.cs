@@ -17,6 +17,6 @@ namespace MPT.Model
         public bool IsCascade { get; set; }
         public bool IsCascadeSlave { get; set; }
         public uint? CascadeMasterNumber { get; set; }
-
+        public string Units { get; set; }
     }
 }
