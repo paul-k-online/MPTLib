@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,14 @@ namespace MPT.PrimitiveType
 {
     public static class EnumExtension
     {
+        public static T ToEnum<T>(this bool val) where T : struct, IConvertible /* Enum */
+        {
+            var t = typeof(T);
+            if (!t.IsEnum)
+                throw new ArgumentException("Type {0} not Enum", t.ToString());
+            return (T)(object)Convert.ToInt32(val);
+        }
+
         public static T ToEnum<T>(this string value, bool ignoreCase = true)
         {
             try
