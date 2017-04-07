@@ -7,99 +7,93 @@ using System.Linq;
 
 namespace MPT.DataBase
 {
-    public static class DBFDataBaseExtension
+    public static class DataReaderExtension
     {
-        public static IEnumerable<T> Select<T>(this IDataReader reader, Func<IDataReader, T> projection)
+        public static IEnumerable<T> Select<T>(this IDataReader reader, Func<IDataRecord, T> projection)
         {
             while (reader.Read())
             {
                 yield return projection(reader);
             }
+            reader.Close();
         }
     }
 
 
     public class DBFDataBase
     {
-        private const string AllTablePattern = "*.dbf";
+        private const string DbfTablePattern = "*.dbf";
 
-        private const string ObdcConnectionStringTemplate =
-            @"Driver={Microsoft dBase Driver (*.dbf)}; SourceType=DBF; SourceDB={0}; Exclusive=No; NULL=NO; DELETED=NO; BACKGROUNDFETCH=NO; Collate=Machine;";
-
-        private const string OleDbJetConnectionStringTemplate =
-            @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=dBASE IV; User ID=; Password=;";
-
-        private const string OleDbConnectionStringTemplate =
-            @"Provider=VFPOLEDB; Data Source='{0}'; User Id=''; Password=''; Mode=read; Collating Sequence=MACHINE;";
+        //OdbcConnection odbcConnection = new OdbcConnection(
+        // @"Driver={Microsoft Visual FoxPro Driver};SourceType=DBF;SourceDB={0};Exclusive=No;Collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=NO;"
+        
+        private const string ObdcConnectionStringTemplate = @"Driver={Microsoft dBase Driver (*.dbf)}; SourceType=DBF; SourceDB={0}; Exclusive=No; NULL=NO; DELETED=NO; BACKGROUNDFETCH=NO; Collate=Machine;";
+        private const string JetOleDbConnectionStringTemplate = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=dBASE IV; User ID=; Password=;";
+        private const string VFPOleDbConnectionStringTemplate = @"Provider=VFPOLEDB; Data Source='{0}'; User Id=''; Password=''; Mode=read; Collating Sequence=MACHINE; Exclusive=No";
 
         private const string SqlSelectTemplate = @"SELECT * FROM '{0}'";
         private const string SqlSelectWhereTemplate = @"SELECT * FROM '{0}' WHERE {1}";
 
-        private string ConnectionStringTempltate = OleDbConnectionStringTemplate;
-        private string ConnectionString
-        {
-            get { return DbPath.Exists ? string.Format(ConnectionStringTempltate, DbPath.FullName) : ""; }
-        }
+        private string ConnectionStringTempltate = VFPOleDbConnectionStringTemplate;
+
 
         public DirectoryInfo DbPath { get; private set; }
-        
-        public string DbName { get; private set; }
+        private string ConnectionString
+        {
+            get { return string.Format(ConnectionStringTempltate, DbPath.FullName); }
+        }
 
-        private OleDbConnection Connection { get; set; }
-        
+        private OleDbConnection _connection;
 
-        public DBFDataBase(string dataBasePath, string dbName = "")
-            : this(new DirectoryInfo(dataBasePath), dbName)
+        private string _dbName;
+        public string DbName
+        {
+            get { return string.IsNullOrEmpty(_dbName) ? DbPath.Name : _dbName; }
+        }
+
+
+        public DBFDataBase(string path, string dbName = null)
+            : this(new DirectoryInfo(path), dbName)
         {}
 
-        public DBFDataBase(DirectoryInfo dataBasePath, string dbName = "")
+        public DBFDataBase(DirectoryInfo path, string dbName = null)
         {
-            if (!dataBasePath.Exists)
-            {
-                throw new DirectoryNotFoundException(dataBasePath.FullName);
-            }
-            DbPath = dataBasePath;
-
-            DbName = dbName;
-            if (string.IsNullOrEmpty(DbName))
-            {
-                DbName = DbPath.Name;
-            }
-            
-            OpenConnection();
+            if (!path.Exists)
+                throw new DirectoryNotFoundException(path.FullName);
+            DbPath = path;
+            _dbName = dbName;
         }
 
 
         private bool OpenConnection()
         {
-            Connection = new OleDbConnection(ConnectionString);
             try
             {
-                if (Connection.State == ConnectionState.Closed)
-                {
-                    Connection.Open();
-                }
-                return Connection.State == ConnectionState.Open;
+                if (_connection == null)
+                    _connection = new OleDbConnection(ConnectionString);
+                if (_connection.State != ConnectionState.Open)
+                    _connection.Open();
+                return _connection.State == ConnectionState.Open;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public IEnumerable<string> GetTableList()
+        {
+            try
+            {
+                return DbPath.GetFiles(DbfTablePattern).Select(filename => Path.GetFileNameWithoutExtension(filename.Name));
             }
             catch (Exception)
             {
-                return false;
-            }           
-        }
-
-        public IEnumerable<string> AllTableList
-        {
-            get
-            {
-                if (!DbPath.Exists)
-                    return null;
-                var a = DbPath.GetFiles(AllTablePattern, SearchOption.TopDirectoryOnly);
-                var b = a.Select(filename => Path.GetFileNameWithoutExtension(filename.Name));
-                return b;
+                throw;
             }
         }
 
-        public string GetSqlSelect(string table, string condition = "")
+        private string GetSqlSelect(string table, string condition = null)
         {
             if (string.IsNullOrEmpty(condition))
                 return string.Format(SqlSelectTemplate, table);
@@ -107,31 +101,31 @@ namespace MPT.DataBase
                 return string.Format(SqlSelectWhereTemplate, table, condition);
         }
 
-        public IDataReader GetReader(string table, string condition = "")
+
+        public IDataReader GetReader(string table, string condition = null)
         {
-            var cmdText = GetSqlSelect(table, condition);
-            var cmd = new OleDbCommand(cmdText, Connection);
             try
             {
-                return cmd.ExecuteReader();
+                OpenConnection();
+                var cmd = new OleDbCommand(GetSqlSelect(table, condition), _connection);
+                return cmd.ExecuteReader(CommandBehavior.CloseConnection);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw;
             }
         }
 
 
-        public IEnumerable<T> ReadTable<T>(Func<IDataRecord, T> projection, string table, string condition = "")
+        public IEnumerable<T> ReadTable<T>(Func<IDataRecord, T> projection, string table, string condition = null)
         {
             try
             {
                 return GetReader(table, condition).Select(projection);
-                
             }
             catch (Exception e)
             {
-                throw e;
+                throw new Exception("Read table", e);
             }
         }
     }
