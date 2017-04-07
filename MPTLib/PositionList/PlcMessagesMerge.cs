@@ -31,15 +31,9 @@ namespace MPT.Positions
 
         public PlcMessagesMerge(IEnumerable<PlcMessage> existMessages, IEnumerable<PlcMessage> newMessages, int plcid = 0)
         {
-            if (existMessages == null)
-                throw new ArgumentNullException("existMessages");
-            
-            if (newMessages == null)
-                throw new ArgumentNullException("newMessages");
-
             PlcId = plcid;
-            ExistMessages = existMessages;
-            NewMessages = newMessages;
+            ExistMessages = existMessages ?? throw new ArgumentNullException(nameof(existMessages));
+            NewMessages = newMessages ?? throw new ArgumentNullException(nameof(newMessages));
 
             try
             {
@@ -112,7 +106,7 @@ namespace MPT.Positions
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Remove", ex);
             }
             
             try
@@ -127,7 +121,7 @@ namespace MPT.Positions
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Add or Update", ex);
             }
             return true;
         }
